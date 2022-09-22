@@ -5,7 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: rgb(230, 220, 220);
+  background-color: rgb(191, 230, 226);
   color: rgb(0, 0, 0);
   text-align: center;
   
@@ -21,25 +21,38 @@ code {
 }
 
 ul {
-  display: table;
+
   margin: 0 auto;
-}
-li {
   
-  text-transform: capitalize;
-  align-items: center;
-  background-color: #f5e9e9;
   width: 300px;
     height: 100px;
     margin-right: 10px;
     margin-top: 10px;
-   padding-top: 24px;
+    margin-bottom: 10px;
+    align-items: center;
+  
+  
+    display: inline-block;
+}
+li {
+  opacity: 80%;
+  text-transform: capitalize;
+  
+  background-blend-mode: color;
   display: inline-block;
-
-  background-size: 50%;
- 
-  border: white;
+  background-color: #fafafe;
   border-radius: 10px;
+ 
+  padding: 10px 20px 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  width: 320px;
+  box-sizing: border-box;
+
+  
+}
+
+input{
+  border: none;
 }
 
 ul li:not(first-child){
@@ -67,10 +80,17 @@ h2 {
   border-radius: 10px;
 }
 form {
-  margin: auto;
-  width: 50%;
-  padding: 10px;
-  color: black;
+  opacity: 80%;
+  background-blend-mode: color;
+  display: inline-block;
+  background-color: #fafafe;
+  border-radius: 10px;
+  margin: 20px;
+  margin-top: 100px;
+  padding: 1px 20px 10px;
+  box-shadow: 0 5px 15px rgba(185, 154, 154, 0.2);
+  width: 320px;
+  box-sizing: border-box;
 }
 
 h1 {

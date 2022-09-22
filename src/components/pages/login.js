@@ -1,40 +1,52 @@
-import React, { Component } from 'react';
-import {NavLink} from 'react-router-dom';
+import React from 'react'
+import {useNavigate, NavLink} from 'react-router-dom'
 
+function LoginForm() {
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const navigate = useNavigate();
 
-class Login extends Component {
-  render() {
-    return (
-
-
-<div className="form-container">
-
-  <div className="vertical-center">
+  function handleSubmit(event) {
+    event.preventDefault();
+    localStorage.email = email
+    localStorage.password = password
+    navigate('/user');
   
-  <h1>Welcome Back to Due Date!</h1>
-     <form>
-       <div className="input-container">
-         <label>Username </label>
-         <input type="text" name="uname" required />
-         
-       </div>
-       <div className="input-container">
-         <label>Password </label>
-         <input type="password" name="pass" required />
-  
-       </div>
-       <div className="button-container">
-         <input type="submit" />
-       </div>
-     </form>
-     </div>
-</div>
-
-   )
   }
-  
+
+
+
+  return (
+    <div>
+    <form onSubmit={handleSubmit}>
+      <h1>Welcome Back To Due Date!</h1>
+      <div>
+        <input
+        placeholder="E-Mail Address"
+          id="email"
+          type="text"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </div>
+      <div>
+        <input
+          placeholder="Password"
+          id="password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </div>
+      <br></br>
+      <button type="submit">Submit</button>
+      <br></br>
+      
+    </form>
+    <br></br>
+    <p>Don't Have An Account? <NavLink to="/signup"> Sign Up</NavLink></p>
+     </div>
+  );
 }
 
-
-
-export default Login;
+export default LoginForm

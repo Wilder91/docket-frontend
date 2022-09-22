@@ -9,6 +9,8 @@ function ProjectForm() {
   const [kind, setKind] = useState("");
   const [message, setMessage] = useState("");
 
+  
+
   let handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -43,8 +45,9 @@ function ProjectForm() {
 
 <div className="form-container">
   <div className="vertical-center">
-    <h1>Add a Project</h1>
+    
      <form onSubmit={handleSubmit}>
+     <h1>Add a Project</h1>
         <input
           type="text"
           value={name}

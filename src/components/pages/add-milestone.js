@@ -13,12 +13,13 @@ function MilestoneForm() {
   let handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      let res = await fetch(`http://localhost:3000/project/${projectId}/milestones`, {
+      let res = await fetch(`http://localhost:3000/projects/${projectId}/milestones`, {
         method: "POST",
         body: JSON.stringify({
           name: name,
           description: description,
-          date: date
+          date: date,
+          project_id: projectId
         }),
         headers: {
           'Content-Type': 'application/json'
@@ -44,8 +45,9 @@ function MilestoneForm() {
 
 <div className="form-container">
   <div className="vertical-center">
-    <h1>Add a milestone</h1>
+   
      <form onSubmit={handleSubmit}>
+     <h1>Add a milestone</h1>
         <input
           type="text"
           value={name}
@@ -71,7 +73,7 @@ function MilestoneForm() {
 
         <div className="message">{message ? <p>{message}</p> : null}</div>
         <br></br>
-        <NavLink to={`/projects/${projectId}`}>Return to milestones</NavLink>
+        <NavLink to={`/projects/${projectId}`}>Return to Project Milestones</NavLink>
      </form>
      
      </div>
