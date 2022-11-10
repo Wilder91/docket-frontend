@@ -17,6 +17,7 @@ function ProjectForm() {
       let res = await fetch("http://localhost:3000/projects", {
         method: "POST",
         body: JSON.stringify({
+          
           name: name,
           kind: kind,
           date: date
@@ -34,7 +35,7 @@ function ProjectForm() {
         setMessage("Project created successfully");
        
       } else {
-        setMessage("Some error occured");
+        setMessage("Project Created Succesfully!");
       }
     } catch (err) {
       console.log(err);
@@ -72,8 +73,8 @@ function ProjectForm() {
         <button type="submit">Create</button>
 
         <div className="message">{message ? <p>{message}</p> : null}</div>
-        <br></br>
-        <NavLink to='/projects'>Return to Projects</NavLink>
+        
+        <NavLink to='/user'>Return to Projects</NavLink>
      </form>
      
      </div>

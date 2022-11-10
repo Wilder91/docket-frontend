@@ -1,5 +1,5 @@
 import React from 'react'
-import {useNavigate, NavLink} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 
 function LoginForm() {
   const [email, setEmail] = React.useState('');
@@ -17,11 +17,12 @@ function LoginForm() {
 
 
   return (
-    <div>
+    
     <form onSubmit={handleSubmit}>
-      <h1>Welcome Back To Due Date!</h1>
+      <h3>Due Date</h3>
+    
       <div>
-        <input
+        <input className = "input-container"
         placeholder="E-Mail Address"
           id="email"
           type="text"
@@ -29,8 +30,8 @@ function LoginForm() {
           onChange={(e) => setEmail(e.target.value)}
         />
       </div>
-      <div>
-        <input
+      <div >
+        <input className = "input-container"
           placeholder="Password"
           id="password"
           type="password"
@@ -39,13 +40,12 @@ function LoginForm() {
         />
       </div>
       <br></br>
-      <button type="submit">Submit</button>
+      <button type="submit" className="nice-button">Log In</button> <a href="/signup" className="signup-button"> Sign Up</a>
       <br></br>
       
     </form>
-    <br></br>
-    <p>Don't Have An Account? <NavLink to="/signup"> Sign Up</NavLink></p>
-     </div>
+   
+     
   );
 }
 

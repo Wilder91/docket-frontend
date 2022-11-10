@@ -14,12 +14,20 @@ function Project() {
     }
 
     function deleteMilestone(id) {
-        alert('Milestone Deleted')
-        fetch(`http://localhost:3000/projects/${projectId}/milestones/${id}`, { method: 'DELETE' })   
+       
+        fetch(`http://localhost:3000/milestones/${id}`, { method: 'DELETE' })   
+        removeMilestone(id)
         
     }
 
-   
+    function removeMilestone(id) {
+      
+        setMilestones(milestones.filter(a =>
+            a.id !== id
+          )
+        )
+    }
+    
   
     
     useEffect(() => {
@@ -39,7 +47,7 @@ function Project() {
           <NavLink to={`/projects/${projectId}/addMilestone`}>New Milestone</NavLink>
           <br></br>
           <br></br>
-          <NavLink to="/projects">Return to Project List</NavLink>
+          <NavLink to="/user">Return to Project List</NavLink>
           
         </ul>
         
