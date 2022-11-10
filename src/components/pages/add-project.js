@@ -1,5 +1,5 @@
 import React, { useState }  from 'react';
-import {NavLink} from 'react-router-dom';
+import {NavLink, useParams} from 'react-router-dom';
 
 
 
@@ -8,19 +8,21 @@ function ProjectForm() {
   const [date, setDate] = useState("");
   const [kind, setKind] = useState("");
   const [message, setMessage] = useState("");
+  const {userId} = useParams();
 
   
 
   let handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      let res = await fetch("http://localhost:3000/projects", {
+      let res = await fetch(`http://localhost:3000/users/${localStorage.user_id}/projects`, {
         method: "POST",
         body: JSON.stringify({
           
           name: name,
           kind: kind,
-          date: date
+          date: date,
+          user_id: userId
         }),
         headers: {
           'Content-Type': 'application/json'

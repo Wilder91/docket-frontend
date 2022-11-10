@@ -45,9 +45,9 @@ function User() {
 
     function findUser(users) {
         
-        console.log(users)
+       
         users.forEach(user=> {
-            if (localStorage.email === user.email) {  
+            if (localStorage.email === user.email) { 
               localStorage.user_id = user.id
             fetchProjects() 
             }
