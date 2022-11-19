@@ -38,8 +38,8 @@ function MilestoneForm() {
       }
     } catch (err) {
       console.log(err);
-    }
-  };
+      }
+    };
  
     return (
 
