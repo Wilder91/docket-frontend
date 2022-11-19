@@ -1,6 +1,6 @@
 import React from 'react'
 import {useNavigate} from 'react-router-dom'
-
+import Logo from '../images/DDLogo.png'
 function LoginForm() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -19,10 +19,15 @@ function LoginForm() {
   return (
     
     <form onSubmit={handleSubmit}>
+      <div className='dd-logo'>
+      <img src={Logo} alt="logo"></img>
+      </div>
       <h3>Due Date</h3>
-    
+      
+     
       <div>
-        <input className = "input-container"
+      
+        <input required className = "input-container"
         placeholder="E-Mail Address"
           id="email"
           type="text"
@@ -31,7 +36,7 @@ function LoginForm() {
         />
       </div>
       <div >
-        <input className = "input-container"
+        <input required className = "input-container"
           placeholder="Password"
           id="password"
           type="password"

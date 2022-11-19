@@ -9,6 +9,26 @@ body {
   
 }
 
+button.normal {display:inline-block;
+  padding:0.5em 3em;
+  border:0.16em solid #FFFFFF;
+  margin:0 0.3em 0.3em 0;
+  box-sizing: border-box;
+  text-decoration:none;
+  text-transform:uppercase;
+  font-family:'Roboto',sans-serif;
+  font-weight:400;
+  color:#9b9b9b;
+  text-align:center;
+  transition: all 0.15s;
+  
+}
+
+.button:hover {
+  background-color: #4CAF50; /* Green */
+  color: white;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
 .input-container {
   background: rgba(160, 160, 160, 0.34);
   border-radius: 8px;
@@ -16,6 +36,8 @@ body {
   height: 30px;
   font-size: 14px;
   text-align: left;
+  border-style: solid;
+  border-color: rgb(185, 180, 180);
   
   
 }
@@ -31,6 +53,7 @@ body {
 	cursor: pointer;
   border-radius: 10px;
   opacity: 100%;
+  text-decoration: none;
 }
 
 .signup-button {
@@ -56,29 +79,19 @@ body {
   margin: 0px auto;
 }
 
+
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
 
-ul {
 
-  margin: 0 auto;
-  
-  width: 300px;
-    height: 100px;
-    margin-right: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    align-items: center;
-  
-  
-    display: inline-block;
-}
+
 li {
   opacity: 80%;
   text-transform: capitalize;
-  
+  margin: 10px;
   background-blend-mode: color;
   display: inline-block;
   background-color: #fafafe;
@@ -92,8 +105,9 @@ li {
   
 }
 
-input{
-  border: none;
+.dd-logo {
+  scale: 30%;
+
 }
 
 ul li:not(first-child){
@@ -102,6 +116,8 @@ ul li:not(first-child){
 
   list-style-position: outside;
 }
+
+
 
 h2 {
   display: table;
@@ -131,19 +147,23 @@ form {
   border-radius: 30px;
   margin: 5px;
   margin-top: 100px;
-  padding-top: 0px;
+  padding-top: 10px;
   box-shadow: 0 5px 15px rgba(185, 154, 154, 0.2);
   width: 320px;
-  height: 253px;
+  height: 280px;
   box-shadow: 0px 50px 100px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(7.5px);
 }
 
 h1 {
   text-align: center;
+  line-height: 0.7em;
+  display: inline;
+  padding-top: 10px;
 }
 
 h3 {
+  display: inline;
   text-align: left;
   font-size:xxx-large;
   margin-top: 0px;
@@ -151,14 +171,20 @@ h3 {
   margin-left: 5px;
 }
 img {
+  scale: 40%;
+  display: inline;
   border-bottom: 10cm;
   margin: 0;
   position: absolute;
   top: 50%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
+
+  transform: translateY(-200%);
 }
 link {
   text-align: center;
+  
+}
+a {
+  text-decoration: none;
 }
 

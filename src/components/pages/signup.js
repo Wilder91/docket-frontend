@@ -49,7 +49,7 @@ function Signup() {
 
      <form onSubmit={handleSubmit}>
       <h3>Sign Up</h3>
-     <input className = "input-container"
+     <input required className = "input-container"
         placeholder="E-Mail Address"
           id="email"
           type="text"
@@ -57,7 +57,7 @@ function Signup() {
           onChange={(e) => setEmail(e.target.value)}
         />
        <div >
-        <input className = "input-container"
+        <input required className = "input-container"
           placeholder="Password"
           id="password"
           type="password"
@@ -66,9 +66,7 @@ function Signup() {
         />
       </div>
       <br />
-       <button type="submit" className="signup-button">Sign Up</button> 
-
-       <a href="/" className="nice-button"> Log In</a>
+       <button type="submit" className="signup-button">Sign Up</button>  <a href="/" className="nice-button"> Log In</a>
      </form>
  
   

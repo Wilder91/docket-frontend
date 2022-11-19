@@ -23,7 +23,9 @@ function ProjectForm() {
           kind: kind,
           date: date,
           user_id: userId
-        }),
+        }
+        ),
+        
         headers: {
           'Content-Type': 'application/json'
          },
@@ -51,31 +53,34 @@ function ProjectForm() {
     
      <form onSubmit={handleSubmit}>
      <h1>Add a Project</h1>
-        <input
+        <input required
           type="text"
           value={name}
           placeholder="Name"
+          className='input-container'
           onChange={(e) => setName(e.target.value)}
         />
         <br></br>
-        <input
+        <input 
           type="text"
           value={kind}
           placeholder="Kind"
+          className='input-container'
           onChange={(e) => setKind(e.target.value)}
         />
         <br></br>
-        <input
+        <input required
           type="date"
           value={date}
           placeholder="Date"
+          className='input-container'
           onChange={(e) => setDate(e.target.value)}
         />
         <br></br>
-        <button type="submit">Create</button>
+        <button className='normal' type="submit">Create</button>
 
         <div className="message">{message ? <p>{message}</p> : null}</div>
-        
+        <br />
         <NavLink to='/user'>Return to Projects</NavLink>
      </form>
      

@@ -1,6 +1,6 @@
 import React, { useEffect, useState} from 'react'
 import { NavLink, useParams} from 'react-router-dom';
-import MilestoneForm from './add-milestone';
+
 
  
 function Project() {
@@ -42,7 +42,7 @@ function Project() {
             <div id= "milestone-list">
             <h1>Active Milestones</h1>
             <ul>
-            {milestones.map(milestone => (<li key={milestone.id}>   <b>{milestone.name}</b> <br></br>  {milestone.description}<br></br> Due Date:{milestone.due_date} <br></br> <button onClick={() => {deleteMilestone(milestone.id)}}>Delete</button> </li>
+            {milestones.map(milestone => (<li key={milestone.id}>   <b>{milestone.name}</b> <br></br>  {milestone.description}<br></br> Due Date:{milestone.due_date} <br></br> <button className='normal' onClick={() => {deleteMilestone(milestone.id)}}>Delete</button> </li>
           ))}
           <br></br>
           <br></br>
@@ -53,7 +53,7 @@ function Project() {
           
         </ul>
         </div>
-        <MilestoneForm />
+      
         
       
      

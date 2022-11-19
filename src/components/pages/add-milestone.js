@@ -44,14 +44,15 @@ function MilestoneForm() {
     return (
 
 <div className="form-container">
-  <div className="vertical-center">
+ 
    
      <form onSubmit={handleSubmit}>
      <h1>Add a milestone</h1>
-        <input
+        <input required
           type="text"
           value={name}
           placeholder="Name"
+          className='input-container'
           onChange={(e) => setName(e.target.value)}
         />
         <br></br>
@@ -59,24 +60,27 @@ function MilestoneForm() {
           type="text"
           value={description}
           placeholder="description"
+          className='input-container'
           onChange={(e) => setDescription(e.target.value)}
         />
         <br></br>
-        <input
+        <input required
           type="date"
           value={date}
           placeholder="Date"
+          className='input-container'
           onChange={(e) => setDate(e.target.value)}
         />
         <br></br>
-        <button type="submit">Create</button>
+        <br />
+        <button className='normal' type="submit">Create</button>
 
         <div className="message">{message ? <p>{message}</p> : null}</div>
-        <br></br>
+    
         <NavLink to={`/projects/${projectId}`}>Return to Project Milestones</NavLink>
      </form>
      
-     </div>
+  
    
      
 </div>
