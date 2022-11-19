@@ -18,7 +18,7 @@ function LoginForm() {
 
   return (
     
-    <form onSubmit={handleSubmit}>
+    <form className='normal' onSubmit={handleSubmit}>
       <div className='dd-logo'>
       <img src={Logo} alt="logo"></img>
       </div>

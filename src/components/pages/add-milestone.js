@@ -20,10 +20,12 @@ function MilestoneForm() {
           description: description,
           date: date,
           project_id: projectId
-        }),
+        }).then((response) => response.json())
+        .then((data) => console.log(data)),
         headers: {
           'Content-Type': 'application/json'
-         },
+         }
+      
       })
       
      
@@ -38,8 +40,8 @@ function MilestoneForm() {
       }
     } catch (err) {
       console.log(err);
-    }
-  };
+      }
+    };
  
     return (
 
