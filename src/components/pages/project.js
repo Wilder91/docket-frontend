@@ -1,21 +1,24 @@
 import React, { useEffect, useState} from 'react'
 import { NavLink, useParams} from 'react-router-dom';
 
-
- 
 function Project() {
     const [milestones, setMilestones] = useState([])
     const [showForm, setShowForm] = useState()
+
     const [name, setName] = useState("");
     const [date, setDate] = useState("");
     const [description, setDescription] = useState("");
-    const [message, setMessage] = useState("");
+    const [message] = useState("");
     const {projectId} = useParams();
 
     let handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-          let res = await fetch(`http://localhost:3000/projects/${projectId}/milestones`, {
+        e.target.reset();
+        setName('')
+        setDate('')
+        setDescription('')
+       
+          fetch(`http://localhost:3000/projects/${projectId}/milestones`, {
             method: "POST",
             body: JSON.stringify({
               name: name,
@@ -26,23 +29,20 @@ function Project() {
             headers: {
               'Content-Type': 'application/json'
              },
-          })
+          }).then((response) => response.json())
+          .then((data) => addMilestone(data))
           
          
-          if (res.status === 200) {
-            setName("");
-            setDescription("");
-            setDate("");
-            setMessage("milestone created successfully");
-           
-          } else {
-            setMessage("Some error occured");
-          }
-        } catch (err) {
-          console.log(err);
-          }
+        
         };
-  
+    
+    function addMilestone(data) {
+        console.log(data)
+        setMilestones( milestones => [...milestones,{id: data.id, name: data.name, description: data.description, due_date: data.due_date, project_id: data.projectId}] )
+        console.log(milestones)
+        //okay so you're gonna have to figure out how to get the data from the form into the 
+        //milestones array
+    }
     const fetchMilestones = () => {
         fetch(`http://localhost:3000/projects/${projectId}/milestones`)
         .then(result => result.json())
@@ -50,36 +50,31 @@ function Project() {
     }
 
     function deleteMilestone(id) {
-       
         fetch(`http://localhost:3000/milestones/${id}`, { method: 'DELETE' })   
-        removeMilestone(id)
-        
+        removeMilestone(id)      
     }
 
-    function removeMilestone(id) {
-      
+    function removeMilestone(id) {      
         setMilestones(milestones.filter(a =>
             a.id !== id
           )
         )
     }
-    
-  
-    
+        
     useEffect(() => {
         fetchMilestones({});
         console.log(milestones)
     }, []);
 
-     return (
-         
-            <div id= "milestone-list">
-            <h1>Active Milestones</h1>
-            <br />
-            <li onClick = {() => setShowForm(true)} className = 'page'>Add Milestone</li> 
-            { showForm    
-            ? <div className = 'Menu'>  
-                <div onClick = {() => setShowForm(false)} className = 'Invisible'></div>
+     return (    
+        <div className='page'>
+        <h1>Active Milestones</h1>
+        <br />
+        <li onClick = {() => setShowForm(true)} className = 'page'>Add Milestone</li> 
+        { showForm    
+        ? <div className = 'Menu'>  
+        <div onClick = {() => setShowForm(false)} className = 'Invisible'></div>
+    
     <form className='embed' onSubmit={handleSubmit}>
 
         <input required
@@ -116,20 +111,16 @@ function Project() {
     </div>
     : null
     }
-            <ul>
-            {milestones.map(milestone => (<li key={milestone.id}>   <b>{milestone.name}</b> <br></br>  {milestone.description}<br></br> Due Date:{milestone.due_date} <br></br> <button className='normal' onClick={() => {deleteMilestone(milestone.id)}}>Delete</button> </li>
-          ))}
-          <br></br>
-          <br></br>
-          <NavLink to={`/projects/${projectId}/addMilestone`}>New Milestone</NavLink>
-          <br></br>
-          <br></br>
-          <NavLink to="/user">Return to Project List</NavLink>
-          
+        <ul>
+        {milestones.map(milestone => (<li key={milestone.id}>   <b>{milestone.name}</b> <br></br>  {milestone.description}<br></br> Due Date:{milestone.due_date} <br></br> <button className='normal' onClick={() => {deleteMilestone(milestone.id)}}>Delete</button> </li>
+        ))}
+       
+        <br></br>
+        <br></br>
+        <NavLink to="/user">Return to Project List</NavLink> 
         </ul>
         </div>
-          );
-      
+        );
 }   
 
 

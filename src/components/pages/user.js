@@ -10,33 +10,31 @@ function User() {
   const [kind, setKind] = useState("");
   const [message] = useState("");
   const {userId} = useParams();
-
-  let handleSubmit = async (e) => {
+  
+  let handleSubmit = (e) => {
     e.preventDefault();
-    
-    try {
+    e.target.reset();
+    setName('')
+    setDate('')
+    setKind('')
+   
       fetch(`http://localhost:3000/users/${localStorage.user_id}/projects`, {
         method: "POST",
         body: JSON.stringify({
-          
           name: name,
           kind: kind,
           date: date,
           user_id: userId
-        }
-        ),
-        
+        }),
         headers: {
           'Content-Type': 'application/json'
          },
-      })
+      }).then((response) => response.json())
+      .then((data) => addProject(data))
       
      
-     
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    
+    };
 
 
     const fetchUsers = () => {
@@ -50,6 +48,13 @@ function User() {
       .then(result => result.json())
       .then(projects => setProjects(projects))
   
+    }
+
+    function addProject(project) {
+      console.log(project)
+      setProjects( projects => [...projects,{id: project.id, name: project.name, due_date: project.due_date, kind: project.kind, user_id: project.userId}] )
+      console.log(projects)
+      
     }
 
     function deleteProject(id) {
@@ -83,7 +88,7 @@ function User() {
     
   return (
     
-    <div>
+    <div classname='page'>
     <h1>Active Projects</h1>
     <br />
     <li onClick = {() => setShowForm(true)} className = 'page'>Add Project</li> 
@@ -103,7 +108,7 @@ function User() {
         <input 
           type="text"
           value={kind}
-          placeholder="Kind"
+          placeholder="Type"
           className='input-container'
           onChange={(e) => setKind(e.target.value)}
         />
