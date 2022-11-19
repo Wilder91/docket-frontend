@@ -37,9 +37,9 @@ function Project() {
         };
     
     function addMilestone(data) {
-        console.log(data)
+       
         setMilestones( milestones => [...milestones,{id: data.id, name: data.name, description: data.description, due_date: data.due_date, project_id: data.projectId}] )
-        console.log(milestones)
+    
         //okay so you're gonna have to figure out how to get the data from the form into the 
         //milestones array
     }
@@ -70,7 +70,7 @@ function Project() {
         <div className='page'>
         <h1>Active Milestones</h1>
         <br />
-        <li onClick = {() => setShowForm(true)} className = 'page'>Add Milestone</li> 
+        <h4 onClick = {() => setShowForm(true)} className = 'page'>Add Milestone</h4> 
         { showForm    
         ? <div className = 'Menu'>  
         <div onClick = {() => setShowForm(false)} className = 'Invisible'></div>

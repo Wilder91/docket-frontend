@@ -15,12 +15,13 @@ button.normal {display:inline-block;
   margin:0 0.3em 0.3em 0;
   box-sizing: border-box;
   text-decoration:none;
-  text-transform:uppercase;
+ 
   font-family:'Roboto',sans-serif;
   font-weight:400;
   color:#9b9b9b;
   text-align:center;
   transition: all 0.15s;
+  
   
 }
 
@@ -112,7 +113,7 @@ li {
 
 ul li:not(first-child){
   list-style : disc inside;
-  width : 178pt;
+  width : 180pt;
 
   list-style-position: outside;
 }
@@ -135,6 +136,12 @@ h2 {
  
   border: white;
   border-radius: 10px;
+}
+
+h4 {
+  cursor:pointer;
+  margin-bottom: 0px;
+  display: inline;
 }
 form.normal {
  
@@ -213,4 +220,12 @@ a {
 
 div {
   padding-top: 10px;
+}
+a:active{
+  color:#8982ca
+}
+
+a:visited{
+  color:#8982ca
+
 }
