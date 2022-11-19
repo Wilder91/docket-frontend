@@ -14,14 +14,11 @@ function Project() {
     }
 
     function deleteMilestone(id) {
-       
         fetch(`http://localhost:3000/milestones/${id}`, { method: 'DELETE' })   
-        removeMilestone(id)
-        
+        removeMilestone(id)       
     }
 
-    function removeMilestone(id) {
-      
+    function removeMilestone(id) {     
         setMilestones(milestones.filter(a =>
             a.id !== id
           )
@@ -37,8 +34,6 @@ function Project() {
 
      return (
             <div>
-         
-
             <div id= "milestone-list">
             <h1>Active Milestones</h1>
             <ul>
