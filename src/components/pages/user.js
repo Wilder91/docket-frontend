@@ -1,7 +1,6 @@
 import React, { useEffect, useState} from 'react'
 import { NavLink, useParams} from 'react-router-dom';
 
-
 function User() {
   const [projects, setProjects] = useState([])
   const [milestones, setMilestones] = useState([])
@@ -48,7 +47,7 @@ function User() {
       fetch(`http://localhost:3000/users/${localStorage.user_id}/projects`)
       .then(result => result.json())
       .then(projects => setProjects(projects))
-  
+      .then(fetchMilestones())
     }
     const fetchMilestones = () => {
       fetch(`http://localhost:3000/users/${localStorage.user_id}/milestones`)
@@ -69,6 +68,12 @@ function User() {
       removeProject(id)  
     }
 
+    function deleteMilestone(id) {
+      fetch(`http://localhost:3000/milestones/${id}`, { method: 'DELETE' }) 
+      removeMilestone(id)
+    }
+
+
     function removeProject(id) {
       
       setProjects(projects.filter(p =>
@@ -77,10 +82,18 @@ function User() {
       )
     }
 
+    function removeMilestone(id) {
+      
+      setMilestones(milestones.filter(p =>
+          p.id !== id
+        )
+      )
+    }
+
     
     useEffect(() => {
         fetchUsers({});
-        fetchMilestones();
+        
        
     }, []);
 
@@ -137,6 +150,7 @@ function User() {
                 : null
                 }
     <ul>
+      
         {projects.map(project => (<li key={project.id}>  <NavLink to={`/projects/${project.id}`} > {project.name}  </NavLink><br></br> {project.kind}<br></br> Due Date: {project.due_date} <button className='normal' onClick={() => {deleteProject(project.id)}}>delete</button>   </li>
         ))}
        
@@ -145,7 +159,7 @@ function User() {
         <h1>Active Milestones</h1>
         <br></br>
                 
-        {milestones.map(project => (<li key={project.id}>   {project.name}  <br></br> {project.description}<br></br> Due Date:{project.due_date} <button className='normal' onClick={() => {deleteProject(project.id)}}>delete</button>   </li>
+        {milestones.map(project => (<li key={project.id}>   {project.name}  <br></br> {project.description}<br></br> Due Date:{project.due_date} <button className='normal' onClick={() => {deleteMilestone(project.id)}}>delete</button>   </li>
         ))}
         <br></br>
         <NavLink to="/logout">Logout</NavLink>

@@ -1,6 +1,7 @@
 import React from 'react'
 import {useNavigate} from 'react-router-dom'
 import Logo from '../images/DDLogo.png'
+
 function LoginForm() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -17,8 +18,10 @@ function LoginForm() {
 
 
   return (
-    
+    <div>
+   
     <form className='normal' onSubmit={handleSubmit}>
+ 
       <div className='dd-logo'>
       <img src={Logo} alt="logo"></img>
       </div>
@@ -26,7 +29,7 @@ function LoginForm() {
       
      
       <div>
-      
+     
         <input required className = "input-container"
         placeholder="E-Mail Address"
           id="email"
@@ -47,10 +50,10 @@ function LoginForm() {
       <br></br>
       <button type="submit" className="nice-button">Log In</button> <a href="/signup" className="signup-button"> Sign Up</a>
       <br></br>
-      
+    
     </form>
    
-     
+    </div>
   );
 }
 
