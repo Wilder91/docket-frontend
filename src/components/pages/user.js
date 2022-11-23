@@ -67,10 +67,9 @@ function User() {
       
     }
     function addProject(project) {
-      console.log(project)
+
       setProjects( projects => [...projects,{id: project.id, name: project.name, due_date: project.due_date, kind: project.kind, user_id: project.userId}] )
-      console.log(projects)
-      
+
     }
 
 
@@ -80,10 +79,10 @@ function User() {
       removeProject(id)  
     }
 
-    /*function deleteMilestone(id) {
+    function deleteMilestone(id) {
       fetch(`http://localhost:3000/milestones/${id}`, { method: 'DELETE' }) 
       removeMilestone(id)
-    }*/
+    }
 
 
     function removeProject(id) {
@@ -94,13 +93,13 @@ function User() {
       )
     }
 
-    /*function removeMilestone(id) {
+    function removeMilestone(id) {
       
       setMilestones(milestones.filter(p =>
           p.id !== id
         )
       )
-    }*/
+    }
 
     
     useEffect(() => {
@@ -109,16 +108,6 @@ function User() {
        
     }, []);
 
- 
-
-    /*function findUser(users) {
-        users.forEach(user=> {
-            if (localStorage.email === user.email) { 
-              localStorage.user_id = user.id
-            fetchProjects() 
-            }
-          })
-    }*/
     
   return (
     
@@ -164,15 +153,17 @@ function User() {
                 : null
                 }
     <ul>
-         
-        {projects.map(project => (<li key={project.id}>  <NavLink to={`/projects/${project.id}`} > {project.name}  </NavLink><br></br> {project.kind}<br></br> Due Date: {project.due_date} <button className='normal' onClick={() => {deleteProject(project.id)}}>delete</button>   </li>
+        
+        {projects.map(project => (<li key={project.id}>  <NavLink to={`/projects/${project.id}`}
+  state={{user: {user}, projects: {projects}, milestones: {milestones}}}>  
+            {project.name}  </NavLink><br></br> {project.kind}<br></br> Due Date: {project.due_date} <button className='normal' onClick={() => {deleteProject(project.id)}}>delete</button>   </li>
         ))}
        
         <br />
         <br />
         <h1>Active Milestones</h1>
         <br></br>
-        {milestones.map(milestone => (<li key={milestone.id}>  {milestone.name}  <br></br> {milestone.description}<br></br> Due Date: {milestone.due_date} <button className='normal' onClick={() => {deleteProject(milestone.id)}}>delete</button>   </li>
+        {milestones.map(milestone => (<li key={milestone.id}>  {milestone.name}  <br></br> {milestone.description}<br></br> Due Date: {milestone.due_date} <button className='normal' onClick={() => {deleteMilestone(milestone.id)}}>delete</button>   </li>
         ))}       
 
         <br></br>

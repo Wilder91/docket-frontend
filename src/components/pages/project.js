@@ -1,10 +1,11 @@
 import React, { useEffect, useState} from 'react'
-import { NavLink, useParams} from 'react-router-dom';
+import { NavLink, useParams, useLocation} from 'react-router-dom';
 
 function Project() {
     const [milestones, setMilestones] = useState([])
     const [showForm, setShowForm] = useState()
-
+    const location = useLocation()
+   
     const [name, setName] = useState("");
     const [date, setDate] = useState("");
     const [description, setDescription] = useState("");
@@ -47,6 +48,7 @@ function Project() {
         fetch(`http://localhost:3000/projects/${projectId}/milestones`)
         .then(result => result.json())
         .then(data =>setMilestones(data))
+
     }
 
     function deleteMilestone(id) {
@@ -55,15 +57,17 @@ function Project() {
     }
 
     function removeMilestone(id) {      
-        setMilestones(milestones.filter(a =>
+        window.state.location.location.milestones.filter(a =>
             a.id !== id
           )
-        )
+        
     }
+   
         
     useEffect(() => {
-        fetchMilestones({});
-        console.log(milestones)
+      
+  
+        console.log(location.state)
     }, []);
 
      return (    
@@ -112,9 +116,10 @@ function Project() {
     : null
     }
         <ul>
-        {milestones.map(milestone => (<li key={milestone.id}>   <b>{milestone.name}</b> <br></br>  {milestone.description}<br></br> Due Date:{milestone.due_date} <br></br> <button className='normal' onClick={() => {deleteMilestone(milestone.id)}}>Delete</button> </li>
+        hello {location.state.user.user.email}
+        {location.state.milestones.milestones.map(milestone => (<li key={milestone.id}>   <b>{milestone.name}</b> <br></br>  {milestone.description}<br></br> Due Date:{milestone.due_date} <br></br> <button className='normal' onClick={() => {deleteMilestone(milestone.id)}}>Delete</button> </li>
         ))}
-       
+        
         <br></br>
         <br></br>
         <NavLink to="/user">Return to Project List</NavLink> 
