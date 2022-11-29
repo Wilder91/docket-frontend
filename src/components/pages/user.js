@@ -46,7 +46,14 @@ function User() {
 
     function setterFunction(user){
       setUser(user)
-      setProjects(user.projects)
+      let p = user.projects.sort(function(a,b){
+        // Turn your strings into dates, and then subtract them
+        // to get a value that is either negative, positive, or zero.
+        return new Date(a.due_date) - new Date(b.due_date);
+      });
+     
+      setProjects(p)
+
       fetchMilestones()
     
 
@@ -68,7 +75,9 @@ function User() {
     }
     function addProject(project) {
 
-      setProjects( projects => [...projects,{id: project.id, name: project.name, due_date: project.due_date, kind: project.kind, user_id: project.userId}] )
+      setProjects( projects => [...projects,{id: project.id, name: project.name, due_date: project.due_date, kind: project.kind, user_id: project.userId}].sort(function(a,b){
+        return new Date(a.due_date) - new Date(b.due_date);
+      }) )
 
     }
 

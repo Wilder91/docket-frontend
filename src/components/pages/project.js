@@ -38,7 +38,7 @@ function Project() {
         };
     
     function addMilestone(data) {
-       
+      
         setMilestones( milestones => [...milestones,{id: data.id, name: data.name, description: data.description, due_date: data.due_date, project_id: data.projectId}] )
     
         //okay so you're gonna have to figure out how to get the data from the form into the 
@@ -57,17 +57,17 @@ function Project() {
     }
 
     function removeMilestone(id) {      
-        window.state.location.location.milestones.filter(a =>
-            a.id !== id
-          )
-        
+      location.state.milestones.milestones.filter(a =>
+            a.id === id
+          )   
     }
    
         
     useEffect(() => {
       
-  
+        
         console.log(location.state)
+        removeMilestone()
     }, []);
 
      return (    
@@ -116,7 +116,7 @@ function Project() {
     : null
     }
         <ul>
-        hello {location.state.user.user.email}
+       
         {location.state.milestones.milestones.map(milestone => (<li key={milestone.id}>   <b>{milestone.name}</b> <br></br>  {milestone.description}<br></br> Due Date:{milestone.due_date} <br></br> <button className='normal' onClick={() => {deleteMilestone(milestone.id)}}>Delete</button> </li>
         ))}
         
