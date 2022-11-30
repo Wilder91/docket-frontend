@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
 import {useParams} from 'react-router-dom'
-function projectForm() {
-    const [setProjects] = useState([])
-    const [name, setName] = useState("");
+function projectForm({setProjects}) {
+    
+  const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [kind, setKind] = useState("");
   const [message] = useState("");
@@ -10,11 +10,13 @@ function projectForm() {
 
   function addProject(project) {
 
-    console.log(project)
+    setProjects( projects => [...projects,{id: project.id, name: project.name, due_date: project.due_date, kind: project.kind, user_id: project.userId}].sort(function(a,b){
+        return new Date(a.due_date) - new Date(b.due_date);
+      }) )
 
   }
 let handleSubmit = (e) => {
-  
+    
     e.preventDefault();
     e.target.reset();
     setName('')

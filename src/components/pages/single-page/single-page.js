@@ -93,7 +93,7 @@ function SinglePage() {
   return (
     
     <div className='page'>
-      <ProjectForm />
+      <ProjectForm setProjects={setProjects}/>
     <h1>{user.email}'s Projects</h1>   <h4 onClick = {() => setShowForm(true)} className = 'page'>Add Project</h4> 
     <br />
     
