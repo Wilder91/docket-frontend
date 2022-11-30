@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {NavLink, useNavigate} from 'react-router-dom'
 
 const handleSubmit = event => {
+  console.log(first)
   event.preventDefault();
   useNavigate('/projects, { replace: true }');
 };

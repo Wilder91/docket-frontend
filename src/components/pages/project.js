@@ -122,7 +122,7 @@ function Project() {
         
         <br></br>
         <br></br>
-        <NavLink to="/user">Return to Project List</NavLink> 
+        <NavLink to="/user" >Return to Project List</NavLink> 
         </ul>
         </div>
         );

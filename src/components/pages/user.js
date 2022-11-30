@@ -39,19 +39,21 @@ function User() {
 
 
     const fetchUsers = () => {
-        fetch(`http://localhost:3000/users/${localStorage.user_id}`)
+        fetch(`http://localhost:3000/users/`)
         .then(result => result.json())
-        .then(user => setterFunction(user)) 
+        .then(users => setterFunction(users)) 
     }
 
-    function setterFunction(user){
+    function setterFunction(users){
+      let user = users.find(email => email.email === localStorage.email)
       setUser(user)
+      console.log(user)
       let p = user.projects.sort(function(a,b){
         // Turn your strings into dates, and then subtract them
         // to get a value that is either negative, positive, or zero.
         return new Date(a.due_date) - new Date(b.due_date);
       });
-     
+     localStorage.user_id = user.id
       setProjects(p)
 
       fetchMilestones()
@@ -112,6 +114,7 @@ function User() {
 
     
     useEffect(() => {
+      console.log('first')
         fetchUsers({});
         
        
