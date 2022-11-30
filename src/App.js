@@ -7,10 +7,10 @@ import Landing from './components/pages/login';
 import Projects from './components/pages/projects';
 import Milestones from './components/pages/milestones';
 import AddProject from './components/pages/add-project'
-import Project from './components/pages/project';
+import Project from './components/pages/single-page/project/Project';
 import Signup from './components/pages/signup';
 import Mike from './components/pages/add-milestone';
-import User from './components/pages/single-page/single-page';
+import User from './components/pages/single-page/HomePage';
 import Logout from './components/pages/logout';
 
 

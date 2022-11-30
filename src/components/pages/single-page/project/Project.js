@@ -44,12 +44,7 @@ function Project() {
         //okay so you're gonna have to figure out how to get the data from the form into the 
         //milestones array
     }
-    const fetchMilestones = () => {
-        fetch(`http://localhost:3000/projects/${projectId}/milestones`)
-        .then(result => result.json())
-        .then(data =>setMilestones(data))
-
-    }
+    
 
     function deleteMilestone(id) {
         fetch(`http://localhost:3000/milestones/${id}`, { method: 'DELETE' })   
@@ -61,13 +56,17 @@ function Project() {
             a.id === id
           )   
     }
+
+    /*function selectProject() {
+      location.state.projects.filter(a =>
+        a.id === projectId
+      ) */
    
         
     useEffect(() => {
-      
+        console.log(projectId)
+        console.log(location.state.projects)
         
-        console.log(location.state)
-        removeMilestone()
     }, []);
 
      return (    

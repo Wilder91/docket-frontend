@@ -1,9 +1,9 @@
 import React, { useEffect, useState} from 'react'
-import { NavLink, useParams} from 'react-router-dom';
-import Project from './single-project'
-import ProjectForm from './single-project-form'
+import { NavLink} from 'react-router-dom';
 
-function SinglePage() {
+import ProjectForm from './project/ProjectForm'
+
+function HomePage() {
   const [user, setUser] = useState([])
   const [projects, setProjects] = useState([])
   const [milestones, setMilestones] =useState([])
@@ -22,10 +22,8 @@ function SinglePage() {
     function setterFunction(users){
       let user = users.find(email => email.email === localStorage.email)
       setUser(user)
-      console.log(user)
+  
       let p = user.projects.sort(function(a,b){
-        // Turn your strings into dates, and then subtract them
-        // to get a value that is either negative, positive, or zero.
         return new Date(a.due_date) - new Date(b.due_date);
       });
      localStorage.user_id = user.id
@@ -83,7 +81,7 @@ function SinglePage() {
 
     
     useEffect(() => {
-      console.log('first')
+
         fetchUsers({});
         
        
@@ -93,14 +91,14 @@ function SinglePage() {
   return (
     
     <div className='page'>
-      <ProjectForm setProjects={setProjects}/>
+     
     <h1>{user.email}'s Projects</h1>   <h4 onClick = {() => setShowForm(true)} className = 'page'>Add Project</h4> 
     <br />
     
     { showForm    
             ? <div className = 'Menu'>  
                 <div onClick = {() => setShowForm(false)} className = 'Invisible'></div>
-   
+                <ProjectForm setProjects={setProjects}/>
                 </div>
                 : null
                 }
@@ -129,4 +127,4 @@ function SinglePage() {
 
 
 
-export default SinglePage
+export default HomePage
