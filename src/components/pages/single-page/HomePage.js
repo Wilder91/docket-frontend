@@ -92,7 +92,7 @@ function HomePage() {
     
     <div className='page'>
      
-    <h1>{user.email}'s Projects</h1>   <h4 onClick = {() => setShowForm(true)} className = 'page'>Add Project</h4> 
+    <h1>{user.name}'s Projects</h1>   <h4 onClick = {() => setShowForm(true)} className = 'page'>Add Project</h4> 
     <br />
     
     { showForm    
@@ -105,8 +105,8 @@ function HomePage() {
     <ul>
         
         {projects.map(project => (<li key={project.id}>  <NavLink to={`/projects/${project.id}`}
-  state={{user: {user}, projects: {projects}, milestones: {milestones}}}>  
-            {project.name}  </NavLink><br></br> {project.kind}<br></br> Due Date: {project.due_date} <button className='normal' onClick={() => {deleteProject(project.id)}}>delete</button>   </li>
+        state={{user: {user}, projects: {projects}, milestones: {milestones}}}>  
+        {project.name}   </NavLink><br></br> {project.kind}<br></br> Due Date: {project.due_date} <button className='normal' onClick={() => {deleteProject(project.id)}}>delete</button>   </li>
         ))}
        
         <br />

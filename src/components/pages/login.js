@@ -1,17 +1,17 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import Logo from '../images/DDLogo.png'
 
 function LoginForm() {
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   function handleSubmit(event) {
     event.preventDefault();
     localStorage.email = email
     localStorage.password = password
-    navigate('/user');
+    navigate('/home');
   
   }
 
@@ -21,11 +21,9 @@ function LoginForm() {
     <div>
    
     <form className='normal' onSubmit={handleSubmit}>
- 
-      <div className='dd-logo'>
-      <img src={Logo} alt="logo"></img>
-      </div>
-      <h3>Due Date</h3>
+    <img src={Logo} alt="logo"></img> 
+    <br />
+      <h3>Due Date </h3>
       
      
       <div>
@@ -48,7 +46,9 @@ function LoginForm() {
         />
       </div>
       <br></br>
-      <button type="submit" className="nice-button">Log In</button> <a href="/signup" className="signup-button"> Sign Up</a>
+      <button type="submit" className="nice-button">Log In</button>
+      <br />
+       <button data-href="/signup" className="signup-button" type="button"> Sign Up</button>
       <br></br>
     
     </form>

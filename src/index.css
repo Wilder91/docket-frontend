@@ -15,18 +15,22 @@ button.normal {display:inline-block;
   margin:0 0.3em 0.3em 0;
   box-sizing: border-box;
   text-decoration:none;
- 
   font-family:'Roboto',sans-serif;
   font-weight:400;
   color:#9b9b9b;
   text-align:center;
   transition: all 0.15s;
-  
+  cursor: pointer;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+
   
 }
 
+
+
 .button:hover {
-  background-color: #4CAF50; /* Green */
+
   color: white;
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
@@ -44,10 +48,10 @@ button.normal {display:inline-block;
 }
 .nice-button {
   font-size: 1em;
-	text-align: left;
+	text-align: center;
 	background-color: #e74d1c;
 	color: white;
-	margin: 0;
+	margin-bottom: 5px;
 	padding-top: 5px;
   padding-bottom: 6px;
 	border: none;
@@ -55,21 +59,24 @@ button.normal {display:inline-block;
   border-radius: 10px;
   opacity: 100%;
   text-decoration: none;
+  width: 210px;
+
 }
 
 .signup-button {
   font-size: 1em;
-	text-align: left;
+	text-align: center;
 	background-color: gray;
 	color: white;
 	margin: 0;
-	padding-top: 0px;
-  padding-bottom: 0px;
+	padding-top: 5px;
+  padding-bottom: 6px;
   text-decoration: none;
 	border: none;
 	cursor: pointer;
   border-radius: 10px;
   opacity: 100%;
+  width: 210px;
 }
 
 .signup {
@@ -107,7 +114,8 @@ li {
 }
 
 .dd-logo {
-  scale: 30%;
+  width: 10px;
+  display: inline;
 
 }
 
@@ -157,7 +165,7 @@ form.normal {
   padding-top: 10px;
   box-shadow: 0 5px 15px rgba(185, 154, 154, 0.2);
   width: 320px;
-  height: 280px;
+  height: 380px;
   box-shadow: 0px 50px 100px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(7.5px);
 }
@@ -170,22 +178,19 @@ h1 {
 }
 
 h3 {
-  display: inline;
-  text-align: left;
-  font-size:xxx-large;
+  text-align: -webkit-left;
+  font-size:xx-large;
   margin-top: 0px;
   margin-bottom: 5px;
-  margin-left: 5px;
+  margin-left: 50px;
 }
 img {
-  scale: 40%;
-  display: inline;
+  scale: 10%;
+  display: flex;
   border-bottom: 10cm;
-  margin: 0;
   position: absolute;
-  top: 50%;
-
-  transform: translateY(-200%);
+  top: -55%;
+  right: 0;
 }
 link {
   text-align: center;
@@ -197,7 +202,7 @@ form.embed {
   background-blend-mode: color;
   display: inline-block;
   border-radius: 30px;
-  margin: 5px;
+  padding-top: 40px;
   box-shadow: 0 5px 15px rgba(185, 154, 154, 0.2);
   width: 320px;
   height: 170px;
@@ -207,6 +212,7 @@ form.embed {
 
 a {
   text-decoration: none;
+  color: #e74d1c;
 }
 
 .Invisible{
@@ -226,6 +232,6 @@ a:active{
 }
 
 a:visited{
-  color:#8982ca
+  color: #e74d1c;
 
 }

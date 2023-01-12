@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes,  } from 'react-router-dom';
 
 
 import Landing from './components/pages/login';
@@ -29,7 +29,7 @@ const App = () => {
         <Route exact path='/projects' element={<Projects />} />
         <Route exact path='/projects/:projectId' element={<Project />} />
         <Route exact path='/projects/:projectId/addmilestone' element={<Mike />} />
-        <Route exact path='/user' element={<User />} />
+        <Route exact path='/home' element={<User />} />
         <Route exact path ='/logout' element={<Logout />} />
  
 
