@@ -6,7 +6,7 @@ function Project() {
     const [user, setUser] = useState([])
     const [projects, setProjects] = useState([])
     const [showForm, setShowForm] = useState()
-    const [filtered, setFiltered] = useState([])
+    
     const location = useLocation()
    
     
@@ -27,19 +27,14 @@ function Project() {
     }
 
     function hello() {
-      console.log(location.state.milestones.milestones)
-      setFiltered(location.state.milestones.milestones)
+      
+      
       setUser(location.state.user.user)
       setProjects(location.state.projects.projects)
-      
-      console.log(typeof location.state.milestones.milestones[0].project_id)
-      console.log(typeof projectId)
-     let num = projectId
-     setFiltered( location.state.milestones.milestones.filter((m) =>
-        m.project_id.toString() === num
+
+     setMilestones( location.state.milestones.milestones.filter((m) =>
+        m.project_id.toString() === projectId
       ))
-     
-      console.log(filtered)
     }
 
     /*function selectProject() {
@@ -68,10 +63,10 @@ function Project() {
     : null
     }
         <ul>
-        {filtered.length <= 0 &&
+        {milestones.length === 0 &&
         
-        <h1>This Project Has No Milestones</h1> }
-        {filtered.map(milestone => (<li key={milestone.id}>   <b>{milestone.name}</b> <br></br>  {milestone.description}<br></br> Due Date:{milestone.due_date} <br></br> <button className='normal' onClick={() => {deleteMilestone(milestone.id)}}>Delete</button> </li>
+        <h5>Nothing Here, Yet!</h5> }
+        {milestones.map(milestone => (<li key={milestone.id}>   <b>{milestone.name}</b> <br></br>  {milestone.description}<br></br> Due Date:{milestone.due_date} <br></br> <button className='normal' onClick={() => {deleteMilestone(milestone.id)}}>Delete</button> </li>
         ))}
         
         <br></br>
