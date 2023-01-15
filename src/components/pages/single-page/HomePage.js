@@ -20,39 +20,27 @@ function HomePage() {
     }
 
     function setterFunction(users){
-      let user = users.find(email => email.email === localStorage.email)
-      setUser(user)
-  
-      let p = user.projects.sort(function(a,b){
-        return new Date(a.due_date) - new Date(b.due_date);
-      });
-     localStorage.user_id = user.id
-      setProjects(p)
-
-      fetchMilestones()
+    let user = users.find(email => email.email === localStorage.email)
     
+    setUser(user)
 
-
+    let p = user.projects.sort(function(a,b){
+      return new Date(a.due_date) - new Date(b.due_date);
+    });
+    localStorage.user_id = user.id
+    setProjects(p)
+    fetchMilestones()
     }
 
-
-    /*const fetchProjects = () => {
-      fetch(`http://localhost:3000/users/${localStorage.user_id}/projects`)
-      .then(result => result.json())
-      .then(projects => setProjects(projects))
-      .then(fetchMilestones())
-    }*/
     const fetchMilestones = () => {
       fetch(`http://localhost:3000/users/${localStorage.user_id}/milestones`)
       .then(result => result.json())
-      .then(milestones => setMilestones(milestones))
-      
+      .then(milestones => setMilestones(milestones))      
     }
     
 
 
     function deleteProject(id) {
-
       fetch(`http://localhost:3000/projects/${id}`, { method: 'DELETE' }) 
       removeProject(id)  
     }
@@ -63,16 +51,14 @@ function HomePage() {
     }
 
 
-    function removeProject(id) {
-      
+    function removeProject(id) {      
       setProjects(projects.filter(p =>
           p.id !== id
         )
       )
     }
 
-    function removeMilestone(id) {
-      
+    function removeMilestone(id) {      
       setMilestones(milestones.filter(p =>
           p.id !== id
         )
@@ -81,10 +67,7 @@ function HomePage() {
 
     
     useEffect(() => {
-        
-        fetchUsers({});
-        
-       
+        fetchUsers({});               
     }, []);
 
     
@@ -92,7 +75,7 @@ function HomePage() {
     
     <div className='page'>
      
-    <h1>{user.name}'s Projects</h1>   <h4 onClick = {() => setShowForm(true)} className = 'page'>Add Project</h4> 
+    <h1>{user.name}'s Projects</h1>   <h4 onClick = {() => setShowForm(true)} className = 'page'>Start a Project</h4> 
     <br />
     
     { showForm    
@@ -104,16 +87,18 @@ function HomePage() {
                 }
     <ul>
         
-        {projects.map(project => (<li key={project.id}>  <NavLink to={`/projects/${project.id}`}
+        {projects.map(project => (<li key={project.id}>  <NavLink className="project-names" to={`/projects/${project.id}`} 
         state={{user: {user}, projects: {projects}, milestones: {milestones}}}>  
-        {project.name}   </NavLink><br></br> {project.kind}<br></br> Due Date: {project.due_date} <button className='normal' onClick={() => {deleteProject(project.id)}}>delete</button>   </li>
+        {project.name}   </NavLink>
+        <br></br> 
+        {project.kind}<br></br> Deadline | {project.due_date} <button className='normal' onClick={() => {deleteProject(project.id)}}>delete</button>   </li>
         ))}
        
         <br />
         <br />
         <h1>Active Milestones</h1>
         <br></br>
-        {milestones.map(milestone => (<li key={milestone.id}>  {milestone.name}  <br></br> {milestone.description}<br></br> Due Date: {milestone.due_date} <button className='normal' onClick={() => {deleteMilestone(milestone.id)}}>delete</button>   </li>
+        {milestones.map(milestone => (<li key={milestone.id}>  <b>{milestone.name}</b>  <br></br> {milestone.description}<br></br> Due Date: {milestone.due_date} <br /> <button className='normal' onClick={() => {deleteMilestone(milestone.id)}}>delete</button>   </li>
         ))}       
 
         <br></br>

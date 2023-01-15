@@ -54,6 +54,7 @@ let handleSubmit = (e) => {
       value={kind}
       placeholder="Type"
       className='input-container'
+      maxLength={50}
       onChange={(e) => setKind(e.target.value)}
     />
     <br></br>
@@ -66,7 +67,6 @@ let handleSubmit = (e) => {
     />
     <br></br>
     <button className='normal' type="submit">Create</button>
-
     <div className="message">{message ? <p>{message}</p> : null}</div>
     <br />
  </form>

@@ -59,8 +59,9 @@ return(
 <input
   type="text"
   value={description}
-  placeholder="description"
+  placeholder="Description(50 character limit)"
   className='input-container'
+  maxLength={50}
   onChange={(e) => setDescription(e.target.value)}
 />
 <br></br>

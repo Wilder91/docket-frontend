@@ -8,51 +8,45 @@ function LoginForm() {
   const navigate = useNavigate();
 
   function handleSubmit(event) {
-    event.preventDefault();
-    localStorage.email = email
-    localStorage.password = password
-    navigate('/home');
-  
+  event.preventDefault();
+  localStorage.email = email
+  localStorage.password = password
+  navigate('/home');
+
   }
 
-
-
   return (
-    <div>
-   
+    <div>  
     <form className='normal' onSubmit={handleSubmit}>
     <img src={Logo} alt="logo"></img> 
     <br />
       <h3>Due Date </h3>
-      
-     
       <div>
      
-        <input required className = "input-container"
-        placeholder="E-Mail Address"
-          id="email"
-          type="text"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </div>
-      <div >
-        <input required className = "input-container"
-          placeholder="Password"
-          id="password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-      <br></br>
-      <button type="submit" className="nice-button">Log In</button>
-      <br />
-       <button data-href="/signup" className="signup-button" type="button"> Sign Up</button>
-      <br></br>
+      <input required className = "input-container"
+      placeholder="E-Mail Address"
+        id="email"
+        type="text"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+    </div>
     
-    </form>
-   
+    <div >
+      <input required className = "input-container"
+        placeholder="Password"
+        id="password"
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+    </div>
+    <br></br>
+    <button type="submit" className="nice-button">Log In</button>
+    <br />
+      <button data-href="/signup" className="signup-button" type="button"> Sign Up</button>
+    <br></br>  
+    </form>   
     </div>
   );
 }
