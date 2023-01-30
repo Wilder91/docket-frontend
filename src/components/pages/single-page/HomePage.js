@@ -9,17 +9,24 @@ function HomePage() {
   const [milestones, setMilestones] =useState([])
   const [showForm, setShowForm] = useState()
   
-  
-  
 
+  console.log(localStorage.token)
 
     const fetchUsers = () => {
-        fetch(`http://localhost:3000/users/`)
+        fetch(`http://localhost:3000/users/`, {
+          method: 'GET',
+          headers: {
+         
+          Authorization: `${localStorage.token}`,
+          }
+        })
+       
         .then(result => result.json())
         .then(users => setterFunction(users)) 
     }
 
     function setterFunction(users){
+      
     let user = users.find(email => email.email === localStorage.email)
     
     setUser(user)

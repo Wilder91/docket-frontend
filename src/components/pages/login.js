@@ -3,14 +3,27 @@ import {useNavigate} from 'react-router-dom'
 import Logo from '../images/DDLogo.png'
 
 function LoginForm() {
+  const [user, setUser] = useState('')
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
+  function login() {
+    fetch(`http://localhost:3000/auth/login`, {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({email: email, password: password})
+    }).then(resp => resp.json())
+    .then(data => {
+      localStorage.setItem("token", data.token)
+      setUser(data.user)
+      
+    })
+  }
   function handleSubmit(event) {
   event.preventDefault();
-  localStorage.email = email
-  localStorage.password = password
+  login()
+  console.log(user)
   navigate('/home');
 
   }

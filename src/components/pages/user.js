@@ -70,6 +70,7 @@ function User() {
       .then(fetchMilestones())
     }*/
     const fetchMilestones = () => {
+      console.log(localStorage.user_id)
       fetch(`http://localhost:3000/users/${localStorage.user_id}/milestones`)
       .then(result => result.json())
       .then(milestones => setMilestones(milestones))

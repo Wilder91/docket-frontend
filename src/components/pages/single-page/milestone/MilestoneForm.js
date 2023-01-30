@@ -18,25 +18,25 @@ function milestoneForm({milestones, setMilestones}) {
     }
     
     let handleSubmit = (e) => {
-        e.preventDefault();
-        e.target.reset();
-        setName('')
-        setDate('')
-        setDescription('')
+      e.preventDefault();
+      e.target.reset();
+      setName('')
+      setDate('')
+      setDescription('')
        
-          fetch(`http://localhost:3000/users/${localStorage.user_id}/projects/${projectId}/milestones`, {
-            method: "POST",
-            body: JSON.stringify({
-              name: name,
-              description: description,
-              date: date,
-              project_id: projectId
-            }),
-            headers: {
-              'Content-Type': 'application/json'
-             },
-          }).then((response) => response.json())
-          .then((data) => addMilestone(data))
+      fetch(`http://localhost:3000/users/${localStorage.user_id}/projects/${projectId}/milestones`, {
+        method: "POST",
+        body: JSON.stringify({
+          name: name,
+          description: description,
+          date: date,
+          project_id: projectId
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+          },
+      }).then((response) => response.json())
+      .then((data) => addMilestone(data))
           
          
         
