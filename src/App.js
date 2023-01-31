@@ -9,7 +9,7 @@ import Milestones from './components/pages/milestones';
 import AddProject from './components/pages/add-project'
 import Project from './components/pages/single-page/project/Project';
 import Signup from './components/pages/signup';
-import Mike from './components/pages/add-milestone';
+
 import User from './components/pages/single-page/HomePage';
 import Logout from './components/pages/logout';
 
@@ -28,7 +28,7 @@ const App = () => {
         <Route exact path='/addproject' element={<AddProject />} />
         <Route exact path='/projects' element={<Projects />} />
         <Route exact path='/projects/:projectId' element={<Project />} />
-        <Route exact path='/projects/:projectId/addmilestone' element={<Mike />} />
+ 
         <Route exact path='/home' element={<User />} />
         <Route exact path ='/logout' element={<Logout />} />
  

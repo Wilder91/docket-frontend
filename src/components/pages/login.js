@@ -13,9 +13,12 @@ function LoginForm() {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({email: email, password: password})
-    }).then(resp => resp.json())
+    })
+    .then(resp => resp.json())
     .then(data => {
+    
       localStorage.setItem("token", data.token)
+      localStorage.setItem("email", data.email)
       setUser(data.user)
       
     })

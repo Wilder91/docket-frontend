@@ -1,16 +1,20 @@
-import React, {  useState, useEffect} from 'react'
+import React, {  useState, useEffect} from 'react';
 import { NavLink, useParams, useLocation} from 'react-router-dom';
-import MilestoneForm from '../milestone/MilestoneForm'
+import MilestoneForm from '../milestone/MilestoneForm';
+import EditProject from '../project/editProject';
 function Project() {
   const [milestones, setMilestones] = useState([])
   const [user, setUser] = useState([])
+
   const [projects, setProjects] = useState([])
-  const [showForm, setShowForm] = useState()    
+  const [showForm, setShowForm] = useState()  
+  const [showEdit, setShowEdit] = useState()    
   const location = useLocation()
   const {projectId} = useParams();
 
   function deleteMilestone(id) {
-    fetch(`http://localhost:3000/milestones/${id}`, { method: 'DELETE' })   
+    fetch(`http://localhost:3000/milestones/${id}`, { method: 'DELETE', headers: new Headers( {
+      Authorization: `${localStorage.token}`, })})  
     removeMilestone(id)      
    }
 
@@ -25,6 +29,11 @@ function Project() {
   setMilestones( location.state.milestones.milestones.filter((m) =>
     m.project_id.toString() === projectId
   ))
+
+  
+
+
+
   }
 
   useEffect(() => {  
@@ -34,7 +43,7 @@ function Project() {
 
   return (    
   <div className='page'>
-  <h1>Active Milestones </h1>
+  <h1>{location.state.project.project.name} Milestones</h1>
 
   <h4 onClick = {() => setShowForm(true)} className = 'page'>Add Milestone</h4> 
   { showForm    
@@ -42,6 +51,16 @@ function Project() {
   <div onClick = {() => setShowForm(false)} className = 'Invisible'></div>
 
     <MilestoneForm setMilestones={setMilestones} milestones ={milestones} setProjects={setProjects} projects={projects} setUser={setUser} user={user}/>
+  </div>
+  : null
+  }
+<br />
+<h4 onClick = {() => setShowEdit(true)} className = 'page'>Add Milestone</h4> 
+  { showEdit    
+  ? <div className = 'Menu'>  
+  <div onClick = {() => setShowEdit(false)} className = 'Invisible'></div>
+
+    <EditProject setMilestones={setMilestones} milestones ={milestones} setProjects={setProjects} projects={projects} setUser={setUser} user={user}/>
   </div>
   : null
   }
@@ -54,7 +73,7 @@ function Project() {
   
   <br></br>
   <br></br>
-  <NavLink to="/home" >Return to Project List</NavLink> 
+  <NavLink to="/home" >Home</NavLink> 
   </ul>
   </div>
   );

@@ -8,74 +8,68 @@ function HomePage() {
   const [projects, setProjects] = useState([])
   const [milestones, setMilestones] =useState([])
   const [showForm, setShowForm] = useState()
-  
-
-  console.log(localStorage.token)
-
-    const fetchUsers = () => {
-        fetch(`http://localhost:3000/users/`, {
-          method: 'GET',
-          headers: {
-         
-          Authorization: `${localStorage.token}`,
-          }
+  const token = localStorage.token
+  const fetchUsers = () => {
+      fetch(`http://localhost:3000/users/`, {
+        method: 'GET',
+        headers: new Headers( {
+        Authorization: `${token}`,
         })
-       
-        .then(result => result.json())
-        .then(users => setterFunction(users)) 
-    }
-
-    function setterFunction(users){
-      
-    let user = users.find(email => email.email === localStorage.email)
-    
-    setUser(user)
-
-    let p = user.projects.sort(function(a,b){
-      return new Date(a.due_date) - new Date(b.due_date);
-    });
-    localStorage.user_id = user.id
-    setProjects(p)
-    fetchMilestones()
-    }
-
-    const fetchMilestones = () => {
-      fetch(`http://localhost:3000/users/${localStorage.user_id}/milestones`)
+      })
       .then(result => result.json())
-      .then(milestones => setMilestones(milestones))      
-    }
-    
+      .then(users => setterFunction(users)) 
+  }
+
+  function setterFunction(users){
+  let user = users.find(u => u.email === localStorage.email)
+  setUser(user)
+  console.log(user)
+  let p = user.projects.sort(function(a,b){
+    return new Date(a.due_date) - new Date(b.due_date);
+  });
+  localStorage.user_id = user.id
+  setProjects(p)
+  setMilestones(user.milestones)
+  }
+  
+  function editProject(id) {
+    console.log(`here i am ${id}`)
+  }
+
+  function deleteProject(id) {
+    fetch(`http://localhost:3000/projects/${id}`, { method: 'DELETE' ,headers: new Headers( {
+      Authorization: `${localStorage.token}`,
+      })} ) 
+    removeProject(id)  
+  }
+
+  function deleteMilestone(id) {
+    fetch(`http://localhost:3000/milestones/${id}`, { method: 'DELETE', headers: new Headers( {
+      Authorization: `${localStorage.token}`,
+      }) }) 
+    removeMilestone(id)
+  }
 
 
-    function deleteProject(id) {
-      fetch(`http://localhost:3000/projects/${id}`, { method: 'DELETE' }) 
-      removeProject(id)  
-    }
-
-    function deleteMilestone(id) {
-      fetch(`http://localhost:3000/milestones/${id}`, { method: 'DELETE' }) 
-      removeMilestone(id)
-    }
-
-
-    function removeProject(id) {      
-      setProjects(projects.filter(p =>
-          p.id !== id
-        )
+  function removeProject(id) {      
+    setProjects(projects.filter(p =>
+        p.id !== id
       )
-    }
+    )
+  }
 
-    function removeMilestone(id) {      
-      setMilestones(milestones.filter(p =>
-          p.id !== id
-        )
+  function removeMilestone(id) {      
+    setMilestones(milestones.filter(p =>
+        p.id !== id
       )
-    }
+    )
+  }
 
-    
-    useEffect(() => {
-        fetchUsers({});               
-    }, []);
+  
+  useEffect(() => {
+    console.log('hello')
+    fetchUsers({});               
+  }, []);
 
     
   return (
@@ -95,10 +89,10 @@ function HomePage() {
     <ul>
         
         {projects.map(project => (<li key={project.id}>  <NavLink className="project-names" to={`/projects/${project.id}`} 
-        state={{user: {user}, projects: {projects}, milestones: {milestones}}}>  
+        state={{user: {user}, project: {project}, milestones: {milestones}}}>  
         {project.name}   </NavLink>
         <br></br> 
-        {project.kind}<br></br> Deadline | {project.due_date} <button className='normal' onClick={() => {deleteProject(project.id)}}>delete</button>   </li>
+        {project.kind}<br></br> Deadline | {project.due_date} <button className='normal' onClick={() => {editProject(project.id)}}>edit</button> <button className='normal' onClick={() => {deleteProject(project.id)}}>delete</button>    </li>
         ))}
        
         <br />

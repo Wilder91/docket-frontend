@@ -32,9 +32,10 @@ function milestoneForm({milestones, setMilestones}) {
           date: date,
           project_id: projectId
         }),
-        headers: {
+        headers: new Headers( {
+          Authorization: localStorage.token,
           'Content-Type': 'application/json'
-          },
+          }),
       }).then((response) => response.json())
       .then((data) => addMilestone(data))
           

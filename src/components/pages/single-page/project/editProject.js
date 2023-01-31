@@ -45,7 +45,7 @@ let handleSubmit = (e) => {
     <input required
       type="text"
       value={name}
-      placeholder="Name"
+      placeholder="FUck YOue"
       className='input-container'
       onChange={(e) => setName(e.target.value)}
     />
