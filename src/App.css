@@ -238,12 +238,11 @@ body {
     color: #7B7575;
   }
 
-  .modal {
+  .ReactModal__Content ReactModal__Content--after-open {
     position: absolute;
     width: 0px;
-    left: 37.5%;
-    top: 20%;
-    background-color: papayawhip;
+
+  
   }
 
   .Overlay {
