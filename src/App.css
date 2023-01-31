@@ -199,7 +199,7 @@ body {
   }
   
   form.embed {
-    opacity: 80%;  
+    opacity: 1;  
     background-blend-mode: color;
     display: inline-block;
     border-radius: 30px;
@@ -236,6 +236,23 @@ body {
   
   b{
     color: #7B7575;
+  }
+
+  .modal {
+    position: absolute;
+    width: 0px;
+    left: 37.5%;
+    top: 20%;
+    background-color: papayawhip;
+  }
+
+  .Overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rebeccapurple;
   }
   /*
   a:visited{

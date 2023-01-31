@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 
 import {useNavigate} from 'react-router-dom'
 
 
 function Signup() {
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
   let handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,7 +19,10 @@ function Signup() {
           password: password,
         }),
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          headers: new Headers( {
+            Authorization: localStorage.token,
+            })
          },
       })
       
@@ -34,7 +38,7 @@ function Signup() {
     }
     localStorage.email = email 
     localStorage.password= password
-    navigate('/user');
+    navigate('/home');
   };
 
   
@@ -49,6 +53,13 @@ function Signup() {
 
      <form onSubmit={handleSubmit}>
       <h3>Sign Up</h3>
+      <input required className = "input-container"
+        placeholder="Name"
+          id="name"
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
      <input required className = "input-container"
         placeholder="E-Mail Address"
           id="email"

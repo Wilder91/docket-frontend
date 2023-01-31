@@ -1,14 +1,13 @@
 import React, {  useState, useEffect} from 'react';
 import { NavLink, useParams, useLocation} from 'react-router-dom';
 import MilestoneForm from '../milestone/MilestoneForm';
-import EditProject from '../project/editProject';
+import Modal from 'react-modal';
+
 function Project() {
   const [milestones, setMilestones] = useState([])
-  const [user, setUser] = useState([])
 
-  const [projects, setProjects] = useState([])
-  const [showForm, setShowForm] = useState()  
-  const [showEdit, setShowEdit] = useState()    
+  const [formOpen, setFormOpen] = useState()  
+   
   const location = useLocation()
   const {projectId} = useParams();
 
@@ -29,11 +28,15 @@ function Project() {
   setMilestones( location.state.milestones.milestones.filter((m) =>
     m.project_id.toString() === projectId
   ))
+  }
 
-  
+  function openForm() {
+    setFormOpen(true);
+  }
 
 
-
+  function closeForm() {
+    setFormOpen(false);
   }
 
   useEffect(() => {  
@@ -45,25 +48,21 @@ function Project() {
   <div className='page'>
   <h1>{location.state.project.project.name} Milestones</h1>
 
-  <h4 onClick = {() => setShowForm(true)} className = 'page'>Add Milestone</h4> 
-  { showForm    
-  ? <div className = 'Menu'>  
-  <div onClick = {() => setShowForm(false)} className = 'Invisible'></div>
+  <button className='normal' onClick={openForm}>Add Milestone</button>
+      <Modal
+        className='modal'
+        isOpen={formOpen}
 
-    <MilestoneForm setMilestones={setMilestones} milestones ={milestones} setProjects={setProjects} projects={projects} setUser={setUser} user={user}/>
-  </div>
-  : null
-  }
+        onRequestClose={closeForm}
+
+        contentLabel="Example Modal"
+        ariaHideApp={false}
+      >
+       <MilestoneForm setMilestones={setMilestones} />
+      </Modal>
 <br />
-<h4 onClick = {() => setShowEdit(true)} className = 'page'>Add Milestone</h4> 
-  { showEdit    
-  ? <div className = 'Menu'>  
-  <div onClick = {() => setShowEdit(false)} className = 'Invisible'></div>
 
-    <EditProject setMilestones={setMilestones} milestones ={milestones} setProjects={setProjects} projects={projects} setUser={setUser} user={user}/>
-  </div>
-  : null
-  }
+
   <ul>
   {milestones.length === 0 &&
   

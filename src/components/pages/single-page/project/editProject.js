@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {useParams} from 'react-router-dom'
 function projectForm({setProjects}) {
-    
+
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [kind, setKind] = useState("");
@@ -45,7 +45,7 @@ let handleSubmit = (e) => {
     <input required
       type="text"
       value={name}
-      placeholder="FUck YOue"
+      placeholder="Name"
       className='input-container'
       onChange={(e) => setName(e.target.value)}
     />

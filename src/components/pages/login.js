@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, NavLink} from 'react-router-dom'
 import Logo from '../images/DDLogo.png'
 
 function LoginForm() {
@@ -60,7 +60,12 @@ function LoginForm() {
     <br></br>
     <button type="submit" className="nice-button">Log In</button>
     <br />
-      <button data-href="/signup" className="signup-button" type="button"> Sign Up</button>
+    <NavLink to="/signup">
+     <button type="button" className='signup-button'>
+          Sign Up
+     </button>
+  </NavLink>
+   
     <br></br>  
     </form>   
     </div>
