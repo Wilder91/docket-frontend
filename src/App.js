@@ -1,17 +1,17 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-
+import { BrowserRouter, Route, Routes,  } from 'react-router-dom';
+import './App.css';
 
 import Landing from './components/pages/login';
-import ProjectForm from './components/pages/projectForm';
-import Projects from './components/pages/projects';
-import Milestones from './components/pages/milestones';
-import AddProject from './components/pages/add-project'
-import Project from './components/pages/project';
+
+
+import Project from './components/pages/single-page/project/Project';
 import Signup from './components/pages/signup';
-import Mike from './components/pages/add-milestone';
-import User from './components/pages/user';
+
+import User from './components/pages/single-page/HomePage';
 import Logout from './components/pages/logout';
+
+
 
 
 const App = () => {
@@ -21,13 +21,11 @@ const App = () => {
       <Routes>
         <Route exact path='/' element={<Landing />} />
         <Route exact path='/signup' element={<Signup />} />
-        <Route exact path='/milestones' element={<Milestones />} />
-        <Route exact path='/project' element={<ProjectForm />} />
-        <Route exact path='/addproject' element={<AddProject />} />
-        <Route exact path='/projects' element={<Projects />} />
+
+
         <Route exact path='/projects/:projectId' element={<Project />} />
-        <Route exact path='/projects/:projectId/addmilestone' element={<Mike />} />
-        <Route exact path='/user' element={<User />} />
+ 
+        <Route exact path='/home' element={<User />} />
         <Route exact path ='/logout' element={<Logout />} />
  
 
