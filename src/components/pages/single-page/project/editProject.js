@@ -1,20 +1,24 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {useParams} from 'react-router-dom'
-function projectForm({setProjects}) {
 
+function editProject({project}) {
+ 
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [kind, setKind] = useState("");
   const [message] = useState("");
   const {userId} = useParams();
 
-  function addProject(project) {
+  function addProject() {
 
-    setProjects( projects => [...projects,{id: project.id, name: project.name, due_date: project.due_date, kind: project.kind, user_id: project.userId}].sort(function(a,b){
-        return new Date(a.due_date) - new Date(b.due_date);
-      }) )
+    console.log('p')
 
   }
+
+  useEffect(() => {
+    console.log(project)
+                
+  }, []);
 let handleSubmit = (e) => {
     
     e.preventDefault();
@@ -23,7 +27,7 @@ let handleSubmit = (e) => {
     setDate('')
     setKind('')
    
-      fetch(`http://localhost:3000/users/${localStorage.user_id}/projects`, {
+      fetch(`http://localhost:3000/projects`, {
         method: "POST",
         body: JSON.stringify({
           name: name,
@@ -41,7 +45,7 @@ let handleSubmit = (e) => {
 
     return (
     <form className='embed' onSubmit={handleSubmit}>
-  
+      <h1>``</h1>
     <input required
       type="text"
       value={name}
@@ -74,4 +78,4 @@ let handleSubmit = (e) => {
     )
 }
 
-export default projectForm
+export default editProject

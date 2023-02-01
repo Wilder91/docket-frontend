@@ -4,13 +4,14 @@ import React, { useEffect, useState} from 'react'
 import { NavLink} from 'react-router-dom';
 import Modal from 'react-modal';
 import ProjectForm from './project/ProjectForm'
+import EditProject from './project/editProject'
 
 function HomePage() {
   const [user, setUser] = useState([])
   const [projects, setProjects] = useState([])
   const [milestones, setMilestones] =useState([])
-
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [editIsOpen, setEditIsOpen] = useState(false);
   const token = localStorage.token
   const fetchUsers = () => {
       fetch(`http://localhost:3000/users/`, {
@@ -26,7 +27,7 @@ function HomePage() {
   function setterFunction(users){
   let user = users.find(u => u.email === localStorage.email)
   setUser(user)
-  console.log(user)
+ 
   let p = user.projects.sort(function(a,b){
     return new Date(a.due_date) - new Date(b.due_date);
   });
@@ -43,9 +44,15 @@ function HomePage() {
     setIsOpen(false);
   }
 
-  function editProject(id) {
-    console.log(`here i am ${id}`)
+  function openEdit() {
+    setEditIsOpen(true);
   }
+
+  function closeEdit() {
+    setEditIsOpen(false);
+  }
+
+  
 
   function deleteProject(id) {
     fetch(`http://localhost:3000/projects/${id}`, { method: 'DELETE' ,headers: new Headers( {
@@ -78,7 +85,7 @@ function HomePage() {
 
   
   useEffect(() => {
-    console.log('hello')
+    console.log(window.location)
     fetchUsers({});               
   }, []);
 
@@ -97,19 +104,32 @@ function HomePage() {
         isOpen={modalIsOpen}
         ariaHideApp={false}
         onRequestClose={closeModal}
-   
+        className="modal"
         contentLabel="Example Modal"
+        
       >
-        <ProjectForm />
+        <ProjectForm setProjects={setProjects}/>
           </Modal>
           <br />
     <ul>
         
-        {projects.map(project => (<li key={project.id}>  <NavLink className="project-names" to={`/projects/${project.id}`} 
+        {projects.map(project => (<li key={project.id}>  
+        <NavLink className="project-names" to={`/projects/${project.id}`} 
         state={{user: {user}, project: {project}, milestones: {milestones}}}>  
         {project.name}   </NavLink>
         <br></br> 
-        {project.kind}<br></br> Deadline | {project.due_date} <button className='normal' onClick={() => {editProject(project.id)}}>edit</button> <button className='normal' onClick={() => {deleteProject(project.id)}}>delete</button>    </li>
+        {project.kind}<br></br> Deadline | {project.due_date}
+        <button className='normal' onClick={openEdit}>edit</button>
+      <Modal
+        isOpen={editIsOpen}
+        ariaHideApp={false}
+        onRequestClose={closeEdit}
+        className="modal"
+        contentLabel="Example Modal"
+      >
+        <EditProject project={project} /> 
+          </Modal>
+         <button className='normal' onClick={() => {deleteProject(project.id)}}>delete</button>    </li>
         ))}
        
         <br />

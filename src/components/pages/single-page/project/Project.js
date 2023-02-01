@@ -5,9 +5,7 @@ import Modal from 'react-modal';
 
 function Project() {
   const [milestones, setMilestones] = useState([])
-
-  const [formOpen, setFormOpen] = useState()  
-   
+  const [formOpen, setFormOpen] = useState()     
   const location = useLocation()
   const {projectId} = useParams();
 
@@ -41,6 +39,7 @@ function Project() {
 
   useEffect(() => {  
     hello()   
+    console.log(location.state)
   }, []);
  
 

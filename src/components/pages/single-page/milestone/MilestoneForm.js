@@ -1,48 +1,48 @@
 import React, {useState} from 'react';
 import {useParams} from 'react-router-dom'
 
-function milestoneForm({milestones, setMilestones}) {
+function milestoneForm({setMilestones}) {
 
-    const [name, setName] = useState("");
-    const [date, setDate] = useState("");
-    const [description, setDescription] = useState("");
-    const [message] = useState("");
-    const {projectId} = useParams();
-    
-    function addMilestone(milestone) {
-      console.log(milestone)
-      setMilestones( milestones => [...milestones,{id: milestone.id, name: milestone.name, due_date: milestone.due_date, description: milestone.description, project_id: milestone.projectId}].sort(function(a,b){
-          return new Date(a.due_date) - new Date(b.due_date);
-        }) )
+  const [name, setName] = useState("");
+  const [date, setDate] = useState("");
+  const [description, setDescription] = useState("");
+  const [message] = useState("");
+  const {projectId} = useParams();
   
-    }
+  function addMilestone(milestone) {
+    console.log(milestone)
+    setMilestones( milestones => [...milestones,{id: milestone.id, name: milestone.name, due_date: milestone.due_date, description: milestone.description, project_id: milestone.projectId}].sort(function(a,b){
+        return new Date(a.due_date) - new Date(b.due_date);
+      }) )
+
+  }
     
-    let handleSubmit = (e) => {
-      e.preventDefault();
-      e.target.reset();
-      setName('')
-      setDate('')
-      setDescription('')
-       
-      fetch(`http://localhost:3000/users/${localStorage.user_id}/projects/${projectId}/milestones`, {
-        method: "POST",
-        body: JSON.stringify({
-          name: name,
-          description: description,
-          date: date,
-          project_id: projectId
+  let handleSubmit = (e) => {
+    e.preventDefault();
+    e.target.reset();
+    setName('')
+    setDate('')
+    setDescription('')
+      
+    fetch(`http://localhost:3000/users/${localStorage.user_id}/projects/${projectId}/milestones`, {
+      method: "POST",
+      body: JSON.stringify({
+        name: name,
+        description: description,
+        date: date,
+        project_id: projectId
+      }),
+      headers: new Headers( {
+        Authorization: localStorage.token,
+        'Content-Type': 'application/json'
         }),
-        headers: new Headers( {
-          Authorization: localStorage.token,
-          'Content-Type': 'application/json'
-          }),
-      }).then((response) => response.json())
-      .then((data) => addMilestone(data))
-          
-         
+    }).then((response) => response.json())
+    .then((data) => addMilestone(data))
         
-        };
-    
+        
+      
+      };
+  
         
 
 

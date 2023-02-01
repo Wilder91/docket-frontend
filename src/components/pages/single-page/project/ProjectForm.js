@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {useParams} from 'react-router-dom'
 function projectForm({setProjects}) {
-    
+  
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [kind, setKind] = useState("");
@@ -9,6 +9,7 @@ function projectForm({setProjects}) {
   const {userId} = useParams();
 
   function addProject(project) {
+    console.log(project)
 
     setProjects( projects => [...projects,{id: project.id, name: project.name, due_date: project.due_date, kind: project.kind, user_id: project.userId}].sort(function(a,b){
         return new Date(a.due_date) - new Date(b.due_date);

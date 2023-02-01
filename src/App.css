@@ -238,8 +238,11 @@ body {
     color: #7B7575;
   }
 
-  .ReactModal__Content ReactModal__Content--after-open {
+  .modal {
     position: absolute;
+    left: 40%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     width: 0px;
 
   
