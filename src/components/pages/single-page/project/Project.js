@@ -3,7 +3,7 @@ import { NavLink, useParams, useLocation} from 'react-router-dom';
 import MilestoneForm from '../milestone/MilestoneForm';
 import EditProject from './editProject'
 import Modal from 'react-modal';
-
+import dayjs from 'dayjs';
 function Project() {
   const [milestones, setMilestones] = useState([])
   const [formOpen, setFormOpen] = useState()     
@@ -57,7 +57,7 @@ function Project() {
   return (    
   <div className='page'>
   <h1>{location.state.project.project.name} Milestones</h1>
-
+    <br />
   <button className='normal' onClick={openForm}>Add Milestone</button>
       <Modal
         className='modal'
@@ -71,7 +71,7 @@ function Project() {
        <MilestoneForm setMilestones={setMilestones} />
       </Modal>
 
-      <button className='normal' onClick={openEdit}>edit {location.state.project.project.name}</button>
+      <button className='normal' onClick={openEdit}>edit {location.state.project.project.name} details</button>
       <Modal
         isOpen={editIsOpen}
         ariaHideApp={false}
@@ -88,7 +88,7 @@ function Project() {
   {milestones.length === 0 &&
   
   <h5>Nothing Here, Yet!</h5> }
-  {milestones.map(milestone => (<li key={milestone.id}>   <b>{milestone.name}</b> <br></br>  {milestone.description}<br></br> Due Date:{milestone.due_date} <br></br> <button className='normal' onClick={() => {deleteMilestone(milestone.id)}}>Delete</button> </li>
+  {milestones.map(milestone => (<li key={milestone.id}>   <b>{milestone.name}</b> <br></br>  {milestone.description}<br></br> Due Date:{dayjs(milestone.due_date).format('DD.MM.YYYY')} <br></br> <button className='normal' onClick={() => {deleteMilestone(milestone.id)}}>Delete</button> </li>
   ))}
   
   <br></br>

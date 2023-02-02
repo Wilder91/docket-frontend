@@ -48,7 +48,7 @@ let handleSubmit = (e) => {
 
   return (
   <form className='embed' onSubmit={handleSubmit}>
-    <h1>Edit {project.name}</h1>
+    <h1>Edit Project Details</h1>
   <input required
     type="text"
     defaultValue={project.name}

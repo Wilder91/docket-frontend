@@ -48,7 +48,7 @@ function milestoneForm({setMilestones}) {
 
 return(
 <form className='embed' onSubmit={handleSubmit}>
-
+<h1>New Milestone</h1>
 <input required
   type="text"
   value={name}

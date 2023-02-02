@@ -4,7 +4,7 @@ import {useNavigate} from 'react-router-dom'
 import Logo from '../images/DDLogo.png'
 
 function LoginForm() {
-  const [user, setUser] = useState('')
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -16,20 +16,19 @@ function LoginForm() {
       body: JSON.stringify({email: email, password: password})
     })
     .then(resp => resp.json())
-    .then(data => {
-    
+    .then(data => {    
       localStorage.setItem("token", data.token)
       localStorage.setItem("email", data.email)
-      setUser(data.user)
-      
+      console.log(window.localStorage.token)     
     })
+   
+    .then(navigate('/home'))
   }
   function handleSubmit(event) {
   event.preventDefault();
   login()
-  console.log(user)
-  navigate('/home');
-
+ 
+  
   }
 
   return (

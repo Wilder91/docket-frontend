@@ -4,7 +4,7 @@ import React, { useEffect, useState} from 'react'
 import { NavLink} from 'react-router-dom';
 import Modal from 'react-modal';
 import ProjectForm from './project/ProjectForm'
-
+import dayjs from 'dayjs'
 
 function HomePage() {
   const [user, setUser] = useState([])
@@ -14,11 +14,12 @@ function HomePage() {
 
   const token = localStorage.token
 
-  const fetchUsers = () => {
-    fetch(`http://localhost:3000/users/`, {
+  async function fetchUsers()  {
+    console.log(token)
+    await fetch(`http://localhost:3000/users/`, {
       method: 'GET',
       headers: new Headers( {
-      Authorization: `${localStorage.token}`,
+      Authorization: token,
       })
     })
     .then(result => result.json())
@@ -36,6 +37,8 @@ function HomePage() {
   });
   localStorage.user_id = user.id
   setProjects(p)
+  let d = p[0].due_date
+  console.log(dayjs(d).format('DD/MM/YYYY'))
   setMilestones(user.milestones)
   }
   
@@ -52,14 +55,14 @@ function HomePage() {
 
   function deleteProject(id) {
     fetch(`http://localhost:3000/projects/${id}`, { method: 'DELETE' ,headers: new Headers( {
-      Authorization: `${localStorage.token}`,
+      Authorization: `${token}`,
       })} ) 
     removeProject(id)  
   }
 
   function deleteMilestone(id) {
     fetch(`http://localhost:3000/milestones/${id}`, { method: 'DELETE', headers: new Headers( {
-      Authorization: `${localStorage.token}`,
+      Authorization: `${token}`,
       }) }) 
     removeMilestone(id)
   }
@@ -82,7 +85,7 @@ function HomePage() {
   
   useEffect(() => {
     
-    fetchUsers({});               
+    fetchUsers();               
   }, []);
 
     
@@ -93,38 +96,37 @@ function HomePage() {
     <h1>{user.name}'s Projects</h1>   
 
     
- 
+    <br />
 
 <button className='normal' onClick={openModal}>Add Project</button>
-      <Modal
-        isOpen={modalIsOpen}
-        ariaHideApp={false}
-        onRequestClose={closeModal}
-        className="modal"
-        contentLabel="Example Modal"
-        
-      >
-        <ProjectForm setProjects={setProjects}/>
-          </Modal>
-          <br />
+    <Modal
+      isOpen={modalIsOpen}
+      ariaHideApp={false}
+      onRequestClose={closeModal}
+      className="modal"
+      contentLabel="Example Modal" 
+    >
+    <ProjectForm setProjects={setProjects}/>
+    </Modal>
+    <br />
+
     <ul>
-        
       {projects.map(project => (<li key={project.id}>  
-      <NavLink className="project-names" to={`/projects/${project.id}`} 
-      state={{user: {user}, project: {project}, milestones: {milestones}}}>  
+      <NavLink className="project-names" to={`/projects/${project.id}`} state={{user: {user}, project: {project}, milestones: {milestones}}}>  
       {project.name}   </NavLink>
       <br></br> 
-      {project.kind}<br></br> Deadline | {project.due_date}
+      {project.kind}<br></br> Deadline | {dayjs(project.due_date).format("MM.DD.YYYY")}
      
-        <button className='normal' onClick={() => {deleteProject(project.id)}}>delete</button>    </li>
+      <button className='normal' onClick={() => {deleteProject(project.id)}}>delete</button>    </li>
       ))}
        
-        <br />
-        <br />
-        <h1>Active Milestones</h1>
-        <br></br>
-        {milestones.map(milestone => (<li key={milestone.id}>  <b>{milestone.name}</b>  <br></br> {milestone.description}<br></br> Due Date: {milestone.due_date} <br /> <button className='normal' onClick={() => {deleteMilestone(milestone.id)}}>delete</button>   </li>
-        ))}       
+      <br />
+      <br />
+      <h1>Active Milestones</h1>
+      <br></br>
+      {milestones.map(milestone => 
+      (<li key={milestone.id}>  <b>{milestone.name} </b>  <br></br> {milestone.description}<br></br> Due Date: {dayjs(milestone.due_date).format('DD.MM.YYYY')} <br /> <button className='normal' onClick={() => {deleteMilestone(milestone.id)}}>delete</button>   </li>
+      ))}       
 
         <br></br>
         <NavLink to="/logout">Logout</NavLink>

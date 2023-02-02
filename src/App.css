@@ -35,14 +35,13 @@ body {
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
   }
   .input-container {
-    background: rgba(160, 160, 160, 0.34);
     border-radius: 8px;
-    width: 200px; 
-    height: 30px;
+    width: 200px;
+    height: 35px;
     font-size: 14px;
     text-align: left;
     border-style: solid;
-    border-color: rgb(185, 180, 180);
+    border-color: white;
     
     
   }
@@ -120,13 +119,7 @@ body {
   
   }
   
-  ul li:not(first-child){
-    list-style : disc inside;
-    width : 250pt;
-    list-style-position: outside;
-    flex: 0 0 100%;
-  }
-  
+ 
   
   
   h2 {
@@ -204,11 +197,16 @@ body {
     display: inline-block;
     border-radius: 30px;
     padding: 90px;
+    padding-top: 40px;
     box-shadow: 0 5px 15px rgba(185, 154, 154, 0.2);
     width: 320px;
     height: 220px;
     box-shadow: 0px 50px 100px rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(7.5px);
+  }
+
+  h5{
+    display: inline;
   }
   
   a {
