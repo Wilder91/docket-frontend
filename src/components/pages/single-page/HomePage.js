@@ -4,27 +4,30 @@ import React, { useEffect, useState} from 'react'
 import { NavLink} from 'react-router-dom';
 import Modal from 'react-modal';
 import ProjectForm from './project/ProjectForm'
-import EditProject from './project/editProject'
+
 
 function HomePage() {
   const [user, setUser] = useState([])
   const [projects, setProjects] = useState([])
   const [milestones, setMilestones] =useState([])
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [editIsOpen, setEditIsOpen] = useState(false);
+
   const token = localStorage.token
+
   const fetchUsers = () => {
-      fetch(`http://localhost:3000/users/`, {
-        method: 'GET',
-        headers: new Headers( {
-        Authorization: `${token}`,
-        })
+    fetch(`http://localhost:3000/users/`, {
+      method: 'GET',
+      headers: new Headers( {
+      Authorization: `${localStorage.token}`,
       })
-      .then(result => result.json())
-      .then(users => setterFunction(users)) 
+    })
+    .then(result => result.json())
+    .then(users => setterFunction(users)) 
   }
 
   function setterFunction(users){
+    console.log(users)
+    console.log(token)
   let user = users.find(u => u.email === localStorage.email)
   setUser(user)
  
@@ -44,14 +47,7 @@ function HomePage() {
     setIsOpen(false);
   }
 
-  function openEdit() {
-    setEditIsOpen(true);
-  }
-
-  function closeEdit() {
-    setEditIsOpen(false);
-  }
-
+  
   
 
   function deleteProject(id) {
@@ -85,7 +81,7 @@ function HomePage() {
 
   
   useEffect(() => {
-    console.log(window.location)
+    
     fetchUsers({});               
   }, []);
 
@@ -113,24 +109,15 @@ function HomePage() {
           <br />
     <ul>
         
-        {projects.map(project => (<li key={project.id}>  
-        <NavLink className="project-names" to={`/projects/${project.id}`} 
-        state={{user: {user}, project: {project}, milestones: {milestones}}}>  
-        {project.name}   </NavLink>
-        <br></br> 
-        {project.kind}<br></br> Deadline | {project.due_date}
-        <button className='normal' onClick={openEdit}>edit</button>
-      <Modal
-        isOpen={editIsOpen}
-        ariaHideApp={false}
-        onRequestClose={closeEdit}
-        className="modal"
-        contentLabel="Example Modal"
-      >
-        <EditProject project={project} /> 
-          </Modal>
-         <button className='normal' onClick={() => {deleteProject(project.id)}}>delete</button>    </li>
-        ))}
+      {projects.map(project => (<li key={project.id}>  
+      <NavLink className="project-names" to={`/projects/${project.id}`} 
+      state={{user: {user}, project: {project}, milestones: {milestones}}}>  
+      {project.name}   </NavLink>
+      <br></br> 
+      {project.kind}<br></br> Deadline | {project.due_date}
+     
+        <button className='normal' onClick={() => {deleteProject(project.id)}}>delete</button>    </li>
+      ))}
        
         <br />
         <br />

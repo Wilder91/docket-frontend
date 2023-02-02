@@ -10,7 +10,7 @@ function projectForm({setProjects}) {
 
   function addProject(project) {
     console.log(project)
-
+    
     setProjects( projects => [...projects,{id: project.id, name: project.name, due_date: project.due_date, kind: project.kind, user_id: project.userId}].sort(function(a,b){
         return new Date(a.due_date) - new Date(b.due_date);
       }) )
@@ -42,7 +42,8 @@ let handleSubmit = (e) => {
 
     return (
     <form className='embed' onSubmit={handleSubmit}>
-  
+    <h1>New Project</h1>
+    <br /> <br />
     <input required
       type="text"
       value={name}

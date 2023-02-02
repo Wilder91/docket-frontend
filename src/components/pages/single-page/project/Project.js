@@ -1,6 +1,7 @@
 import React, {  useState, useEffect} from 'react';
 import { NavLink, useParams, useLocation} from 'react-router-dom';
 import MilestoneForm from '../milestone/MilestoneForm';
+import EditProject from './editProject'
 import Modal from 'react-modal';
 
 function Project() {
@@ -8,7 +9,7 @@ function Project() {
   const [formOpen, setFormOpen] = useState()     
   const location = useLocation()
   const {projectId} = useParams();
-
+  const [editIsOpen, setEditIsOpen] = useState(false);
   function deleteMilestone(id) {
     fetch(`http://localhost:3000/milestones/${id}`, { method: 'DELETE', headers: new Headers( {
       Authorization: `${localStorage.token}`, })})  
@@ -37,6 +38,16 @@ function Project() {
     setFormOpen(false);
   }
 
+  function openEdit() {
+    setEditIsOpen(true);
+    
+  }
+
+  function closeEdit() {
+    setEditIsOpen(false);
+  }
+
+
   useEffect(() => {  
     hello()   
     console.log(location.state)
@@ -58,6 +69,17 @@ function Project() {
         ariaHideApp={false}
       >
        <MilestoneForm setMilestones={setMilestones} />
+      </Modal>
+
+      <button className='normal' onClick={openEdit}>edit {location.state.project.project.name}</button>
+      <Modal
+        isOpen={editIsOpen}
+        ariaHideApp={false}
+        onRequestClose={closeEdit}
+        className="modal"
+        contentLabel="Example Modal"
+      >
+      <EditProject project={location.state.project.project} /> 
       </Modal>
 <br />
 
