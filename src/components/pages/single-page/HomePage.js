@@ -68,11 +68,18 @@ function HomePage() {
   }
 
 
-  function removeProject(id) {      
+  function removeProject(id) {  
+    let p_id = id    
     setProjects(projects.filter(p =>
         p.id !== id
       )
     )
+    console.log(p_id)
+    setMilestones(milestones.filter(p =>
+        p.project_id !== p_id
+      )
+    )
+    
   }
 
   function removeMilestone(id) {      

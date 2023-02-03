@@ -2,7 +2,6 @@ body {
     margin: 0;
     font-family:  'Ek Mukta'; font-size: 22px;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     background-color: #eeedec;
     color: #e74d1c;
     text-align: center;
@@ -196,6 +195,7 @@ body {
     background-blend-mode: color;
     display: inline-block;
     border-radius: 30px;
+    margin: 0 auto; 
     padding: 90px;
     padding-top: 40px;
     box-shadow: 0 5px 15px rgba(185, 154, 154, 0.2);
@@ -238,7 +238,7 @@ body {
 
   .modal {
     position: absolute;
-    left: 40%;
+    left: 30%;
     top: 50%;
     transform: translate(-50%, -50%);
     width: 0px;
