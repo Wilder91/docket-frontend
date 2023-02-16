@@ -1,5 +1,7 @@
 import React, {useState} from 'react'
 import {useParams} from 'react-router-dom'
+import Dropdown from 'react-bootstrap/Dropdown'
+import DropdownButton from 'react-bootstrap/DropdownButton';
 function projectForm({setProjects}) {
   
   const [name, setName] = useState("");
@@ -7,10 +9,11 @@ function projectForm({setProjects}) {
   const [kind, setKind] = useState("");
   const [message] = useState("");
   const {userId} = useParams();
+ 
 
   function addProject(project) {
-    console.log(project)
-    
+
+  
     setProjects( projects => [...projects,{id: project.id, name: project.name, due_date: project.due_date, kind: project.kind, user_id: project.userId}].sort(function(a,b){
         return new Date(a.due_date) - new Date(b.due_date);
       }) )
@@ -69,6 +72,11 @@ let handleSubmit = (e) => {
       onChange={(e) => setDate(e.target.value)}
     />
     <br></br>
+    <DropdownButton id="dropdown-basic-button" title="Dropdown button">
+      <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+      <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+      <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+    </DropdownButton>
     <button className='normal' type="submit">Create</button>
     <div className="message">{message ? <p>{message}</p> : null}</div>
     <br />

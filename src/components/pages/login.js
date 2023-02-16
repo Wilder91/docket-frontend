@@ -15,28 +15,44 @@ function LoginForm() {
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({email: email, password: password})
     })
+    
     .then(resp => resp.json())
     .then(data => {    
       localStorage.setItem("token", data.token)
       localStorage.setItem("email", data.email)
       console.log(window.localStorage.token)     
     })
-   
-    .then(navigate('/home'))
+   if(window.localStorage.token){
+    navigate('/home')
+   }
+    
+    
+    
+    
   }
+
+ 
   function handleSubmit(event) {
   event.preventDefault();
   login()
+  if(window.localStorage.token){
+    navigate('/home')
+   }
+  
  
   
+  }
+  function routeChange () { 
+    let path = '/signup'; 
+    navigate(path);
   }
 
   return (
     <div>  
     <form className='normal' onSubmit={handleSubmit}>
-    <img src={Logo} alt="logo"></img> 
+    <img src={Logo} id='DDLogo' alt="logo"></img> 
     <br />
-      <h3>Due Date </h3>
+      <h3>Duedate </h3>
       <div>
      
       <input required className = "input-container"
@@ -60,7 +76,7 @@ function LoginForm() {
     <br></br>
     <button type="submit" className="nice-button">Log In</button>
     <br />
-      <button data-href="/signup" className="signup-button" type="button"> Sign Up</button>
+    <button onClick={() => { routeChange() }} className="signup-button" type="button"> Sign Up</button>
     <br></br>  
     </form>   
     </div>

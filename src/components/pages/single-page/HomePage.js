@@ -1,22 +1,28 @@
 
 
 import React, { useEffect, useState} from 'react'
-import { NavLink} from 'react-router-dom';
+import { NavLink, useNavigate} from 'react-router-dom';
 import Modal from 'react-modal';
 import ProjectForm from './project/ProjectForm'
 import dayjs from 'dayjs'
+/*import 'bootstrap/dist/css/bootstrap.css';
+import Modal from 'react-bootstrap/Modal'*/
+import Card from 'react-bootstrap/Card'
+
+
 
 function HomePage() {
-  const [user, setUser] = useState([])
-  const [projects, setProjects] = useState([])
-  const [milestones, setMilestones] =useState([])
+  const [user, setUser] = useState([]);
+  const [projects, setProjects] = useState([]);
+  const [milestones, setMilestones] =useState([]);
+  const [templates, setTemplates] = useState([]);
   const [modalIsOpen, setIsOpen] = useState(false);
-
-  const token = localStorage.token
-
-  async function fetchUsers()  {
-    console.log(token)
-    await fetch(`http://localhost:3000/users/`, {
+  const token = localStorage.token;
+  const navigate = useNavigate();
+  console.log(window.localStorage.token)
+  function fetchUsers()  {
+   
+    fetch(`http://localhost:3000/users/`, {
       method: 'GET',
       headers: new Headers( {
       Authorization: token,
@@ -27,19 +33,21 @@ function HomePage() {
   }
 
   function setterFunction(users){
-    console.log(users)
-    console.log(token)
-  let user = users.find(u => u.email === localStorage.email)
-  setUser(user)
- 
-  let p = user.projects.sort(function(a,b){
-    return new Date(a.due_date) - new Date(b.due_date);
-  });
-  localStorage.user_id = user.id
-  setProjects(p)
-  let d = p[0].due_date
-  console.log(dayjs(d).format('DD/MM/YYYY'))
-  setMilestones(user.milestones)
+      
+      let user = users.find(u => u.email === localStorage.email)
+      setUser(user)
+      let p = user.projects.sort(function(a,b){
+        return new Date(a.due_date) - new Date(b.due_date);
+      });
+      setTemplates(user.templates)
+      localStorage.user_id = user.id
+      setProjects(p)
+      setMilestones(user.milestones)
+   
+      
+      
+   
+    
   }
   
   function openModal() {
@@ -67,6 +75,11 @@ function HomePage() {
     removeMilestone(id)
   }
 
+  const getTemplates = () => {
+    console.log(templates);
+    let path = '/templates'
+    navigate(path, {state:{hello:'hello', templates: templates}});
+  }
 
   function removeProject(id) {  
     let p_id = id    
@@ -74,7 +87,7 @@ function HomePage() {
         p.id !== id
       )
     )
-    console.log(p_id)
+  
     setMilestones(milestones.filter(p =>
         p.project_id !== p_id
       )
@@ -95,7 +108,7 @@ function HomePage() {
     fetchUsers();               
   }, []);
 
-    
+   
   return (
     
     <div className='page'>
@@ -104,8 +117,8 @@ function HomePage() {
 
     
     <br />
-
-<button className='normal' onClick={openModal}>Add Project</button>
+   
+<button className='normal' onClick={openModal}>Add Project</button>  <button className='normal' onClick={getTemplates}>Templates</button>
     <Modal
       isOpen={modalIsOpen}
       ariaHideApp={false}
@@ -113,24 +126,34 @@ function HomePage() {
       className="modal"
       contentLabel="Example Modal" 
     >
-    <ProjectForm setProjects={setProjects}/>
+    <ProjectForm setProjects={setProjects} templates={templates}/>
     </Modal>
     <br />
 
     <ul>
+      
+    {projects === 'undefined' && <h5>Nothing Here, Yet!</h5>}
+    {projects.length === 0 &&
+  
+  <h5>No projects (yet)</h5> }
+  <Card style={{background: 'none', border: 'none', display: 'inline'}}>
       {projects.map(project => (<li key={project.id}>  
-      <NavLink className="project-names" to={`/projects/${project.id}`} state={{user: {user}, project: {project}, milestones: {milestones}}}>  
-      {project.name}   </NavLink>
-      <br></br> 
+      <div className="card-title"><NavLink className="project-names" to={`/projects/${project.id}`} state={{user: {user}, project: {project}, milestones: {milestones}}}>  
+      {project.name}   </NavLink> </div>
+
+      <div className="card-body">
       {project.kind}<br></br> Deadline | {dayjs(project.due_date).format("MM.DD.YYYY")}
-     
-      <button className='normal' onClick={() => {deleteProject(project.id)}}>delete</button>    </li>
+     </div>
+      <button className='normal'  onClick={() => {deleteProject(project.id)}}>delete</button>    </li>
       ))}
-       
+      </Card>
       <br />
       <br />
       <h1>Active Milestones</h1>
       <br></br>
+      {milestones.length === 0 &&
+  
+  <h5>No milestones (yet)</h5> }
       {milestones.map(milestone => 
       (<li key={milestone.id}>  <b>{milestone.name} </b>  <br></br> {milestone.description}<br></br> Due Date: {dayjs(milestone.due_date).format('DD.MM.YYYY')} <br /> <button className='normal' onClick={() => {deleteMilestone(milestone.id)}}>delete</button>   </li>
       ))}       

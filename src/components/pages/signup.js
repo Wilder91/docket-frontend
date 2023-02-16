@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-
-
 import {useNavigate} from 'react-router-dom'
 
 
@@ -9,12 +7,28 @@ function Signup() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+
+  function login() {
+    fetch(`http://localhost:3000/auth/login`, {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({email: email, password: password})
+    })
+    
+    .then(resp => resp.json())
+    .then(data => {    
+      localStorage.setItem("token", data.token)
+      localStorage.setItem("email", data.email)
+      console.log(window.localStorage.token)     })
+   
+  }
   let handleSubmit = async (e) => {
     e.preventDefault();
     try {
       let res = await fetch(`http://localhost:3000/users`, {
         method: "POST",
         body: JSON.stringify({
+          name: name,
           email: email,
           password: password,
         }),
@@ -36,8 +50,8 @@ function Signup() {
     } catch (err) {
       console.log(err);
     }
-    localStorage.email = email 
-    localStorage.password= password
+    console.log(localStorage)
+    login();
     navigate('/home');
   };
 
@@ -51,7 +65,7 @@ function Signup() {
 
   
 
-     <form onSubmit={handleSubmit}>
+     <form className='normal' onSubmit={handleSubmit}>
       <h3>Sign Up</h3>
       <input required className = "input-container"
         placeholder="Name"
@@ -77,7 +91,10 @@ function Signup() {
         />
       </div>
       <br />
-       <button type="submit" className="signup-button">Sign Up</button>  <a href="/" className="nice-button"> Log In</a>
+       <button type="submit" className="signup-button">Sign Up</button> 
+       <br /> 
+       <br />
+       <a href="/">Return to Log In</a>
      </form>
  
   

@@ -10,7 +10,7 @@ function milestoneForm({setMilestones}) {
   const {projectId} = useParams();
   
   function addMilestone(milestone) {
-    console.log(milestone)
+   
     setMilestones( milestones => [...milestones,{id: milestone.id, name: milestone.name, due_date: milestone.due_date, description: milestone.description, project_id: milestone.projectId}].sort(function(a,b){
         return new Date(a.due_date) - new Date(b.due_date);
       }) )
@@ -47,39 +47,43 @@ function milestoneForm({setMilestones}) {
 
 
 return(
-<form className='embed' onSubmit={handleSubmit}>
-<h1>New Milestone</h1>
-<input required
-  type="text"
-  value={name}
-  placeholder="Name"
-  className='input-container'
-  onChange={(e) => setName(e.target.value)}
-/>
-<br></br>
-<input
-  type="text"
-  value={description}
-  placeholder="Description(50 character limit)"
-  className='input-container'
-  maxLength={50}
-  onChange={(e) => setDescription(e.target.value)}
-/>
-<br></br>
-<input required
-  type="date"
-  value={date}
-  placeholder="Date"
-  className='input-container'
-  onChange={(e) => setDate(e.target.value)}
-/>
 
+  <form className='embed' onSubmit={handleSubmit}>
 
-<br></br>
+  <h1>New Milestone</h1>
+    <input required
+      type="text"
+      value={name}
+      placeholder="Name"
+      className='input-container'
+      onChange={(e) => setName(e.target.value)}
+    />
 
-<button className='normal' type="submit">Create</button>
+  <br></br>
+  <input
+    type="text"
+    value={description}
+    placeholder="Description(50 character limit)"
+    className='input-container'
+    maxLength={50}
+    onChange={(e) => setDescription(e.target.value)}
+  />
+  
+  <br></br>
 
-<div className="message">{message ? <p>{message}</p> : null}</div>
+  <input required
+    type="date"
+    value={date}
+    placeholder="Date"
+    className='input-container'
+    onChange={(e) => setDate(e.target.value)}
+  />
+
+  <br></br>
+
+  <button className='normal' type="submit">Create</button>
+
+  <div className="message">{message ? <p>{message}</p> : null}</div>
 
 
 </form>
