@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useParams} from 'react-router-dom'
 
-function milestoneForm({setMilestones}) {
+function milestoneForm(props) {
 
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
@@ -9,9 +9,11 @@ function milestoneForm({setMilestones}) {
   const [message] = useState("");
   const {projectId} = useParams();
   
+  const oneDay = 24 * 60 * 60 * 1000;
+  const newDate = (new Date(props.project.due_date) - new Date(date) / oneDay);
   function addMilestone(milestone) {
    
-    setMilestones( milestones => [...milestones,{id: milestone.id, name: milestone.name, due_date: milestone.due_date, description: milestone.description, project_id: milestone.projectId}].sort(function(a,b){
+    props.setMilestones( milestones => [...milestones,{id: milestone.id, name: milestone.name, due_date: milestone.due_date, description: milestone.description, project_id: milestone.projectId}].sort(function(a,b){
         return new Date(a.due_date) - new Date(b.due_date);
       }) )
 
@@ -76,8 +78,8 @@ return(
     value={date}
     placeholder="Date"
     className='input-container'
-    onChange={(e) => setDate(e.target.value)}
-  />
+    onChange={(e) => setDate(e.target.value)} 
+  />{newDate}
 
   <br></br>
 

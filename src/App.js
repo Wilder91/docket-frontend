@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes,  } from 'react-router-dom';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Landing from './components/pages/login';
 
-import Templates from './components/pages/templates/index.js'
+import Templates from './components/pages/templates/templates.js'
 import Project from './components/pages/single-page/project/Project';
 import Signup from './components/pages/signup';
 

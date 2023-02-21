@@ -1,20 +1,38 @@
-import React, {useState} from 'react'
-import {useParams} from 'react-router-dom'
-import Dropdown from 'react-bootstrap/Dropdown'
-import DropdownButton from 'react-bootstrap/DropdownButton';
-function projectForm({setProjects}) {
+import React, {useState} from 'react';
+import {useParams} from 'react-router-dom';
+import Form from 'react-bootstrap/Form';
+
+function projectForm(props) {
   
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [kind, setKind] = useState("");
+  const [template, setTemplate] = useState("")
   const [message] = useState("");
   const {userId} = useParams();
- 
+
+
+  
+  function handleChange(e) {
+    setTemplate(e.target.value);
+  
+    /*addMilestones(e.target.value);*/
+  }
+
+  /*function addMilestones(template){
+    console.log(template)
+    let t = props.templates.find(name => name = template)
+    console.log(t)
+    props.setMilestones( milestones => [...milestones,{id: milestone.id, name: milestone.name, due_date: milestone.due_date, kind: milestone.kind, project_id: milestone.projectId}].sort(function(a,b){
+      return new Date(a.due_date) - new Date(b.due_date);
+    }) )
+
+  }*/
 
   function addProject(project) {
 
   
-    setProjects( projects => [...projects,{id: project.id, name: project.name, due_date: project.due_date, kind: project.kind, user_id: project.userId}].sort(function(a,b){
+    props.setProjects( projects => [...projects,{id: project.id, name: project.name, due_date: project.due_date, kind: project.kind, user_id: project.userId}].sort(function(a,b){
         return new Date(a.due_date) - new Date(b.due_date);
       }) )
 
@@ -26,14 +44,15 @@ let handleSubmit = (e) => {
     setName('')
     setDate('')
     setKind('')
-   
+    setTemplate('')
       fetch(`http://localhost:3000/users/${localStorage.user_id}/projects`, {
         method: "POST",
         body: JSON.stringify({
           name: name,
           kind: kind,
           date: date,
-          user_id: userId
+          user_id: userId,
+          template: template
         }),
         headers: new Headers( {
           Authorization: `${localStorage.token}`, 
@@ -43,10 +62,12 @@ let handleSubmit = (e) => {
       .then((data) => addProject(data))
     };
 
+ 
+
     return (
-    <form className='embed' onSubmit={handleSubmit}>
+    <Form className='embed' onSubmit={handleSubmit}>
     <h1>New Project</h1>
-    <br /> <br />
+    
     <input required
       type="text"
       value={name}
@@ -72,15 +93,20 @@ let handleSubmit = (e) => {
       onChange={(e) => setDate(e.target.value)}
     />
     <br></br>
-    <DropdownButton id="dropdown-basic-button" title="Dropdown button">
-      <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-      <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-      <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-    </DropdownButton>
+    <Form.Select aria-label="Default select example"  onChange={handleChange}>
+    
+      <option value="">No Template</option>
+    {props.templates.map(template => 
+    <option key={template.id} value={template.name}>{template.name}</option>) }
+      
+     
+    </Form.Select>
+   
+    <br />
     <button className='normal' type="submit">Create</button>
     <div className="message">{message ? <p>{message}</p> : null}</div>
     <br />
- </form>
+ </Form>
     )
 }
 

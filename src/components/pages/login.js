@@ -20,7 +20,7 @@ function LoginForm() {
     .then(data => {    
       localStorage.setItem("token", data.token)
       localStorage.setItem("email", data.email)
-      console.log(window.localStorage.token)     
+  
     })
    if(window.localStorage.token){
     navigate('/home')

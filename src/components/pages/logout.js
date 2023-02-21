@@ -10,7 +10,7 @@ class Logout extends Component {
 
       clearUser(){
         window.localStorage.clear()
-        console.log(localStorage)
+       
       }
       render() {
         return(

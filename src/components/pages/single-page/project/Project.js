@@ -2,15 +2,18 @@ import React, {  useState, useEffect} from 'react';
 import { NavLink, useParams, useLocation} from 'react-router-dom';
 import MilestoneForm from '../milestone/MilestoneForm';
 import EditProject from './editProject'
-import Modal from 'react-modal';
+import Modal from 'react-bootstrap/Modal';
 import dayjs from 'dayjs';
 import Card from 'react-bootstrap/Card';
+
 function Project() {
   const [milestones, setMilestones] = useState([])
-  const [formOpen, setFormOpen] = useState()     
+  const [isOpen, setIsOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+    
   const location = useLocation()
   const {projectId} = useParams();
-  const [editIsOpen, setEditIsOpen] = useState(false);
+ 
   function deleteMilestone(id) {
     fetch(`http://localhost:3000/milestones/${id}`, { method: 'DELETE', headers: new Headers( {
       Authorization: `${localStorage.token}`, })})  
@@ -29,60 +32,53 @@ function Project() {
     m.project_id.toString() === projectId
   ))
   }
+ /* ok */
+  const showModal = () => {
+    setIsOpen(true);
+  };
 
-  function openForm() {
-    console.log(formOpen);
-    setFormOpen(true);
-    console.log(formOpen);
-  }
+  const hideModal = () => {
+    setIsOpen(false);
+  };
+
+  const showEdit = () => {
+    setEditOpen(true);
+  };
+
+  const hideEdit = () => {
+    setEditOpen(false);
+  };
+  
+  /*ok*/
 
 
-  function closeForm() {
-    setFormOpen(false);
-  }
-
-  function openEdit() {
-    setEditIsOpen(true);
-    
-  }
-
-  function closeEdit() {
-    setEditIsOpen(false);
-  }
+  
 
 
   useEffect(() => {  
     hello()   
-
+  
   }, []);
  
 
   return (    
   <div className='page'>
+    
   <h1>{location.state.project.project.name} Milestones</h1>
     <br />
-  <button className='normal' onClick={openForm}>Add Milestone</button>
-      <Modal style={{opacity: 1}}
-        className='modal'
-        isOpen={formOpen}
-
-        onRequestClose={closeForm}
-
-        contentLabel="Example Modal"
-        ariaHideApp={false}
-      >
-       <MilestoneForm setMilestones={setMilestones} />
+    <button className="normal" onClick={showModal}>Add Milestone</button>
+      <Modal className='bootmodal' show={isOpen} onHide={hideModal}>
+       
+        <Modal.Body><MilestoneForm setMilestones={setMilestones} project={location.state.project.project}/></Modal.Body>
+    
       </Modal>
+     
 
-      <button className='normal' onClick={openEdit}>edit {location.state.project.project.name} details</button>
-      <Modal
-        isOpen={editIsOpen}
-        ariaHideApp={false}
-        onRequestClose={closeEdit}
-        className="modal"
-        contentLabel="Example Modal"
-      >
-      <EditProject project={location.state.project.project} /> 
+      <button className='normal' onClick={showEdit}>edit {location.state.project.project.name} details</button>
+      <Modal className='bootmodal' show={editOpen} onHide={hideEdit}>
+       
+        <Modal.Body> <EditProject project={location.state.project.project}templates = {location.state.user.user.templates}/> </Modal.Body>
+  
       </Modal>
 <br />
 

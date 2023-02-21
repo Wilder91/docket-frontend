@@ -3,20 +3,21 @@ import { useNavigate} from 'react-router-dom';
 
 function editProject({project}) {
   const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [kind, setKind] = useState("");
   const [checked, setChecked] = useState();
   const [message] = useState("");
- 
- 
+
+  
 
  
 let handleSubmit = (e) => {
   
   e.preventDefault();
   e.target.reset();
- 
+  
   
   alert(`Project Updated Succesfully`);
   navigate(`/home`)
@@ -83,7 +84,9 @@ useEffect(() => {
       onChange={(e) => setDate(e.target.value)}
     />
     <br />
-    Save Template<input
+    {project.template !== true &&
+    <>
+    <p>Save As Template</p><input
       
       type="checkbox"
       defaultChecked={project.template}
@@ -91,7 +94,7 @@ useEffect(() => {
 
       onChange={handleToggle}
   
-    />
+    /></>}
     <br />
     <button className='normal' type="submit">Update</button>
     <div className="message">{message ? <p>{message}</p> : null}</div>
