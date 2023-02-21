@@ -44,10 +44,18 @@ function HomePage() {
       let m = user.milestones.sort(function(a,b){
         return new Date(a.due_date) - new Date(b.due_date);
       });
+
+      let sortedTemplates = user.templates.map(t => t.milestones.sort(function(a,b){
+        return new Date(a.due_date) - new Date(b.due_date);
+      }))
+     
+     
       setTemplates(user.templates)
       localStorage.user_id = user.id
       setProjects(p)
       setMilestones(m)
+      console.log(templates)
+      console.log(sortedTemplates)
    
       
       

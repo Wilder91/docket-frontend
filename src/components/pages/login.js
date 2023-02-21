@@ -4,7 +4,7 @@ import {useNavigate} from 'react-router-dom'
 import Logo from '../images/DDLogo.png'
 
 function LoginForm() {
-  
+  const [user, setUser] = useState('')
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -22,21 +22,41 @@ function LoginForm() {
       localStorage.setItem("email", data.email)
   
     })
-   if(window.localStorage.token){
-    navigate('/home')
-   }
+
+    
+  
+    fetchUsers()
+   
     
     
     
     
   }
 
+  function fetchUsers()  {
+   
+    fetch(`http://localhost:3000/users/`, {
+      method: 'GET',
+      headers: new Headers( {
+      Authorization: window.localStorage.token,
+      })
+    })
+    .then(result => result.json())
+    .then(users => findUser(users)) 
+  }
+
+  function findUser(users) {
+    let user = users.find(u => u.email === localStorage.email)
+      setUser(user)
+  }
+
  
   function handleSubmit(event) {
   event.preventDefault();
   login()
+  console.log(user)
   if(window.localStorage.token){
-    navigate('/home')
+    navigate('/home', {user})
    }
   
  

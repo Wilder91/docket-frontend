@@ -93,7 +93,7 @@ let handleSubmit = (e) => {
       onChange={(e) => setDate(e.target.value)}
     />
     <br></br>
-    <Form.Select aria-label="Default select example"  onChange={handleChange}>
+    <Form.Select aria-label="Default select example"  onChange={handleChange} style={{textTransform: 'capitalize'}}>
     
       <option value="">No Template</option>
     {props.templates.map(template => 

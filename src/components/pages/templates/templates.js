@@ -5,6 +5,7 @@ function templateIndex() {
     const location = useLocation();
     const templates = location.state.templates
     
+
     function deleteTemplate(id) {
         fetch(`http://localhost:3000/templates/${id}`, { method: 'DELETE', headers: new Headers( {
       Authorization: `${localStorage.token}`, })})  
@@ -18,8 +19,10 @@ function templateIndex() {
             
         {templates.map((template) =>(<li key={template.id}> 
            <h1 className="project-names">{template.name}</h1>
-           
-            {template.milestones.map((milestone) =>(<Card className="card-body" key={milestone.id}>{milestone.name} {milestone.lead_time} Days Before Due Date <br />    </Card> ))} <button className='normal' onClick={() => {deleteTemplate(template.id)}}>Delete</button>   </li>))}
+         
+            {template.milestones.sort(function(a,b){
+        return new Date(b.due_date) - new Date(a.due_date);
+      }).map((milestone) =>(<Card className="card-body" key={milestone.id}>{milestone.name} {milestone.lead_time} Days Before Due Date <br />    </Card> ))} <button className='normal' onClick={() => {deleteTemplate(template.id)}}>Delete</button>   </li>))}
       
            <br />
            </Card> 
