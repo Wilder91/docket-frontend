@@ -245,7 +245,10 @@ h1, .h1 {
     z-index: 0;
   }
   
-
+  svg {
+    position: absolute;
+    
+}
   a:active{
     color:#8982ca
   }

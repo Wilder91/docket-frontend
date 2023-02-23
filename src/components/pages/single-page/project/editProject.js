@@ -21,7 +21,7 @@ let handleSubmit = (e) => {
   
   alert(`Project Updated Succesfully`);
   navigate(`/home`)
-  console.log(checked)
+
   fetch(`http://localhost:3000/projects/${project.id}`, {
     method: 'PATCH',
     body: JSON.stringify({

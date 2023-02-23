@@ -8,7 +8,7 @@ import dayjs from 'dayjs'
 
 import Modal from 'react-bootstrap/Modal'
 import Card from 'react-bootstrap/Card'
-
+import { FaFlag } from 'react-icons/fa';
 
 
 function HomePage() {
@@ -18,7 +18,7 @@ function HomePage() {
   const [templates, setTemplates] = useState([]);
 
   const [isOpen, setIsOpen] = useState(false);
-
+  
   const token = localStorage.token;
   const navigate = useNavigate();
  
@@ -41,21 +41,20 @@ function HomePage() {
       let p = user.projects.sort(function(a,b){
         return new Date(a.due_date) - new Date(b.due_date);
       });
+      
       let m = user.milestones.sort(function(a,b){
         return new Date(a.due_date) - new Date(b.due_date);
       });
 
-      let sortedTemplates = user.templates.map(t => t.milestones.sort(function(a,b){
-        return new Date(a.due_date) - new Date(b.due_date);
-      }))
+      let sorted = m.sort(function(a, b) {return a.complete - b.complete});
+
+
      
      
       setTemplates(user.templates)
       localStorage.user_id = user.id
       setProjects(p)
-      setMilestones(m)
-      console.log(templates)
-      console.log(sortedTemplates)
+      setMilestones(sorted)
    
       
       
@@ -90,7 +89,7 @@ function HomePage() {
   const getTemplates = () => {
     
     let path = '/templates'
-    navigate(path, {state:{hello:'hello', templates: templates}});
+    navigate(path, {state:{user: user, templates: templates}});
   }
 
   function removeProject(id) {  
@@ -115,6 +114,82 @@ function HomePage() {
   }
 
   
+  function handleMilestoneToggle(id) {
+    const m = [...milestones]
+    
+    const milestone = m.find(
+      m => m.id === id
+    );
+    
+    milestone.complete = !milestone.complete
+    
+    
+    m.sort(function(a,b){
+      return new Date(a.due_date) - new Date(b.due_date);
+    });
+
+    let sorted = m.sort(function(a, b) {return a.complete - b.complete});
+    
+    setMilestones(sorted)
+
+
+    
+    fetch(`http://localhost:3000/milestones/${id}`, {
+    method: 'PATCH',
+    body: JSON.stringify({
+      name: milestone.name,
+      complete: milestone.complete
+    }),
+    headers: new Headers( {
+      Authorization: `${localStorage.token}`, 
+      'Content-Type': 'application/json'
+    }),
+  })
+  }
+
+  function handleProjectToggle(id) {
+
+    let new_arr = [...projects]
+    let project = new_arr.find(
+      p => p.id === id
+    );
+    
+    setProjects(new_arr)
+
+    const m = [...milestones]
+    
+    m.forEach((element, index) => {
+      if(element.project_id === project.id) {
+          element.complete = !element.complete;
+      }
+  });
+    console.log(m)
+    
+    
+    
+    m.sort(function(a,b){
+      return new Date(a.due_date) - new Date(b.due_date);
+    });
+
+    let sorted = m.sort(function(a, b) {return a.complete - b.complete});
+    
+    setMilestones(sorted)
+
+   project.complete = !project.complete
+    fetch(`http://localhost:3000/projects/${id}/complete`, {
+    method: 'PATCH',
+    body: JSON.stringify({
+      name: project.name,
+      complete: project.complete,
+      id: id
+    }),
+    headers: new Headers( {
+      Authorization: `${localStorage.token}`, 
+      'Content-Type': 'application/json'
+    }),
+  })
+  }
+  
   useEffect(() => {
     
     fetchUsers();               
@@ -127,8 +202,6 @@ function HomePage() {
      
     <h1>{user.name}'s Projects</h1>   
 
-    
-    <br />
     
     <>
     <button className="normal" onClick={showModal}>Add Project</button>
@@ -151,9 +224,12 @@ function HomePage() {
       
   <h5>No projects (yet)</h5> }
  
-  <Card style={{background: 'none', border: 'none', display: 'inline'}}>
-      {projects.map(project => (<li key={project.id}>  
-      <div className="card-title"><NavLink className="project-names" to={`/projects/${project.id}`} state={{user: {user}, project: {project}, milestones: {milestones}}}>  
+  <Card style={{background: 'none', border: 'none', display: 'inline' }}>
+      {projects.map(project => (<li key={project.id}>
+        {project.complete === true &&
+      
+      <h5>complete</h5> }  
+      <div className="card-title"><FaFlag onClick={() => handleProjectToggle(project.id)} style={{color: project.complete ? "grey" : "red"}}/> <br /> <NavLink className="project-names" to={`/projects/${project.id}`} state={{user: {user}, project: {project}, milestones: {milestones}}} >  
       {project.name}   </NavLink> </div>
       
       <div className="card-body">
@@ -170,7 +246,9 @@ function HomePage() {
   
   <h5>No milestones (yet)</h5> }
       {milestones.map(milestone => 
-      (<li key={milestone.id}>  <b>{milestone.name} </b><br />{projects.find((item) => item.id === milestone.project_id).name}   <br></br> {milestone.description}<br></br> Due Date: {dayjs(milestone.due_date).format('MM.DD.YYYY')} <br /> <button className='normal' onClick={() => {deleteMilestone(milestone.id)}}>delete</button>   </li>
+      (<li key={milestone.id} style={{opacity: milestone.complete === true && "20%"}}>{milestone.complete === true &&
+      
+        <h5>complete</h5> }  <FaFlag onClick={() => handleMilestoneToggle(milestone.id)} style={{color: milestone.complete ? "grey" : "red", opacity: "100"}}/> <b style={{color: milestone.complete === true && "red"}}> <br />{milestone.name} </b><br />{projects.find((item) => item.id === milestone.project_id).name}   <br></br> {milestone.description}<br></br> Due Date: {dayjs(milestone.due_date).format('MM.DD.YYYY')} <br /> <button className='normal' onClick={() => {deleteMilestone(milestone.id)}}>delete</button>   </li>
       ))}       
 
         <br></br>

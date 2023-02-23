@@ -15,6 +15,7 @@ function templateIndex() {
 
     return(
         <div>
+            <h1>{location.state.user.name}'s Templates</h1>
             <Card style={{background: 'none', border: 'none', display: 'inline'}}>
             
         {templates.map((template) =>(<li key={template.id}> 
