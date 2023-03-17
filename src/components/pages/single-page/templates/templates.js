@@ -1,9 +1,10 @@
-import React from "react";
-import { useLocation, NavLink } from "react-router-dom";
+import React, {useEffect} from "react";
+
 import Card from 'react-bootstrap/Card'
-function templateIndex() {
-    const location = useLocation();
-    const templates = location.state.templates
+function templateIndex(props) {
+    
+    const templates = props.templates
+    const user = props.user
     
 
     function deleteTemplate(id) {
@@ -11,11 +12,16 @@ function templateIndex() {
       Authorization: `${localStorage.token}`, })})  
       
    }
+   useEffect(() => {
+    
+    console.log(props)              
+  }, []);
 
 
     return(
         <div>
-            <h1>{location.state.user.name}'s Templates</h1>
+            
+            <h1>{user.name}'s Templates</h1>
             <Card style={{background: 'none', border: 'none', display: 'inline'}}>
             
         {templates.map((template) =>(<li key={template.id}> 
@@ -27,7 +33,7 @@ function templateIndex() {
       
            <br />
            </Card> 
-           <NavLink to="/home" >Home</NavLink> 
+         
  </div>
      
     ) 

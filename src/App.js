@@ -1,10 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes,  } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-import Landing from './components/pages/login';
-
-import Templates from './components/pages/templates/templates.js'
+import Login from './components/pages/login';
+import addTemplate from './components/pages/single-page/templates/addTemplate'
+import Templates from './components/pages/single-page/templates/templates'
 import Project from './components/pages/single-page/project/Project';
 import Signup from './components/pages/signup';
 
@@ -19,12 +18,14 @@ const App = () => {
     <>
       <BrowserRouter >
         <Routes>
-          <Route exact path='/' element={<Landing />} />
+          <Route exact path='/' element={<Login />} />
           <Route exact path='/signup' element={<Signup />} />
           <Route exact path='/home' element={<Home />} />               
           <Route exact path='/projects/:projectId' element={<Project />} />   
           <Route exact path='/templates' element={<Templates />} />   
           <Route exact path ='/logout' element={<Logout />} />
+          <Route exact path='/editproject' element={<editProject />} />
+          <Route exact path='/addtemplate' element={<addTemplate />} />
         </Routes>
       </BrowserRouter>
     </>

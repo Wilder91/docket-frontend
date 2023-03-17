@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import { useNavigate} from 'react-router-dom';
 
-function editProject({project}) {
+function editMilestone({milestone}) {
   const navigate = useNavigate();
-
+  console.log(navigate)
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
-  const [kind, setKind] = useState("");
+  const [description, setDescription] = useState("");
   const [checked, setChecked] = useState();
   const [message] = useState("");
 
@@ -19,14 +19,14 @@ let handleSubmit = (e) => {
   e.target.reset();
   
   
-  alert(`Project Updated Succesfully`);
-  navigate(`/home`)
+  alert(`Milestone Updated Succesfully`);
 
-  fetch(`http://localhost:3000/projects/${project.id}`, {
+
+  fetch(`http://localhost:3000/milestones/${milestone.id}`, {
     method: 'PATCH',
     body: JSON.stringify({
       name: name,
-      kind: kind,
+      description: description,
       date: date,
       template: checked
     }),
@@ -40,21 +40,12 @@ let handleSubmit = (e) => {
 };
 
 
-
-const handleToggle = () => {
-  console.log(checked)
- setChecked(current => !current);
- console.log(checked)
-  
-
-};
-
 useEffect(() => {
    
-  setName(project.name)
-  setKind(project.kind)
-  setDate(project.due_date) 
-  setChecked(project.template)
+  setName(milestone.name)
+  setDescription(milestone.description)
+  setDate(milestone.due_date) 
+  setChecked(milestone.template)
   
 }, []);
 
@@ -64,38 +55,26 @@ useEffect(() => {
 
     <input required
       type="text"
-      defaultValue={project.name}  
+      defaultValue={milestone.name}  
       className='input-container'
       onChange={(e) => setName(e.target.value)}
     />
     <br></br>
     <input 
       type="text"
-      defaultValue={project.kind}      
+      defaultValue={milestone.kind}      
       className='input-container'
       maxLength={50}
-      onChange={(e) => setKind(e.target.value)}
+      onChange={(e) => setDescription(e.target.value)}
     />
     <br></br>
     <input required
       type="date"
-      defaultValue={project.due_date}
+      defaultValue={milestone.due_date}
       className='input-container'
       onChange={(e) => setDate(e.target.value)}
     />
-    <br />
 
-    <>
-    <p>Save As Template</p><input
-      
-      type="checkbox"
-      defaultChecked={project.template}
-      id="custom-switch"
-
-      onChange={handleToggle}
-  
-    /></>
-    <br />
     <button className='normal' type="submit">Update</button>
     <div className="message">{message ? <p>{message}</p> : null}</div>
     
@@ -103,4 +82,4 @@ useEffect(() => {
   )
 }
 
-export default editProject
+export default editMilestone

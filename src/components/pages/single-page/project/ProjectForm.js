@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useParams} from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
-
+import dayjs from 'dayjs'
 function projectForm(props) {
   
   const [name, setName] = useState("");
@@ -15,7 +15,8 @@ function projectForm(props) {
   
   function handleChange(e) {
     setTemplate(e.target.value);
-  
+    console.log(props.templates)
+    
     /*addMilestones(e.target.value);*/
   }
 
@@ -30,15 +31,22 @@ function projectForm(props) {
   }*/
 
   function addProject(project) {
-
-  
+    
     props.setProjects( projects => [...projects,{id: project.id, name: project.name, due_date: project.due_date, kind: project.kind, user_id: project.userId}].sort(function(a,b){
         return new Date(a.due_date) - new Date(b.due_date);
       }) )
 
+    const thisTemplate = props.templates.find(t => t.name === template)
+    if(thisTemplate){
+    const arr_two = thisTemplate.milestones
+    console.log()
+    arr_two.map(m => m.due_date = dayjs(project.due_date).subtract(m.lead_time, 'days'))
+    arr_two.map(m => m.project_name = project.name)
+    props.setMilestones(milestones => [...milestones, ...arr_two])
+    console.log(props)}
   }
 let handleSubmit = (e) => {
-    
+
     e.preventDefault();
     e.target.reset();
     setName('')

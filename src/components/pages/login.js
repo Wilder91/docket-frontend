@@ -18,10 +18,12 @@ function LoginForm() {
     
     .then(resp => resp.json())
     .then(data => {    
+      console.log(data)
       localStorage.setItem("token", data.token)
       localStorage.setItem("email", data.email)
-  
+      
     })
+    
 
     
   

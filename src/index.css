@@ -10,7 +10,7 @@ body {
   
   button.normal {
     display:inline-block;
-    padding:0.5em 3em;
+    padding:0.3em 1em;
     border:0.16em solid #FFFFFF;
     margin:0 0.3em 0.3em 0;
     box-sizing: border-box;
@@ -102,9 +102,10 @@ body {
     margin: 5px;
     background-blend-mode: color;
     display: inline-block;
-    background-color: #fafafe;
+    background-color: rgb(255, 255, 255);
     border-radius: 10px;
-   
+    border-color: black;
+    border-width: 1px;
     padding: 10px 20px 10px;
     
     width: 320px;

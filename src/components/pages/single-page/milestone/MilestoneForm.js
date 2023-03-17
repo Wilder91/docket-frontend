@@ -9,8 +9,8 @@ function milestoneForm(props) {
   const [message] = useState("");
   const {projectId} = useParams();
   
-  const oneDay = 24 * 60 * 60 * 1000;
-  const newDate = (new Date(props.project.due_date) - new Date(date) / oneDay);
+
+
   function addMilestone(milestone) {
    
     props.setMilestones( milestones => [...milestones,{id: milestone.id, name: milestone.name, due_date: milestone.due_date, description: milestone.description, project_id: milestone.projectId}].sort(function(a,b){
@@ -79,8 +79,7 @@ return(
     placeholder="Date"
     className='input-container'
     onChange={(e) => setDate(e.target.value)} 
-  />{newDate}
-
+  />
   <br></br>
 
   <button className='normal' type="submit">Create</button>
