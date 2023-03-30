@@ -1,9 +1,10 @@
-import React, {  useState, useEffect} from 'react';
-import { NavLink, useParams, useLocation} from 'react-router-dom';
+import React, {  useContext, useState, useEffect} from 'react';
+import { useParams, useLocation, useNavigate} from 'react-router-dom';
 import MilestoneForm from '../milestone/MilestoneForm';
 import EditProject from './editProject'
 import {Modal, Card, Navbar, Nav, Container } from 'react-bootstrap';
 import dayjs from 'dayjs';
+import {UserContext} from '../util/context'
 
 
 function Project() {
@@ -15,14 +16,17 @@ function Project() {
   const user = location.state.user.user
   const project = location.state.project.project
   const projectId = useParams();
+  const mike = useContext(UserContext);
+  const nav = useNavigate()
   const projectMilestones =  user.milestones.filter((m) =>
   m.project_id === project.id
 )
 
   function deleteMilestone(id) {
     fetch(`http://localhost:3000/milestones/${id}`, { method: 'DELETE', headers: new Headers( {
-      Authorization: `${localStorage.token}`, })})  
-    removeMilestone(id)      
+      Authorization: `${sessionStorage.token}`, })})  
+    removeMilestone(id)  
+    console.log(sessionStorage)    
    }
 
    function removeMilestone(id) {  
@@ -36,7 +40,7 @@ function Project() {
     console.log(projectId)
     console.log(user.milestones)
     console.log(window.location)
-   
+   console.log(mike)
 
   }
  /* ok */
@@ -58,8 +62,11 @@ function Project() {
   
   /*ok*/
 
-
-  
+  function goHome() {
+    console.log(user)
+    nav("/home",
+    {state: {returningUser: {user}}})
+  }  
 
 
   useEffect(() => {  
@@ -75,7 +82,7 @@ function Project() {
         <Container>
           <Navbar.Brand href="#home">{user.name}</Navbar.Brand>
           <Nav className="container-fluid">
-            <Nav.Link href='/home'>Home</Nav.Link>
+            <Nav.Link onClick={goHome}>Home</Nav.Link>
             <Nav.Link onClick={showEdit}>Edit Project </Nav.Link>
             <Nav.Link onClick={showModal}>Add Milestone</Nav.Link>
             
@@ -83,6 +90,7 @@ function Project() {
           </Nav>
         </Container>
       </Navbar>
+    
     <h1>{project.name} Milestones</h1>
     <br />
   

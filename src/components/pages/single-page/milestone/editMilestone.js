@@ -31,7 +31,7 @@ let handleSubmit = (e) => {
       template: checked
     }),
     headers: new Headers( {
-      Authorization: `${localStorage.token}`, 
+      Authorization: `${sessionStorage.token}`, 
       'Content-Type': 'application/json'
     }),
   }).then((response) => response.json())
@@ -51,7 +51,7 @@ useEffect(() => {
 
   return (
   <form className='embed' onSubmit={handleSubmit}>
-    <h1>Project Details</h1>
+    <h1>Milestone Details</h1>
 
     <input required
       type="text"

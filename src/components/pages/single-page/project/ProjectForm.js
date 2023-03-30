@@ -53,17 +53,18 @@ let handleSubmit = (e) => {
     setDate('')
     setKind('')
     setTemplate('')
-      fetch(`http://localhost:3000/users/${localStorage.user_id}/projects`, {
+    console.log(sessionStorage)
+      fetch(`http://localhost:3000/users/${sessionStorage.user_id}/projects`, {
         method: "POST",
         body: JSON.stringify({
           name: name,
           kind: kind,
-          date: date,
-          user_id: userId,
+          due_date: date,
+          user_id: sessionStorage.user_id,
           template: template
         }),
         headers: new Headers( {
-          Authorization: `${localStorage.token}`, 
+          Authorization: `${sessionStorage.token}`, 
           'Content-Type': 'application/json'
         }),
       }).then((response) => response.json())

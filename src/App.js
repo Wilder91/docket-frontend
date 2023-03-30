@@ -9,13 +9,17 @@ import Signup from './components/pages/signup';
 
 import Home from './components/pages/single-page/HomePage';
 import Logout from './components/pages/logout';
+import { UserContext } from './components/pages/single-page/util/context';
+
 
 
 
 
 const App = () => {
+ 
   return (
     <>
+      <UserContext.Provider value={'hello'}>
       <BrowserRouter >
         <Routes>
           <Route exact path='/' element={<Login />} />
@@ -28,6 +32,7 @@ const App = () => {
           <Route exact path='/addtemplate' element={<addTemplate />} />
         </Routes>
       </BrowserRouter>
+      </UserContext.Provider>
     </>
   );
 };

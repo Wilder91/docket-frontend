@@ -1,25 +1,26 @@
 
 
 import React, { useEffect, useState} from 'react'
+import { useLocation } from 'react-router-dom'
 
 import ProjectList from './user/projectList'
 import ProjectForm from './project/ProjectForm'
 import Templates from './templates/templates'
 import TemplateForm from './templates/addTemplate'
 import dayjs from 'dayjs'
-import { Container, Modal, Card, Navbar, Nav } from 'react-bootstrap';
+import { Container, Modal, Navbar, Nav } from 'react-bootstrap';
 import { FaFlag } from 'react-icons/fa';
 import EditProject from './project/editProject';
 import EditMilestone from './milestone/editMilestone'
 import Urgent from './milestone/Urgent'
 
 
-function HomePage() {
+function HomePage({returningUser}) {
   const [user, setUser] = useState([]);
   const [projects, setProjects] = useState([]);
   const [milestones, setMilestones] =useState([]);
   const [templates, setTemplates] = useState([]);
-  const [project, setProject] = useState([]);
+  const [project] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [templatesOpen, setTemplatesOpen] = useState(false);
   const [templateFormOpen, setTemplateFormOpen] = useState(false);
@@ -27,9 +28,11 @@ function HomePage() {
   const [milestone, setMilestone] = useState(false);
   const [editMilestoneFormOpen, setEditMilestoneFormOpen] = useState(false);
   const [urgentOpen, setUrgentOpen] = useState(false);
-  const token = localStorage.token;
+  const token = sessionStorage.token;
   const today = dayjs()
- 
+  const location = useLocation();
+
+  
 
   /* retrieves index of all users, should really be a call for a specific user with user id */
   function fetchUsers()  {
@@ -46,13 +49,11 @@ function HomePage() {
   /* sets state for the homepage and ensures that projects and milestones are sorted correctly, first
   by date and then by completion status */
   function setterFunction(users){
-      
-      let user = users.find(u => u.email === localStorage.email)
+      let user = users.find(u => u.email === sessionStorage.email)
       setUser(user)
       let p = user.projects.sort(function(a,b){
         return new Date(a.due_date) - new Date(b.due_date);
       });
-      
       let m = user.milestones.sort(function(a,b){
         return new Date(a.due_date) - new Date(b.due_date);
       });
@@ -63,15 +64,32 @@ function HomePage() {
       
  
       setTemplates(user.templates)
-      localStorage.user_id = user.id
+      sessionStorage.user_id = user.id
       setProjects(p)
       setMilestones(sorted)
-   
-      
-      
-   
-    
   }
+
+  function setterFunction2(user){    
+    setUser(user)
+    let p = user.projects.sort(function(a,b){
+      return new Date(a.due_date) - new Date(b.due_date);
+    });
+    
+    let m = user.milestones.sort(function(a,b){
+      return new Date(a.due_date) - new Date(b.due_date);
+    });
+
+    let sorted = m.sort(function(a, b) {return a.complete - b.complete});
+
+    sorted.map(m => m.project_name = (p.find(n => n.id === m.project_id).name))
+    
+
+    setTemplates(user.templates)
+    sessionStorage.user_id = user.id
+    setProjects(p)
+    setMilestones(sorted)
+  }
+
   
   /* alternates between showing or hiding the project form */
   const showModal = () => {
@@ -118,7 +136,7 @@ function HomePage() {
     setEditMilestoneFormOpen(false);
   }
   
-
+  /*
   function deleteProject(id) {
     let projectMilestones = milestones.filter(m => m.project_id === id)
     projectMilestones.map(m => deleteMilestone(m.id))
@@ -126,7 +144,7 @@ function HomePage() {
       Authorization: `${token}`,
       })} ) 
     removeProject(id)  
-  }
+  }*/
 
   function deleteMilestone(id) {
     fetch(`http://localhost:3000/milestones/${id}`, { method: 'DELETE', headers: new Headers( {
@@ -137,7 +155,7 @@ function HomePage() {
 
 
   
-  /* removes a specific project from the DOM */
+  /* removes a specific project from the DOM 
   function removeProject(id) {  
     let p_id = id    
     setProjects(projects.filter(p =>
@@ -150,7 +168,7 @@ function HomePage() {
       )
     )
     
-  }
+  }*/
 
   
 
@@ -190,13 +208,13 @@ function HomePage() {
       complete: milestone.complete
     }),
     headers: new Headers( {
-      Authorization: `${localStorage.token}`, 
+      Authorization: `${sessionStorage.token}`, 
       'Content-Type': 'application/json'
     }),
   })
   }
 
-  /* changes a milestone's completion status */
+  /* changes a milestone's completion status 
   function handleProjectToggle(id) {
 
     let new_arr = [...projects]
@@ -239,17 +257,21 @@ function HomePage() {
     }),
   })
   }
-  
+  */
   
   useEffect(() => {
+   
     
-    fetchUsers();               
+    fetchUsers();    
+        
+    
   }, []);
 
    
   return (
     
     <div className='page'>
+   
      <Navbar bg="dark" variant="dark">
         <Container>
           <Navbar.Brand href="#home">{user.name}</Navbar.Brand>
@@ -298,13 +320,14 @@ function HomePage() {
         <Modal.Body><Urgent milestones={milestones}  templates={templates} user={user} project={project} /></Modal.Body>
         
       </Modal>
-
-    <ProjectList user={user} projects={projects} setProjects={setProjects}/>
    
-    
+    <ProjectList user={user} projects={projects} setProjects={setProjects} milestones={milestones} setMilestones={setMilestones} templates={templates}/>
+  
   
       <br />
       <h1>Milestones</h1>
+      
+
       <br></br>
       {milestones.length === 0 &&
   
@@ -322,10 +345,10 @@ function HomePage() {
 
         <br></br>
        
-    
+       
     </div>
   )
-        
+    
 }
         
 
