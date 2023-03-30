@@ -89,9 +89,10 @@ function projectList({ user, projects, setProjects, milestones, setMilestones, t
   <ul>
     {projects === 'undefined' && <h5>Nothing Here, Yet!</h5>}
     {projects.length === 0 && <h5>No projects (yet)</h5>}
-    <Card style={{ background: 'none', border: 'none', display: 'inline' }}>
+   
       {projects.map((project) => (
         <li key={project.id}>
+           <Card className='bootstrap_card' >
           {project.complete === true && <h5>complete</h5>}
           <div className="card-title">
             <FaFlag
@@ -113,9 +114,10 @@ function projectList({ user, projects, setProjects, milestones, setMilestones, t
             <button className='normal' onClick={() => showEditForm(project.id)}>edit</button>
             <button className='normal' onClick={() => deleteProject(project.id)}>delete</button>
           </div>
+          </Card>
         </li>
       ))}
-    </Card>
+   
   </ul>
 </div>
     )

@@ -1,15 +1,33 @@
 import React, { useEffect } from "react";
 import Card from "react-bootstrap/Card";
 
-function TemplateIndex({ templates, user, deleteTemplate }) {
+function TemplateIndex({ templates, setTemplates, user}) {
+  function removeTemplate(id) {
+    fetch(`http://localhost:3000/templates/${id}`, { 
+      method: 'DELETE', 
+      headers: new Headers({
+        Authorization: `${sessionStorage.token}`,
+      }) 
+    })
+      .then(() => {
+        const updatedTemplates = templates.filter((t) => t.id !== id);
+        setTemplates(updatedTemplates);
+      })
+      .catch((error) => {
+        console.error('Error deleting template:', error);
+      });
+  }
   useEffect(() => {
     console.log(templates, user);
   }, [templates, user]);
 
   return (
+    <Card style={{ background: "none", border: "none", display: "inline", maxHeight: '5px', overflowY: "clip" }}>
     <div>
+
+    
       <h1>{user.name}'s Templates</h1>
-      <Card style={{ background: "none", border: "none", display: "inline" }}>
+      
         {templates.map((template) => (
           <li key={template.name}>
             <h1 className="project-names">{template.name}</h1>
@@ -24,7 +42,7 @@ function TemplateIndex({ templates, user, deleteTemplate }) {
             <button
               className="normal"
               onClick={() => {
-                deleteTemplate(template.id);
+                removeTemplate(template.id);
               }}
             >
               Delete
@@ -32,8 +50,9 @@ function TemplateIndex({ templates, user, deleteTemplate }) {
           </li>
         ))}
         <br />
-      </Card>
+    
     </div>
+    </Card>
   );
 }
 

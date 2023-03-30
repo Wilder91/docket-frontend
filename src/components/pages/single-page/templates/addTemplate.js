@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
 
-function AddTemplate(props) {
+function AddTemplate() {
   const [name, setName] = useState('')
   const [milestones, setMilestones] = useState([{ name: '', leadTime: '' }])
 
@@ -39,6 +42,7 @@ function AddTemplate(props) {
   }
 
   const deleteMilestone = (index) => {
+    if (index === 0) return // Prevent deleting the first milestone
     const newMilestones = [...milestones]
     newMilestones.splice(index, 1)
     setMilestones(newMilestones)
@@ -48,62 +52,67 @@ function AddTemplate(props) {
     <Form className='embed' onSubmit={handleSubmit}>
       <h1>New Template</h1>
 
-      <input
-        required
-        type='text'
-        value={name}
-        placeholder='Template Name'
-        className='input-container'
-        onChange={(e) => setName(e.target.value)}
-      />
+      <Form.Group controlId='formTemplateName'>
+        <Form.Label>Template Name</Form.Label>
+        <Form.Control
+          required
+          type='text'
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </Form.Group>
 
       {milestones.map((milestone, index) => (
-        <div key={index}>
-          <input
-            required
-            type='text'
-            value={milestone.name}
-            placeholder={`Milestone ${index + 1}`}
-            className='input-container'
-            onChange={(e) =>
-              handleMilestoneChange(index, 'name', e.target.value)
-            }
-          />
-
-          <input
-            required
-            type='number'
-            value={milestone.leadTime}
-            placeholder='Lead Time'
-            className='input-container'
-            onChange={(e) =>
-              handleMilestoneChange(index, 'leadTime', e.target.value)
-            }
-          />
-
+        <Form.Group key={index} controlId={`formMilestone${index}`}>
+          <Row>
+            <Col>
+              <Form.Label>Milestone {index + 1}</Form.Label>
+              <Form.Control
+                required
+                type='text'
+                value={milestone.name}
+                onChange={(e) =>
+                  handleMilestoneChange(index, 'name', e.target.value)
+                }
+              />
+            </Col>
+            <Col>
+              <Form.Label>Lead Time</Form.Label>
+              <Form.Control
+                required
+                type='number'
+                min='1'
+                step='1'
+                value={milestone.leadTime}
+                onChange={(e) =>
+                  handleMilestoneChange(index, 'leadTime', e.target.value)
+                }
+              />
+            </Col>
+            <Col>
           {index !== 0 && (
-            <button
-              className='normal'
+            <Button
+              variant='danger'
               type='button'
               onClick={() => deleteMilestone(index)}
             >
               Delete
-            </button>
+            </Button>
           )}
-        </div>
-      ))}
-
-      <button className='normal' type='button' onClick={addMilestone}>
-        Add Milestone
-      </button>
-
-      <button className='normal' type='submit'>
-        Create
-      </button>
-
-      <br />
-    </Form>
-  )
+        </Col>
+      </Row>
+    </Form.Group>
+  ))}
+  <br />
+  <Button variant='secondary' type='button' onClick={addMilestone}>
+    Add Milestone
+  </Button>
+  <br />
+  <Button variant='primary' type='submit'>
+    Create
+  </Button>
+</Form>
+)
 }
 
 export default AddTemplate

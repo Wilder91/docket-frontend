@@ -1,19 +1,16 @@
-
-
 import React, { useEffect, useState} from 'react'
 import { useLocation } from 'react-router-dom'
-
 import ProjectList from './user/projectList'
 import ProjectForm from './project/ProjectForm'
 import Templates from './templates/templates'
 import TemplateForm from './templates/addTemplate'
 import dayjs from 'dayjs'
-import { Container, Modal, Navbar, Nav } from 'react-bootstrap';
+import { Card, Container, Modal, Navbar, Nav } from 'react-bootstrap';
 import { FaFlag } from 'react-icons/fa';
 import EditProject from './project/editProject';
 import EditMilestone from './milestone/editMilestone'
 import Urgent from './milestone/Urgent'
-
+import Milestone from '../single-page/milestone/milestone'
 
 function HomePage({returningUser}) {
   const [user, setUser] = useState([]);
@@ -49,25 +46,19 @@ function HomePage({returningUser}) {
   /* sets state for the homepage and ensures that projects and milestones are sorted correctly, first
   by date and then by completion status */
   function setterFunction(users){
-      let user = users.find(u => u.email === sessionStorage.email)
-      setUser(user)
-      let p = user.projects.sort(function(a,b){
-        return new Date(a.due_date) - new Date(b.due_date);
-      });
-      let m = user.milestones.sort(function(a,b){
-        return new Date(a.due_date) - new Date(b.due_date);
-      });
-
-      let sorted = m.sort(function(a, b) {return a.complete - b.complete});
-    
-      sorted.map(m => m.project_name = (p.find(n => n.id === m.project_id).name))
-      
- 
-      setTemplates(user.templates)
-      sessionStorage.user_id = user.id
-      setProjects(p)
-      setMilestones(sorted)
+  const user = users.find(u => u.email === sessionStorage.email);
+  setUser(user);
+  const sortedProjects = user.projects.sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
+  const sortedMilestones = user.milestones.sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
+  sortedMilestones.forEach(milestone => milestone.project_name = sortedProjects.find(project => project.id === milestone.project_id).name);
+  sortedMilestones.sort((a, b) => a.complete - b.complete);
+  setTemplates(user.templates);
+  sessionStorage.user_id = user.id;
+  setProjects(sortedProjects);
+  setMilestones(sortedMilestones);
   }
+
+  
 
   function setterFunction2(user){    
     setUser(user)
@@ -136,15 +127,7 @@ function HomePage({returningUser}) {
     setEditMilestoneFormOpen(false);
   }
   
-  /*
-  function deleteProject(id) {
-    let projectMilestones = milestones.filter(m => m.project_id === id)
-    projectMilestones.map(m => deleteMilestone(m.id))
-    fetch(`http://localhost:3000/projects/${id}`, { method: 'DELETE' ,headers: new Headers( {
-      Authorization: `${token}`,
-      })} ) 
-    removeProject(id)  
-  }*/
+
 
   function deleteMilestone(id) {
     fetch(`http://localhost:3000/milestones/${id}`, { method: 'DELETE', headers: new Headers( {
@@ -154,21 +137,6 @@ function HomePage({returningUser}) {
   }
 
 
-  
-  /* removes a specific project from the DOM 
-  function removeProject(id) {  
-    let p_id = id    
-    setProjects(projects.filter(p =>
-        p.id !== id
-      )
-    )
-  
-    setMilestones(milestones.filter(p =>
-        p.project_id !== p_id
-      )
-    )
-    
-  }*/
 
   
 
@@ -214,57 +182,10 @@ function HomePage({returningUser}) {
   })
   }
 
-  /* changes a milestone's completion status 
-  function handleProjectToggle(id) {
-
-    let new_arr = [...projects]
-    let project = new_arr.find(
-      p => p.id === id
-    );
-    
-    setProjects(new_arr)
-    
-    const m = [...milestones]
-    
-    m.forEach((element) => {
-      if(element.project_id === project.id) {
-          element.complete = !element.complete;
-      }
-  });
-    console.log(m)
-    
-    
-    
-    m.sort(function(a,b){
-      return new Date(a.due_date) - new Date(b.due_date);
-    });
-
-    let sorted = m.sort(function(a, b) {return a.complete - b.complete});
-    
-    setMilestones(sorted)
-
-   project.complete = !project.complete
-    fetch(`http://localhost:3000/projects/${id}/complete`, {
-    method: 'PATCH',
-    body: JSON.stringify({
-      name: project.name,
-      complete: project.complete,
-      id: id
-    }),
-    headers: new Headers( {
-      Authorization: `${localStorage.token}`, 
-      'Content-Type': 'application/json'
-    }),
-  })
-  }
-  */
+ 
   
-  useEffect(() => {
-   
-    
-    fetchUsers();    
-        
-    
+  useEffect(() => { 
+    fetchUsers();        
   }, []);
 
    
@@ -293,7 +214,7 @@ function HomePage({returningUser}) {
       </Modal>
       <Modal className='bootmodal' show={templatesOpen} onHide={showTemplates}>
         
-        <Modal.Body><Templates templates={templates} user={user} /></Modal.Body>
+        <Modal.Body><Templates templates={templates} setTemplates={setTemplates} user={user} /></Modal.Body>
         
       </Modal>
 
@@ -330,21 +251,17 @@ function HomePage({returningUser}) {
 
       <br></br>
       {milestones.length === 0 &&
-  
   <h5>No milestones (yet)</h5> }
-      {milestones.map(milestone => 
-      (<li key={milestone.id} style={{opacity: milestone.complete === true && "20%"}}>{milestone.complete === true &&
-       
-      <h5>complete</h5> }  <FaFlag onClick={() => handleMilestoneToggle(milestone.id)} style={{color: milestone.complete ? "grey" : "red", opacity: "100"}}/> <b style={{color: milestone.complete === true && "red"}}> <br />{milestone.name} </b><br />
-   
-      {milestone.project_name} <br/>{milestone.description}<br></br><p >Due Date: {dayjs(milestone.due_date).format('MM.DD.YYYY')}  </p> 
-      {milestone.complete === false &&  <p style={{color:dayjs(milestone.due_date).diff(today, 'day') <= 30 && "red"}}> {dayjs(milestone.due_date).diff(today, 'day')} days remaining </p>} 
-      <button className='normal' onClick={() => {showMilestoneEditForm(milestone.id)}}>edit</button>   
-      <button className='normal' onClick={() => {deleteMilestone(milestone.id)}}>delete</button>   </li>
-      ))}       
-
-        <br></br>
-       
+{milestones.map(milestone => (
+  <Milestone 
+    key={milestone.id} 
+    milestone={milestone} 
+    handleMilestoneToggle={handleMilestoneToggle} 
+    showMilestoneEditForm={showMilestoneEditForm} 
+    deleteMilestone={deleteMilestone} 
+    today={today} 
+  />
+))}
        
     </div>
   )

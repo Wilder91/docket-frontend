@@ -31,7 +31,7 @@ let handleSubmit = (e) => {
       template: checked
     }),
     headers: new Headers( {
-      Authorization: `${localStorage.token}`, 
+      Authorization: `${sessionStorage.token}`, 
       'Content-Type': 'application/json'
     }),
   }).then((response) => response.json())

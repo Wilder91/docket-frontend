@@ -1,10 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 function MilestoneForm() {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [formValid, setFormValid] = useState(false);
+
+  useEffect(() => {
+    setErrorMessage('');
+  }, [name, description, date]);
+
+  useEffect(() => {
+    const isValid = name.trim() !== '' && date.trim() !== '';
+    setFormValid(isValid);
+  }, [name, description, date]);
+
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+  };
+
+  const handleDescriptionChange = (e) => {
+    setDescription(e.target.value);
+  };
+
+  const handleDateChange = (e) => {
+    setDate(e.target.value);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,41 +51,45 @@ function MilestoneForm() {
   };
 
   return (
-    <form className='embed' onSubmit={handleSubmit}>
+    <Form className='embed' onSubmit={handleSubmit}>
       <h1>New Milestone</h1>
-      <input required
-        type="text"
-        value={name}
-        placeholder="Name"
-        className='input-container'
-        onChange={(e) => setName(e.target.value)}
-      />
-
-      <br></br>
-      <input
-        type="text"
-        value={description}
-        placeholder="Description(50 character limit)"
-        className='input-container'
-        maxLength={50}
-        onChange={(e) => setDescription(e.target.value)}
-      />
-      
-      <br></br>
-
-      <input required
-        type="date"
-        value={date}
-        placeholder="Date"
-        className='input-container'
-        onChange={(e) => setDate(e.target.value)} 
-      />
-
+      <Form.Group controlId='formMilestoneName'>
+        <Form.Label>Name</Form.Label>
+        <Form.Control
+          type='text'
+          value={name}
+          placeholder='Name'
+          onChange={handleNameChange}
+          required
+        />
+      </Form.Group>
+      <Form.Group controlId='formMilestoneDescription'>
+        <Form.Label>Description</Form.Label>
+        <Form.Control
+          type='text'
+          value={description}
+          placeholder='Description (50 character limit)'
+          maxLength={50}
+          onChange={handleDescriptionChange}
+        />
+        <Form.Text>
+          {description.length}/{50}
+        </Form.Text>
+      </Form.Group>
+      <Form.Group controlId='formMilestoneDate'>
+        <Form.Label>Date</Form.Label>
+        <Form.Control
+          type='date'
+          value={date}
+          placeholder='Date'
+          onChange={handleDateChange}
+          required
+        />
+      </Form.Group>
       {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-
-      <button type="submit">Submit</button>
-    </form>
+      <Button type='submit' disabled={!formValid}>Submit</Button>
+    </Form>
   );
 }
 
-export default MilestoneForm
+export default MilestoneForm;

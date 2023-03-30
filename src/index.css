@@ -7,7 +7,51 @@ body {
     text-align: center;
     
   }
+  .bootstrap-card {
+    flex: 0 50%;
+    background: #fff;
+    box-shadow: 0 2px 4px 0 rgba(136, 144, 195, 0.2),
+      0 5px 15px 0 rgba(37, 44, 97, 0.15);
+    border-radius: 15px;
+    margin: 8px;
+    padding: 10px 15px;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    min-height: 265px;
+    transition: 0.7s;
+  }
+
+ .bootstrap_card:hover {
+    background: #309df0;
+    color: #fff;
+    transform: scale(1.1);
+    z-index: 9;
+  }
+
+  .bootstrap_card:hover::before {
+    background: rgb(85 108 214 / 10%);
+  }
   
+  .bootstrap_card:hover .solu_title h3,
+  .bootstrap_cards_box .bootstrap_card:hover .solu_description p {
+    color: #fff;
+  }
+
+  .hover_color_bubble {
+    position: absolute;
+    background: rgb(54 81 207 / 15%);
+    width: 100rem;
+    height: 100rem;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    top: 16rem;
+    border-radius: 50%;
+    transform: rotate(-36deg);
+    left: -18rem;
+    transition: 0.7s;
+  }
   button.normal {
     display:inline-block;
     padding:0.3em 1em;
