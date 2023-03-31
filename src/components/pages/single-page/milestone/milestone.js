@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 function Milestone({ milestone, handleMilestoneToggle, showMilestoneEditForm, deleteMilestone, today }) {
   return (
     <li key={milestone.id} style={{opacity: milestone.complete === true && "20%"}}> 
-      <Card className='bootstrap-card'>
+      <Card className='bootstrap-card-no-hover'>
         {milestone.complete === true &&
           <h5>complete</h5>}
         <FaFlag onClick={() => handleMilestoneToggle(milestone.id)} style={{color: milestone.complete ? "grey" : "red", opacity: "100"}}/> 

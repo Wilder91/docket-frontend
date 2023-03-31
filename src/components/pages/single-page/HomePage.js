@@ -1,18 +1,17 @@
 import React, { useEffect, useState} from 'react'
-import { useLocation } from 'react-router-dom'
 import ProjectList from './user/projectList'
 import ProjectForm from './project/ProjectForm'
 import Templates from './templates/templates'
 import TemplateForm from './templates/addTemplate'
 import dayjs from 'dayjs'
-import { Card, Container, Modal, Navbar, Nav } from 'react-bootstrap';
-import { FaFlag } from 'react-icons/fa';
+import {  Container, Modal, Navbar, Nav } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom'
 import EditProject from './project/editProject';
 import EditMilestone from './milestone/editMilestone'
 import Urgent from './milestone/Urgent'
 import Milestone from '../single-page/milestone/milestone'
 
-function HomePage({returningUser}) {
+function HomePage() {
   const [user, setUser] = useState([]);
   const [projects, setProjects] = useState([]);
   const [milestones, setMilestones] =useState([]);
@@ -26,8 +25,8 @@ function HomePage({returningUser}) {
   const [editMilestoneFormOpen, setEditMilestoneFormOpen] = useState(false);
   const [urgentOpen, setUrgentOpen] = useState(false);
   const token = sessionStorage.token;
-  const today = dayjs()
-  const location = useLocation();
+  const today = dayjs();
+  const navigate = useNavigate();
 
   
 
@@ -60,26 +59,7 @@ function HomePage({returningUser}) {
 
   
 
-  function setterFunction2(user){    
-    setUser(user)
-    let p = user.projects.sort(function(a,b){
-      return new Date(a.due_date) - new Date(b.due_date);
-    });
-    
-    let m = user.milestones.sort(function(a,b){
-      return new Date(a.due_date) - new Date(b.due_date);
-    });
-
-    let sorted = m.sort(function(a, b) {return a.complete - b.complete});
-
-    sorted.map(m => m.project_name = (p.find(n => n.id === m.project_id).name))
-    
-
-    setTemplates(user.templates)
-    sessionStorage.user_id = user.id
-    setProjects(p)
-    setMilestones(sorted)
-  }
+  
 
   
   /* alternates between showing or hiding the project form */
@@ -185,7 +165,12 @@ function HomePage({returningUser}) {
  
   
   useEffect(() => { 
-    fetchUsers();        
+    if(!sessionStorage.token) {
+      navigate('/login')
+    } 
+    else{
+      fetchUsers();
+    }    
   }, []);
 
    

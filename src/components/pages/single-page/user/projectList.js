@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+
 import { Card, Modal } from 'react-bootstrap';
 import { FaFlag } from 'react-icons/fa';
 import dayjs from 'dayjs';
@@ -8,8 +8,11 @@ import EditProject from '../project/editProject';
 function projectList({ user, projects, setProjects, milestones, setMilestones, templates }) {
   const [project, setProject] = useState([]);
   const [editFormOpen, setEditFormOpen] = useState(false);
+  const [selectProject, setSelectProject] = useState(false);
+  const [displayedProject, setDisplayedProject] = useState([]);
   const today = dayjs();
   const token = sessionStorage.token;
+
 
   async function deleteProject(id) {
     const projectMilestones = milestones.filter(m => m.project_id === id);
@@ -55,8 +58,9 @@ function projectList({ user, projects, setProjects, milestones, setMilestones, t
 
   function removeProject(id) {
     let p_id = id;
-    setProjects(projects.filter(p => p.id !== id));
-    setMilestones(milestones.filter(p => p.project_id !== p_id));
+      setProjects(projects.filter(p => p.id !== id));
+      setMilestones(milestones.filter(p => p.project_id !== p_id));
+    
   }
 
   function removeMilestone(id) {
@@ -65,6 +69,30 @@ function projectList({ user, projects, setProjects, milestones, setMilestones, t
 
   const hideEditForm = () => {
     setEditFormOpen(false);
+  };
+
+  function showProject(project) {
+    
+    setSelectProject((current) => !current);
+    
+    
+    if(selectProject) {
+      setDisplayedProject(projects.filter(p => p.id === project.id))
+    let projectMilestones = milestones.filter(m => m.project_id === project.id)
+    setMilestones(projectMilestones)
+    console.log(projectMilestones)
+    console.log(displayedProject)
+  }
+    else {
+      setMilestones(user.milestones)
+      setDisplayedProject([])
+    }
+  }
+
+  const confirmDeleteProject = (id) => {
+    if (window.confirm('Are you sure you want to delete this project?')) {
+      deleteProject(id);
+    }
   };
 
   const showEditForm = id => {
@@ -92,7 +120,7 @@ function projectList({ user, projects, setProjects, milestones, setMilestones, t
    
       {projects.map((project) => (
         <li key={project.id}>
-           <Card className='bootstrap_card' >
+           <Card className='bootstrap_card' onClick={() => showProject(project)}>
           {project.complete === true && <h5>complete</h5>}
           <div className="card-title">
             <FaFlag
@@ -100,9 +128,9 @@ function projectList({ user, projects, setProjects, milestones, setMilestones, t
               style={{ color: project.complete ? 'grey' : 'red' }}
             />
             <br />
-            <NavLink to={`/projects/${project.id}`} state={{ user: { user }, project: { project } }}>
+     
               {project.name}
-            </NavLink>
+         
           </div>
           <div className="card-body">
             {project.kind}
@@ -112,7 +140,7 @@ function projectList({ user, projects, setProjects, milestones, setMilestones, t
             {project.complete === false && `${dayjs(project.due_date).diff(today, 'day')} days remaining `}
             <br />
             <button className='normal' onClick={() => showEditForm(project.id)}>edit</button>
-            <button className='normal' onClick={() => deleteProject(project.id)}>delete</button>
+            <button className='normal' onClick={() => confirmDeleteProject(project.id)}>delete</button>
           </div>
           </Card>
         </li>

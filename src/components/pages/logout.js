@@ -14,7 +14,7 @@ class Logout extends Component {
       }
       render() {
         return(
-          <Navigate to="/" />
+          <Navigate to="/login" />
         )
       }
   

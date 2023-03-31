@@ -73,7 +73,7 @@ function LoginForm() {
   // Use useEffect to navigate to home page if login was successful
   useEffect(() => {
     if (loginStatus === 'success' && user) {
-      navigate('/home', {user: user});
+      navigate('/', {user: user});
     }
   }, [loginStatus, navigate, user]);
 

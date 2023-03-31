@@ -1,26 +1,24 @@
-import React, {  useContext, useState, useEffect} from 'react';
-import { useParams, useLocation, useNavigate} from 'react-router-dom';
+import React, {useState, useEffect} from 'react';
+import {useLocation, useNavigate} from 'react-router-dom';
 import MilestoneForm from '../milestone/MilestoneForm';
 import EditProject from './editProject'
 import {Modal, Card, Navbar, Nav, Container } from 'react-bootstrap';
 import dayjs from 'dayjs';
-import {UserContext} from '../util/context'
+
 
 
 function Project() {
+  const [user, setUser] = useState('')
   const [milestones, setMilestones] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   
+  const [project, setProject] = useState('')
   const location = useLocation()
-  const user = location.state.user.user
-  const project = location.state.project.project
-  const projectId = useParams();
-  const mike = useContext(UserContext);
+
+
   const nav = useNavigate()
-  const projectMilestones =  user.milestones.filter((m) =>
-  m.project_id === project.id
-)
+  
 
   function deleteMilestone(id) {
     fetch(`http://localhost:3000/milestones/${id}`, { method: 'DELETE', headers: new Headers( {
@@ -37,10 +35,10 @@ function Project() {
   }
 
   function hello() {
-    console.log(projectId)
-    console.log(user.milestones)
-    console.log(window.location)
-   console.log(mike)
+    console.log(user)
+    console.log(milestones)
+    
+
 
   }
  /* ok */
@@ -69,8 +67,12 @@ function Project() {
   }  
 
 
-  useEffect(() => {  
-    console.log(user)  
+  useEffect(() => { 
+    setUser(location.state.user) 
+    setProject(location.state.project)
+    setMilestones(location.state.user.milestones.filter((m) =>
+    m.project_id === location.state.project.id))
+    console.log(location.state)
     hello()
   }, []);
 
@@ -93,6 +95,16 @@ function Project() {
     
     <h1>{project.name} Milestones</h1>
     <br />
+    <ul>
+    {milestones.length === 0 &&
+    
+    <h5>No milestones</h5> }
+    
+    {milestones.map(milestone => (<li key={milestone.id}>  <Card className='bootstrap-card-no-hover' > <b>{milestone.name}</b> <br></br>  {milestone.description}<br></br> Due Date:{dayjs(milestone.due_date).format('MM.DD.YYYY')} <br></br> <button className='normal' onClick={() => {deleteMilestone(milestone.id)}}>Delete</button></Card>  </li>
+    ))}
+    
+ 
+    </ul> 
   
       <Modal className='bootmodal' show={isOpen} onHide={hideModal}>
        
@@ -104,19 +116,10 @@ function Project() {
      
       <Modal className='bootmodal' show={editOpen} onHide={hideEdit}>
        
-        <Modal.Body> <EditProject project={location.state.project.project}templates = {location.state.user.user.templates}/> </Modal.Body>
+        <Modal.Body> <EditProject project={location.state.project.project}templates = {location.state.user.templates}/> </Modal.Body>
   
       </Modal>
-    <ul>
-    {user.milestones.length === 0 &&
-    
-    <h5>No milestones</h5> }
-     <Card style={{background: 'none', border: 'none', display: 'inline'}}>
-    {projectMilestones.map(milestone => (<li key={milestone.id}>   <b>{milestone.name}</b> <br></br>  {milestone.description}<br></br> Due Date:{dayjs(milestone.due_date).format('MM.DD.YYYY')} <br></br> <button className='normal' onClick={() => {deleteMilestone(milestone.id)}}>Delete</button> </li>
-    ))}
-    </Card>
- 
-    </ul>  
+   
 </div>
     
   )
