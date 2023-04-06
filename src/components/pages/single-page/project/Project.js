@@ -106,11 +106,6 @@ function Project() {
  
     </ul> 
   
-      <Modal className='bootmodal' show={isOpen} onHide={hideModal}>
-       
-        <Modal.Body><MilestoneForm setMilestones={setMilestones} project={location.state.project.project}/></Modal.Body>
-    
-      </Modal>
      
 
      

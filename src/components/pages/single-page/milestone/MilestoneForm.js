@@ -43,7 +43,7 @@ function MilestoneForm() {
       if (!response.ok) {
         throw new Error('Error submitting form');
       }
-      // Handle successful form submission
+    // Handle successful form submission
     })
     .catch(error => {
       setErrorMessage(error.message);

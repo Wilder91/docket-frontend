@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { useNavigate} from 'react-router-dom';
 
-function editProject({project}) {
+function editProject({project, projects, setProjects, setMilestones}) {
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
@@ -10,6 +10,29 @@ function editProject({project}) {
   const [checked, setChecked] = useState();
   const [message] = useState("");
 
+  function updateProject(data) {
+    console.log(data.id);
+    setProjects((prevProjects) => {
+      const updatedProjects = prevProjects.map((project) => {
+        if (project.id === data.id) {
+          return { ...project, ...data };
+        } else {
+          return project;
+        }
+      });
+      return updatedProjects;
+    });
+    setMilestones((prevMilestones) => {
+      const updatedMilestones = prevMilestones.map((milestone) => {
+        if (milestone.project_id === data.id) {
+          return { ...milestone, project_name: data.name }; // <-- modify the milestone object with the updated project_name
+        } else {
+          return milestone;
+        }
+      });
+      return updatedMilestones;
+    });
+  }
   
 
  
@@ -20,7 +43,7 @@ let handleSubmit = (e) => {
   
   
   alert(`Project Updated Succesfully`);
-  navigate(`/home`)
+  navigate(`/`)
 
   fetch(`http://localhost:3000/projects/${project.id}`, {
     method: 'PATCH',
@@ -35,7 +58,7 @@ let handleSubmit = (e) => {
       'Content-Type': 'application/json'
     }),
   }).then((response) => response.json())
-    .then((data) => console.log(data))
+    .then((data) => updateProject(data))
 
 };
 

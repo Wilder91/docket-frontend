@@ -9,7 +9,7 @@ function projectList({ user, projects, setProjects, milestones, setMilestones, t
   const [project, setProject] = useState([]);
   const [editFormOpen, setEditFormOpen] = useState(false);
   const [selectProject, setSelectProject] = useState(false);
-  const [displayedProject, setDisplayedProject] = useState([]);
+  const [displayedProjects, setDisplayedProjects] = useState([]);
   const today = dayjs();
   const token = sessionStorage.token;
 
@@ -17,24 +17,30 @@ function projectList({ user, projects, setProjects, milestones, setMilestones, t
   async function deleteProject(id) {
     const projectMilestones = milestones.filter(m => m.project_id === id);
     await Promise.all(projectMilestones.map(m => deleteMilestone(m.id)));
-
+  
     try {
       const response = await fetch(`http://localhost:3000/projects/${id}`, {
         method: 'DELETE',
         headers: {
+          'Content-Type': 'application/json',
           Authorization: token,
         },
       });
+  
       if (!response.ok) {
-        throw new Error('Failed to delete project');
+        throw new Error(`Failed to delete project with id ${id}`);
       }
+
+  
+      setMilestones(milestones.filter(m => m.project_id !== id));
+      removeProject(id);
+  
+      console.log(`Successfully deleted project with id ${id}`);
     } catch (error) {
       console.error('Error deleting project:', error);
     }
-
-    removeProject(id);
   }
-
+  
   function deleteMilestone(id) {
     fetch(`http://localhost:3000/milestones/${id}`, {
       method: 'DELETE',
@@ -64,7 +70,7 @@ function projectList({ user, projects, setProjects, milestones, setMilestones, t
   }
 
   function removeMilestone(id) {
-    setMilestones(milestones.filter(p => p.id !== id));
+    setMilestones(milestones.filter(p => p.project_id !== id));
   }
 
   const hideEditForm = () => {
@@ -77,15 +83,15 @@ function projectList({ user, projects, setProjects, milestones, setMilestones, t
     
     
     if(selectProject) {
-      setDisplayedProject(projects.filter(p => p.id === project.id))
+      setDisplayedProjects(projects.filter(p => p.id === project.id))
     let projectMilestones = milestones.filter(m => m.project_id === project.id)
     setMilestones(projectMilestones)
     console.log(projectMilestones)
-    console.log(displayedProject)
+    console.log(displayedProjects)
   }
     else {
       setMilestones(user.milestones)
-      setDisplayedProject([])
+      setDisplayedProjects([])
     }
   }
 
@@ -109,7 +115,7 @@ function projectList({ user, projects, setProjects, milestones, setMilestones, t
       <div>
   <Modal className='bootmodal' show={editFormOpen} onHide={hideEditForm}>
     <Modal.Body>
-      <EditProject templates={templates} user={user} project={project} />
+      <EditProject project={project} projects={projects} setProjects={setProjects} setMilestones={setMilestones}/>
     </Modal.Body>
   </Modal>
   <h1>Projects</h1>
@@ -147,6 +153,7 @@ function projectList({ user, projects, setProjects, milestones, setMilestones, t
       ))}
    
   </ul>
+
 </div>
     )
 }

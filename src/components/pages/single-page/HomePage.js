@@ -5,11 +5,11 @@ import Templates from './templates/templates'
 import TemplateForm from './templates/addTemplate'
 import dayjs from 'dayjs'
 import {  Container, Modal, Navbar, Nav } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 import EditProject from './project/editProject';
-import EditMilestone from './milestone/editMilestone'
-import Urgent from './milestone/Urgent'
-import Milestone from '../single-page/milestone/milestone'
+import EditMilestone from './milestone/editMilestone';
+import Urgent from './milestone/Urgent';
+import Milestone from './milestone/Milestone'
 
 function HomePage() {
   const [user, setUser] = useState([]);
@@ -45,6 +45,7 @@ function HomePage() {
   /* sets state for the homepage and ensures that projects and milestones are sorted correctly, first
   by date and then by completion status */
   function setterFunction(users){
+    
   const user = users.find(u => u.email === sessionStorage.email);
   setUser(user);
   const sortedProjects = user.projects.sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
@@ -110,10 +111,23 @@ function HomePage() {
 
 
   function deleteMilestone(id) {
-    fetch(`http://localhost:3000/milestones/${id}`, { method: 'DELETE', headers: new Headers( {
-      Authorization: `${token}`,
-      }) }) 
-    removeMilestone(id)
+    fetch(`http://localhost:3000/milestones/${id}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `${token}`,
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log('Milestone deleted successfully:', response);
+          removeMilestone(id);
+        } else {
+          throw new Error('Failed to delete milestone');
+        }
+      })
+      .catch((error) => {
+        console.error('Error deleting milestone:', error);
+      });
   }
 
 
@@ -180,7 +194,7 @@ function HomePage() {
    
      <Navbar bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand href="#home">{user.name}</Navbar.Brand>
+          <Navbar.Brand >{user.name}</Navbar.Brand>
           <Nav className="container-fluid">
             <Nav.Link onClick={showTemplates}>Templates</Nav.Link>
             <Nav.Link onClick={showTemplateForm}>Add Template</Nav.Link>
@@ -205,13 +219,13 @@ function HomePage() {
 
       <Modal className='bootmodal' show={templateFormOpen} onHide={showTemplateForm}>
         
-        <Modal.Body><TemplateForm templates={templates} user={user} /></Modal.Body>
+        <Modal.Body><TemplateForm templates={templates} setTemplates={setTemplates} user={user} /></Modal.Body>
         
       </Modal>
 
       <Modal className='bootmodal' show={editFormOpen} onHide={hideEditForm}>
         
-        <Modal.Body><EditProject  templates={templates} user={user} project={project} /></Modal.Body>
+        <Modal.Body><EditProject project={project} projects={projects} setProjects={setProjects} /></Modal.Body>
         
       </Modal>
 
@@ -239,7 +253,7 @@ function HomePage() {
   <h5>No milestones (yet)</h5> }
 {milestones.map(milestone => (
   <Milestone 
-    key={milestone.id} 
+     
     milestone={milestone} 
     handleMilestoneToggle={handleMilestoneToggle} 
     showMilestoneEditForm={showMilestoneEditForm} 

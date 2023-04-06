@@ -18,7 +18,8 @@ function Milestone({ milestone, handleMilestoneToggle, showMilestoneEditForm, de
         <br/>
         {milestone.description}
         <br></br>
-        <p >Due Date: {dayjs(milestone.due_date).format('MM.DD.YYYY')}  </p> 
+        <p >Due Date: {milestone.due_date}  </p> 
+        {console.log(milestone)}
         {milestone.complete === false &&  
           <p style={{color:dayjs(milestone.due_date).diff(today, 'day') <= 30 && "red"}}>
             {dayjs(milestone.due_date).diff(today, 'day')} days remaining 

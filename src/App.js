@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes,  } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './components/pages/login';
 import Signup from './components/pages/signup';
-
 import Home from './components/pages/single-page/HomePage';
 import Logout from './components/pages/logout';
 import { UserContext } from './components/pages/single-page/util/context';

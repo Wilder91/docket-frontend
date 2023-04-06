@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-import Form from 'react-bootstrap/Form';
+import {Form, Button} from 'react-bootstrap';
 import dayjs from 'dayjs'
 function projectForm(props) {
   
@@ -9,7 +9,7 @@ function projectForm(props) {
   const [kind, setKind] = useState("");
   const [template, setTemplate] = useState("")
   const [message] = useState("");
-
+  const [formMessage, setFormMessage] = useState('');
 
 
   
@@ -39,83 +39,117 @@ function projectForm(props) {
     const thisTemplate = props.templates.find(t => t.name === template)
     if(thisTemplate){
     const arr_two = thisTemplate.milestones
-    console.log()
-    arr_two.map(m => m.due_date = dayjs(project.due_date).subtract(m.lead_time, 'days'))
-    arr_two.map(m => m.project_name = project.name)
-    props.setMilestones(milestones => [...milestones, ...arr_two])
-    console.log(props)}
-  }
-let handleSubmit = (e) => {
 
+   
+ 
+    arr_two.map(m => m.due_date = dayjs(project.due_date).subtract(parseInt(m.leadTime), 'days').format('DD/MM/YYYY'))
+    
+    arr_two.map(m => m.project_name = project.name)
+    arr_two.map(m => m.complete = false)
+    arr_two.map(m => m.project_id = project.id)
+    console.log(arr_two)
+    props.setMilestones(milestones => [...milestones, ...arr_two])
+    }
+  }
+  let handleSubmit = (e) => {
     e.preventDefault();
     e.target.reset();
-    setName('')
-    setDate('')
-    setKind('')
-    setTemplate('')
-    console.log(sessionStorage)
-      fetch(`http://localhost:3000/users/${sessionStorage.user_id}/projects`, {
-        method: "POST",
-        body: JSON.stringify({
-          name: name,
-          kind: kind,
-          due_date: date,
-          user_id: sessionStorage.user_id,
-          template: template
-        }),
-        headers: new Headers( {
-          Authorization: `${sessionStorage.token}`, 
-          'Content-Type': 'application/json'
-        }),
-      }).then((response) => response.json())
-      .then((data) => addProject(data))
-    };
-
- 
+    setName('');
+    setDate('');
+    setKind('');
+    setTemplate('');
+    console.log(sessionStorage);
+    fetch(`http://localhost:3000/users/${sessionStorage.user_id}/projects`, {
+      method: 'POST',
+      body: JSON.stringify({
+        name: name,
+        kind: kind,
+        due_date: date,
+        user_id: sessionStorage.user_id,
+        template: template,
+      }),
+      headers: new Headers({
+        Authorization: `${sessionStorage.token}`,
+        'Content-Type': 'application/json',
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+        setFormMessage('Project created successfully.');
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data); // <-- add this line to log the response
+        addProject(data);
+      })
+      .catch((error) => {
+        console.error(error);
+        setFormMessage('Error creating project.');
+      });
+  };
 
     return (
-    <Form className='embed' onSubmit={handleSubmit}>
-    <h1>New Project</h1>
-    
-    <input required
-      type="text"
-      value={name}
-      placeholder="Name"
-      className='input-container'
-      onChange={(e) => setName(e.target.value)}
-    />
-    <br></br>
-    <input 
-      type="text"
-      value={kind}
-      placeholder="Type"
-      className='input-container'
-      maxLength={50}
-      onChange={(e) => setKind(e.target.value)}
-    />
-    <br></br>
-    <input required
-      type="date"
-      value={date}
-      placeholder="Date"
-      className='input-container'
-      onChange={(e) => setDate(e.target.value)}
-    />
-    <br></br>
-    <Form.Select aria-label="Default select example"  onChange={handleChange} style={{textTransform: 'capitalize'}}>
-    
-      <option value="">No Template</option>
-    {props.templates.map(template => 
-    <option key={template.id} value={template.name}>{template.name}</option>) }
+    <Form onSubmit={handleSubmit}>
+    <Form.Group controlId='formProjectName'>
+      <Form.Label>Name</Form.Label>
+      <Form.Control
+        required
+        type='text'
+        placeholder='Enter project name'
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+    </Form.Group>
+
+    <Form.Group controlId='formProjectKind'>
+      <Form.Label>Kind</Form.Label>
+      <Form.Control
       
-     
-    </Form.Select>
+        type='text'
+        value={kind}
+        onChange={(e) => setKind(e.target.value)}
+      >
+        
+      </Form.Control>
+    </Form.Group>
+      
+    <Form.Group controlId='formProjectTemplate'>
+    <Form.Label>Or Create from Template</Form.Label>
+    <Form.Control
+    as='select'
+     aria-label="Default select example"  
+     onChange={handleChange} 
+     style={{textTransform: 'capitalize'}}>
+    
+    <option value="">No Template</option>
+  {props.templates.map(template => 
+  <option key={template.id} value={template.name}>{template.name}</option>) }
+    
    
-    <br />
-    <button className='normal' type="submit">Create</button>
-    <div className="message">{message ? <p>{message}</p> : null}</div>
-    <br />
- </Form>
+  </Form.Control>
+    </Form.Group>
+
+    <Form.Group controlId='formProjectDueDate'>
+      <Form.Label>Due Date</Form.Label>
+      <Form.Control
+        required
+        type='date'
+        value={date}
+        onChange={(e) => setDate(e.target.value)}
+      />
+      </Form.Group>
+   
+      
+   
+
+    <Button variant='primary' type='submit'>
+      Create Project
+    </Button>
+
+    <p>{formMessage}</p>
+  </Form>
     )
 }
 
