@@ -43,6 +43,9 @@ body {
     transform: scale(1.1);
     z-index: 9;
   }
+  .bootstrap_card:active {
+    background: #9fa5a9;
+  }
 
   .bootstrap_card:hover::before {
     background: rgb(85 108 214 / 10%);

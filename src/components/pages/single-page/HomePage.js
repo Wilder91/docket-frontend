@@ -110,37 +110,7 @@ function HomePage() {
   
 
 
-  function deleteMilestone(id) {
-    fetch(`http://localhost:3000/milestones/${id}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `${token}`,
-      },
-    })
-      .then((response) => {
-        if (response.ok) {
-          console.log('Milestone deleted successfully:', response);
-          removeMilestone(id);
-        } else {
-          throw new Error('Failed to delete milestone');
-        }
-      })
-      .catch((error) => {
-        console.error('Error deleting milestone:', error);
-      });
-  }
-
-
-
   
-
-  /* removes a specific milestone from the DOM */
-  function removeMilestone(id) {      
-    setMilestones(milestones.filter(p =>
-        p.id !== id
-      )
-    )
-  }
 
   /* changes a milestone's completion status */
   function handleMilestoneToggle(id) {
@@ -219,7 +189,7 @@ function HomePage() {
 
       <Modal className='bootmodal' show={templateFormOpen} onHide={showTemplateForm}>
         
-        <Modal.Body><TemplateForm templates={templates} setTemplates={setTemplates} user={user} /></Modal.Body>
+        <Modal.Body><TemplateForm templates={templates} setTemplates={setTemplates} user={user} setTemplateFormOpen={setTemplateFormOpen} /></Modal.Body>
         
       </Modal>
 
@@ -231,7 +201,7 @@ function HomePage() {
 
       <Modal className='bootmodal' show={editMilestoneFormOpen} onHide={hideEditMilestoneForm}>
         
-        <Modal.Body><EditMilestone  templates={templates} user={user} milestone={milestone} /></Modal.Body>
+        <Modal.Body><EditMilestone  templates={templates} user={user} milestone={milestone} setMilestone={setMilestone} /></Modal.Body>
         
       </Modal>
 
@@ -255,9 +225,11 @@ function HomePage() {
   <Milestone 
      
     milestone={milestone} 
+    setMilestone={setMilestone}
     handleMilestoneToggle={handleMilestoneToggle} 
     showMilestoneEditForm={showMilestoneEditForm} 
-    deleteMilestone={deleteMilestone} 
+    milestones={milestones}
+    setMilestones={setMilestones}
     today={today} 
   />
 ))}

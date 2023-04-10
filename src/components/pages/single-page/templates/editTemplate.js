@@ -54,7 +54,6 @@ function AddTemplate({templates, setTemplates, user, setTemplateFormOpen}) {
 
   const addMilestone = () => {
     setMilestones([...milestones, { name: '', leadTime: '' }]);
-    
   };
 
   const deleteMilestone = (index) => {

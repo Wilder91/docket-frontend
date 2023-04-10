@@ -9,6 +9,7 @@ function projectList({ user, projects, setProjects, milestones, setMilestones, t
   const [project, setProject] = useState([]);
   const [editFormOpen, setEditFormOpen] = useState(false);
   const [selectProject, setSelectProject] = useState(false);
+  const [selectedProjects, setSelectedProjects] = useState([]);
   const [displayedProjects, setDisplayedProjects] = useState([]);
   const today = dayjs();
   const token = sessionStorage.token;
@@ -80,8 +81,9 @@ function projectList({ user, projects, setProjects, milestones, setMilestones, t
   function showProject(project) {
     
     setSelectProject((current) => !current);
-    
-    
+    if(!selectedProjects.includes(project)) {
+    setSelectedProjects(selectedProjects=> [...selectedProjects, project]);}
+    console.log(selectedProjects)
     if(selectProject) {
       setDisplayedProjects(projects.filter(p => p.id === project.id))
     let projectMilestones = milestones.filter(m => m.project_id === project.id)
@@ -115,7 +117,7 @@ function projectList({ user, projects, setProjects, milestones, setMilestones, t
       <div>
   <Modal className='bootmodal' show={editFormOpen} onHide={hideEditForm}>
     <Modal.Body>
-      <EditProject project={project} projects={projects} setProjects={setProjects} setMilestones={setMilestones}/>
+      <EditProject project={project} projects={projects} setProjects={setProjects} setMilestones={setMilestones} setEditFormOpen={setEditFormOpen}/>
     </Modal.Body>
   </Modal>
   <h1>Projects</h1>

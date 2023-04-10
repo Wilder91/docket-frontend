@@ -1,21 +1,21 @@
 import React, {useState} from 'react';
 
 import {Form, Button} from 'react-bootstrap';
-import dayjs from 'dayjs'
-function projectForm(props) {
+
+function projectForm({setProjects, templates, milestones ,setMilestones}) {
   
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [kind, setKind] = useState("");
   const [template, setTemplate] = useState("")
-  const [message] = useState("");
+
   const [formMessage, setFormMessage] = useState('');
 
 
   
   function handleChange(e) {
     setTemplate(e.target.value);
-    console.log(props.templates)
+    console.log(templates)
     
     /*addMilestones(e.target.value);*/
   }
@@ -32,23 +32,26 @@ function projectForm(props) {
 
   function addProject(project) {
     
-    props.setProjects( projects => [...projects,{id: project.id, name: project.name, due_date: project.due_date, kind: project.kind, user_id: project.userId}].sort(function(a,b){
+    setProjects( projects => [...projects,{id: project.id, name: project.name, due_date: project.due_date, kind: project.kind, user_id: project.userId}].sort(function(a,b){
         return new Date(a.due_date) - new Date(b.due_date);
       }) )
-
-    const thisTemplate = props.templates.find(t => t.name === template)
+  
+    const thisTemplate = templates.find(t => t.name === template)
     if(thisTemplate){
-    const arr_two = thisTemplate.milestones
+    const arr_two = project.milestones
+    arr_two.map(m => console.log(m.leadTime))
+    console.log(project)
 
-   
- 
-    arr_two.map(m => m.due_date = dayjs(project.due_date).subtract(parseInt(m.leadTime), 'days').format('DD/MM/YYYY'))
-    
+    console.log(arr_two)
     arr_two.map(m => m.project_name = project.name)
     arr_two.map(m => m.complete = false)
     arr_two.map(m => m.project_id = project.id)
+   
     console.log(arr_two)
-    props.setMilestones(milestones => [...milestones, ...arr_two])
+    setMilestones(milestones => [...milestones, ...arr_two].sort(function(a,b){
+      return new Date(a.due_date) - new Date(b.due_date)}))
+
+    
     }
   }
   let handleSubmit = (e) => {
@@ -124,7 +127,7 @@ function projectForm(props) {
      style={{textTransform: 'capitalize'}}>
     
     <option value="">No Template</option>
-  {props.templates.map(template => 
+  {templates.map(template => 
   <option key={template.id} value={template.name}>{template.name}</option>) }
     
    
