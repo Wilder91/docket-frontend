@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from 'react'
-import ProjectList from './user/projectList'
+import ProjectList from '../single-page/project/projectList'
 import ProjectForm from './project/ProjectForm'
 import Templates from './templates/templates'
 import TemplateForm from './templates/addTemplate'
