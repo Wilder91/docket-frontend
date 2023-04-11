@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-function MilestoneForm() {
+function MilestoneForm({project, milestones, setMilestones}) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
@@ -11,6 +11,7 @@ function MilestoneForm() {
 
   useEffect(() => {
     setErrorMessage('');
+    console.log(project)
   }, [name, description, date]);
 
   useEffect(() => {
@@ -30,25 +31,41 @@ function MilestoneForm() {
     setDate(e.target.value);
   };
 
+  function addMilestone(data){
+    console.log(data)
+    setMilestones(milestones => [...milestones, {id: data.id, name: data.name, description: data.description, due_date: data.due_date, project_id: data.projectId, project_name: data.project_name}].sort(function(a,b){ return new Date(a.due_date) - new Date(b.due_date)}
+    ))
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    e.target.reset();
     fetch('http://localhost:3000/milestones', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: `${sessionStorage.token}`
       },
-      body: JSON.stringify({ name, description, date })
+      body: JSON.stringify({ 
+        name: name,
+        description: description, 
+        date: date, 
+        project_name: project.name,
+        project_id: project.id })
     })
     .then(response => {
       if (!response.ok) {
         throw new Error('Error submitting form');
       }
-    // Handle successful form submission
+      return response.json(); // parse the response body as JSON
+    })
+    .then(data => {
+      addMilestone(data); // call addMilestone with the parsed data
     })
     .catch(error => {
       setErrorMessage(error.message);
     });
-  };
+  }
 
   return (
     <Form className='embed' onSubmit={handleSubmit}>

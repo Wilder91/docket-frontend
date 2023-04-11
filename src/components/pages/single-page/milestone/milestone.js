@@ -8,6 +8,11 @@ const token = sessionStorage.token;
 
 function Milestone({ milestone, setMilestone, milestones, setMilestones, showMilestoneEditForm, today }) {
 
+  const confirmDeleteMilestone = (id) => {
+    if (window.confirm('Are you sure you want to delete this milestone?')) {
+      deleteMilestone(id);
+    }
+  };
   function deleteMilestone(id) {
  
     fetch(`http://localhost:3000/milestones/${id}`, {
@@ -102,7 +107,7 @@ function Milestone({ milestone, setMilestone, milestones, setMilestones, showMil
            `${dayjs(milestone.due_date).diff(today, 'day')} days remaining`}
        </p> }
         <button className='normal' onClick={() => showMilestoneEditForm(milestone.id)}>edit</button>   
-        <button className='normal' onClick={() => deleteMilestone(milestone.id)}>delete</button>   
+        <button className='normal' onClick={() => confirmDeleteMilestone(milestone.id)}>delete</button>   
       </Card>
     </li>
   );

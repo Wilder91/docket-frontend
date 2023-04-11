@@ -4,13 +4,11 @@ import { Card, Modal } from 'react-bootstrap';
 import { FaFlag } from 'react-icons/fa';
 import dayjs from 'dayjs';
 import EditProject from '../project/editProject';
-import MilestoneForm from '../milestone/MilestoneForm';
 
 function projectList({ user, projects, setProjects, milestones, setMilestones, templates }) {
   const [project, setProject] = useState([]);
   const [editFormOpen, setEditFormOpen] = useState(false);
   const [selectProject, setSelectProject] = useState(false);
-  const [milestoneFormOpen, setMilestoneFormOpen] = useState(false);
   const [selectedProjects, setSelectedProjects] = useState([]);
   const [displayedProjects, setDisplayedProjects] = useState([]);
   const today = dayjs();
@@ -21,10 +19,6 @@ function projectList({ user, projects, setProjects, milestones, setMilestones, t
   const hideEditForm = () => {
     setEditFormOpen(false);
   };
-
-  const hideMilestoneForm = () => { 
-    setMilestoneFormOpen(false);
-  } 
 
   function showProject(project) {
     
@@ -108,11 +102,6 @@ function projectList({ user, projects, setProjects, milestones, setMilestones, t
     setMilestones(milestones.filter((p) => p.project_id !== id));
   }
 
-  const showMilestoneForm = id => {
-   
-    setProject(id);
-    setMilestoneFormOpen(true);
-  };
   
 
   const showEditForm = id => {
@@ -130,11 +119,6 @@ function projectList({ user, projects, setProjects, milestones, setMilestones, t
   <Modal className='bootmodal' show={editFormOpen} onHide={hideEditForm}>
     <Modal.Body>
       <EditProject project={project} projects={projects} setProjects={setProjects} setMilestones={setMilestones} setEditFormOpen={setEditFormOpen}/>
-    </Modal.Body>
-  </Modal>
-  <Modal className='bootmodal' show={milestoneFormOpen} onHide={hideMilestoneForm}>
-    <Modal.Body>
-      <MilestoneForm project={project} milestones={setMilestones} setMilestones={setMilestones}/>
     </Modal.Body>
   </Modal>
   <h1>Projects</h1>
@@ -166,7 +150,6 @@ function projectList({ user, projects, setProjects, milestones, setMilestones, t
             <br />
             <button className='normal' onClick={() => showEditForm(project.id)}>edit</button>
             <button className='normal' onClick={() => confirmDeleteProject(project.id)}>delete</button>
-            <button className='normal' onClick={() => showMilestoneForm(project)}>Add Milestone</button>
           </div>
           </Card>
         </li>

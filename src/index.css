@@ -89,7 +89,10 @@ body {
     
   }
   
-  
+  ul > li {
+    display: inline-block;
+    /* You can also add some margins here to make it look prettier */
+}
   
   .button:hover {
   
@@ -166,7 +169,7 @@ body {
     display: inline-block;
     background-color: rgb(255, 255, 255);
     border-radius: 10px;
-    border-color: black;
+    border-color: rgb(187, 47, 47);
     border-width: 1px;
     padding: 10px 20px 10px;
     
@@ -174,6 +177,9 @@ body {
     box-sizing: border-box;
   
     
+  }
+  .milestone-list{
+    float: left;
   }
   
   .dd-logo {
