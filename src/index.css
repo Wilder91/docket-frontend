@@ -1,0 +1,371 @@
+body {
+    margin: 0;
+    font-family:  'Ek Mukta'; font-size: 22px;
+    -webkit-font-smoothing: antialiased;
+    background-color: #eeedec;
+    color: #e74d1c;
+    text-align: center;
+    
+  }
+  .bootstrap_card {
+    flex: 0 50%;
+    background: #fff;
+    box-shadow: 0 2px 4px 0 rgba(136, 144, 195, 0.2),
+      0 5px 15px 0 rgba(37, 44, 97, 0.15);
+    border-radius: 15px;
+    margin: 8px;
+    padding: 10px 15px;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    min-height: 265px;
+    transition: 0.7s;
+  }
+
+  .bootstrap-card-no-hover {
+    flex: 0 50%;
+    background: #fff;
+    box-shadow: 0 2px 4px 0 rgba(136, 144, 195, 0.2),
+      0 5px 15px 0 rgba(37, 44, 97, 0.15);
+    border-radius: 15px;
+    margin: 8px;
+    padding: 10px 15px;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    min-height: 265px;
+    transition: 0.7s;
+  }
+
+ .bootstrap_card:hover {
+    background: #9fa5a9;
+    color: #fff;
+    transform: scale(1.1);
+    z-index: 9;
+  }
+  .bootstrap_card:active {
+    background: #9fa5a9;
+  }
+
+  .bootstrap_card:hover::before {
+    background: rgb(85 108 214 / 10%);
+  }
+  
+  .bootstrap_card:hover .solu_title h3,
+  .bootstrap_cards_box .bootstrap_card:hover .solu_description p {
+    color: #fff;
+  }
+
+  .hover_color_bubble {
+    position: absolute;
+    background: rgb(54 81 207 / 15%);
+    width: 100rem;
+    height: 100rem;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    top: 16rem;
+    border-radius: 50%;
+    transform: rotate(-36deg);
+    left: -18rem;
+    transition: 0.7s;
+  }
+  button.normal {
+    display:inline-block;
+    padding:0.3em 1em;
+    border:0.16em solid #FFFFFF;
+    margin:0 0.3em 0.3em 0;
+    box-sizing: border-box;
+    text-decoration:none;
+    font-family:'Roboto',sans-serif;
+    font-weight:400;
+    color:#9b9b9b;
+    text-align:center;
+    transition: all 0.15s;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+  
+    
+  }
+  
+  ul > li {
+    display: inline-block;
+    /* You can also add some margins here to make it look prettier */
+}
+.fixed-list {
+  position: fixed;
+  top: 50px;
+  bottom: 50px;
+  left: 50px;
+  right: 50px;
+  overflow-y: auto; /* enables scrolling for the fixed list */
+}
+.embed {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.embed input[type="number"] {
+  width: 200%;
+  max-width: 150%;
+  min-width: 90%
+}
+
+.embed.milestone-name {
+  width: 400%;
+  max-width: 400%;
+  min-width: 90%
+}
+  .button:hover {
+  
+    color: white;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  }
+  .input-container {
+    border-radius: 8px;
+    width: 200px;
+    height: 35px;
+    font-size: 14px;
+    text-align: left;
+    border-style: solid;
+    border-color: white;
+    
+    
+  }
+  .nice-button {
+    font-size: 1em;
+      text-align: center;
+      background-color: #e74d1c;
+      color: white;
+      margin-bottom: 5px;
+      padding-top: 5px;
+    padding-bottom: 6px;
+      border: none;
+      cursor: pointer;
+    border-radius: 10px;
+    opacity: 100%;
+    text-decoration: none;
+    width: 210px;
+  
+  }
+  
+  .signup-button {
+    font-size: 1em;
+      text-align: center;
+      background-color: gray;
+      color: white;
+      margin: 0;
+      padding-top: 5px;
+    padding-bottom: 6px;
+    text-decoration: none;
+      border: none;
+      cursor: pointer;
+    border-radius: 10px;
+    opacity: 100%;
+    width: 210px;
+  }
+  
+  .signup {
+    background-color: gray;
+  }
+  
+  #main{
+    margin: 0px auto;
+  }
+  
+  
+  
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+      monospace;
+  }
+  
+  
+  
+  li {
+    
+    opacity: 80%;
+    text-transform: capitalize;
+    margin: 5px;
+    background-blend-mode: color;
+    display: inline-block;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    border-color: rgb(187, 47, 47);
+    border-width: 1px;
+    padding: 10px 20px 10px;
+    
+    width: 320px;
+    box-sizing: border-box;
+  
+    
+  }
+  .milestone-list{
+    float: left;
+  }
+  
+  .dd-logo {
+    width: 10px;
+    display: inline;
+  
+  }
+  
+ 
+  
+  
+  h2 {
+    display: table;
+    margin: 0 auto;
+    align-items: center;
+    background-color: #f5e9e9;
+    width: 300px;
+    height: 100px;
+    margin-right: 10px;
+    margin-top: 10px;
+    padding-top: 24px;
+    display: inline-block;
+  
+    background-size: 50%;
+   
+    border: white;
+    border-radius: 10px;
+  }
+  
+  h4 {
+    cursor:pointer;
+    margin-bottom: 0px;
+    display: inline;
+  }
+  form.normal {
+   
+    opacity: 80%;
+    
+    background-blend-mode: color;
+    display: inline-block;
+  
+    background-color: white;
+    border-radius: 30px;
+    margin: 5px;
+    margin-top: 100px;
+    padding-top: 10px;
+    box-shadow: 0 5px 15px rgba(185, 154, 154, 0.2);
+    width: 320px;
+    height: 380px;
+    box-shadow: 0px 50px 100px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(7.5px);
+  }
+  
+  h1 {
+    text-align: center;
+    line-height: 0.7em;
+    display: inline;
+    padding-top: 10px;
+  }
+
+
+h1, .h1 {
+    font-size: calc(1.375rem + 1.5vw);
+    display: inherit;
+}
+  
+  h3 {
+    text-align: -webkit-left;
+    font-size:xx-large;
+    margin-top: 0px;
+    margin-bottom: 5px;
+    margin-left: 50px;
+  }
+  img {
+    scale: 10%;
+    display: flex;
+    border-bottom: 10cm;
+    position: absolute;
+    top: -55%;
+    right: 0;
+  }
+  link {
+    text-align: center;
+    
+  }
+  
+  form.embed {
+    opacity: 1;  
+    background-blend-mode: color;
+    display: inline-block;
+    border-radius: 30px;
+    margin: 0 auto; 
+    padding: 90px;
+    padding-top: 40px;
+
+    width: 320px;
+    height: 220px;
+
+    backdrop-filter: blur(7.5px);
+  }
+
+  h5{
+    display: inline;
+  }
+
+  .btn-primary {
+   background-color: none;
+   width: 200px;
+   height: 35px;
+  }
+
+  .modal-body {
+    padding: 1px;
+  }
+
+  .form-select{
+    width: 200px;
+  }
+  a {
+    text-decoration: none;
+    color: #e74d1c;
+  }
+  .project-names{
+    color: #7B7575;
+  }
+  .Invisible{
+    height: 100vh;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    z-index: 0;
+  }
+  
+  svg {
+    position: absolute;
+    
+}
+  a:active{
+    color:#8982ca
+  }
+  
+  b{
+    color: #7B7575;
+  }
+
+ 
+
+  .bootmodal{
+    background:none;
+  }
+
+  .Overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rebeccapurple;
+  }
+  /*
+  a:visited{
+    color: #e74d1c;
+  
+  }*/
+  

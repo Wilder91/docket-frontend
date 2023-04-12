@@ -1,18 +1,30 @@
-import React, {  useState, useEffect} from 'react';
-import { NavLink, useParams, useLocation} from 'react-router-dom';
+import React, {useState, useEffect} from 'react';
+import {useLocation, useNavigate} from 'react-router-dom';
 import MilestoneForm from '../milestone/MilestoneForm';
-import Modal from 'react-modal';
+import EditProject from './editProject'
+import {Modal, Card, Navbar, Nav, Container } from 'react-bootstrap';
+import dayjs from 'dayjs';
+
+
 
 function Project() {
-  const [milestones, setMilestones] = useState([])
-  const [formOpen, setFormOpen] = useState()     
+  const [user, setUser] = useState('')
+  const [milestones, setMilestones] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+  
+  const [project, setProject] = useState('')
   const location = useLocation()
-  const {projectId} = useParams();
+
+
+  const nav = useNavigate()
+  
 
   function deleteMilestone(id) {
     fetch(`http://localhost:3000/milestones/${id}`, { method: 'DELETE', headers: new Headers( {
-      Authorization: `${localStorage.token}`, })})  
-    removeMilestone(id)      
+      Authorization: `${sessionStorage.token}`, })})  
+    removeMilestone(id)  
+    console.log(sessionStorage)    
    }
 
    function removeMilestone(id) {  
@@ -23,58 +35,89 @@ function Project() {
   }
 
   function hello() {
-  setMilestones( location.state.milestones.milestones.filter((m) =>
-    m.project_id.toString() === projectId
-  ))
+    console.log(user)
+    console.log(milestones)
+    
+
+
   }
+ /* ok */
+  const showModal = () => {
+    setIsOpen(true);
+  };
 
-  function openForm() {
-    setFormOpen(true);
-  }
+  const hideModal = () => {
+    setIsOpen(false);
+  };
+
+  const showEdit = () => {
+    setEditOpen(true);
+  };
+
+  const hideEdit = () => {
+    setEditOpen(false);
+  };
+  
+  /*ok*/
+
+  function goHome() {
+    console.log(user)
+    nav("/home",
+    {state: {returningUser: {user}}})
+  }  
 
 
-  function closeForm() {
-    setFormOpen(false);
-  }
-
-  useEffect(() => {  
-    hello()   
+  useEffect(() => { 
+    setUser(location.state.user) 
+    setProject(location.state.project)
+    setMilestones(location.state.user.milestones.filter((m) =>
+    m.project_id === location.state.project.id))
     console.log(location.state)
+    hello()
   }, []);
+
+
+  return (  
+    
+    <div>
+      <Navbar bg="dark" variant="dark">
+        <Container>
+          <Navbar.Brand href="#home">{user.name}</Navbar.Brand>
+          <Nav className="container-fluid">
+            <Nav.Link onClick={goHome}>Home</Nav.Link>
+            <Nav.Link onClick={showEdit}>Edit Project </Nav.Link>
+            <Nav.Link onClick={showModal}>Add Milestone</Nav.Link>
+            
+            <Nav.Link className="ms-auto" href="/logout">Logout</Nav.Link>
+          </Nav>
+        </Container>
+      </Navbar>
+    
+    <h1>{project.name} Milestones</h1>
+    <br />
+    <ul>
+    {milestones.length === 0 &&
+    
+    <h5>No milestones</h5> }
+    
+    {milestones.map(milestone => (<li key={milestone.id}>  <Card className='bootstrap-card-no-hover' > <b>{milestone.name}</b> <br></br>  {milestone.description}<br></br> Due Date:{dayjs(milestone.due_date).format('MM.DD.YYYY')} <br></br> <button className='normal' onClick={() => {deleteMilestone(milestone.id)}}>Delete</button></Card>  </li>
+    ))}
+    
  
+    </ul> 
+  
+     
 
-  return (    
-  <div className='page'>
-  <h1>{location.state.project.project.name} Milestones</h1>
-
-  <button className='normal' onClick={openForm}>Add Milestone</button>
-      <Modal
-        className='modal'
-        isOpen={formOpen}
-
-        onRequestClose={closeForm}
-
-        contentLabel="Example Modal"
-        ariaHideApp={false}
-      >
-       <MilestoneForm setMilestones={setMilestones} />
+     
+      <Modal className='bootmodal' show={editOpen} onHide={hideEdit}>
+       
+        <Modal.Body> <EditProject project={location.state.project.project}templates = {location.state.user.templates}/> </Modal.Body>
+  
       </Modal>
-<br />
-
-
-  <ul>
-  {milestones.length === 0 &&
-  
-  <h5>Nothing Here, Yet!</h5> }
-  {milestones.map(milestone => (<li key={milestone.id}>   <b>{milestone.name}</b> <br></br>  {milestone.description}<br></br> Due Date:{milestone.due_date} <br></br> <button className='normal' onClick={() => {deleteMilestone(milestone.id)}}>Delete</button> </li>
-  ))}
-  
-  <br></br>
-  <br></br>
-  <NavLink to="/home" >Home</NavLink> 
-  </ul>
-  </div>
-  );
+   
+</div>
+    
+  )
 }   
 
 
@@ -83,6 +126,3 @@ export default Project
 
 
 
-/*[{id: 2, name: 'present proofs', description: 'give customer time to review and suggest changes', due_date: '2022-04-06', project_id: 1}, {id: 1, name: 'ship invites', description: 'invites must be shipped by this date', due_date: '2022-04-09', project_id: 2}]
-[{id: 2, name: 'present proofs', description: 'give customer time to review and suggest changes', due_date: '2022-04-06', project_id: 1}, {id: 1, name: 'ship invites', description: 'invites must be shipped by this date', due_date: '2022-04-09', project_id: 2}]
-*/

@@ -1,37 +1,30 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes,  } from 'react-router-dom';
-import './App.css';
-
-import Landing from './components/pages/login';
-
-
-import Project from './components/pages/single-page/project/Project';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Login from './components/pages/login';
 import Signup from './components/pages/signup';
-
-import User from './components/pages/single-page/HomePage';
+import Home from './components/pages/single-page/HomePage';
 import Logout from './components/pages/logout';
+import { UserContext } from './components/pages/single-page/util/context';
+
 
 
 
 
 const App = () => {
+ 
   return (
     <>
+      <UserContext.Provider value={'hello'}>
       <BrowserRouter >
-      <Routes>
-        <Route exact path='/' element={<Landing />} />
-        <Route exact path='/signup' element={<Signup />} />
-
-
-        <Route exact path='/projects/:projectId' element={<Project />} />
- 
-        <Route exact path='/home' element={<User />} />
-        <Route exact path ='/logout' element={<Logout />} />
- 
-
+        <Routes>
+          <Route exact path='/login' element={<Login />} />
+          <Route exact path='/signup' element={<Signup />} />
+          <Route exact path='/' element={<Home />} />               
+          <Route exact path ='/logout' element={<Logout />} />
         </Routes>
-       
       </BrowserRouter>
+      </UserContext.Provider>
     </>
   );
 };

@@ -1,63 +1,103 @@
-import React, {useEffect, useState} from 'react'
-import {useParams} from 'react-router-dom'
+import React, {useEffect, useState} from 'react';
 
-function editProject({project}) {
- 
+import dayjs from 'dayjs';
+function editProject({project, projects, setProjects, setMilestones, setEditFormOpen}) {
+
+
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [kind, setKind] = useState("");
+
   const [message] = useState("");
-  const {userId} = useParams();
 
-  function addProject() {
-
-    console.log('p')
-
-  }
-
-  useEffect(() => {
-    console.log(project)
-                
-  }, []);
-let handleSubmit = (e) => {
+  function updateProject(data) {
+    console.log(data);
     
-    e.preventDefault();
-    e.target.reset();
-    setName('')
-    setDate('')
-    setKind('')
-   
-      fetch(`http://localhost:3000/projects`, {
-        method: "POST",
-        body: JSON.stringify({
-          name: name,
-          kind: kind,
-          date: date,
-          user_id: userId
-        }),
-        headers: new Headers( {
-          Authorization: `${localStorage.token}`, 
-          'Content-Type': 'application/json'
-        }),
-      }).then((response) => response.json())
-      .then((data) => addProject(data))
-    };
+    setProjects((prevProjects) => {
+      const updatedProjects = prevProjects.map((project) => {
+        console.log(data)
+        if (project.id === data.id) {
+          return { ...project, ...data };
+        } else {
+          return project;
+        }
+      });
+      return updatedProjects;
+    });
+    setMilestones((prevMilestones) => {
+      const updatedMilestones = prevMilestones.map((milestone) => {
+        if (milestone.project_id === data.id) {
+          let dueDate = dayjs(data.due_date).subtract(milestone.lead_time, 'day');
+          console.log(dueDate)
+          return { ...milestone, project_name: data.name,  due_date:dueDate}; // <-- modify the milestone object with the updated project_name
+        } else {
+          return milestone;
+        }
+      });
+      return updatedMilestones;
+    });
+  }
+  
 
-    return (
-    <form className='embed' onSubmit={handleSubmit}>
-      <h1>``</h1>
+ 
+  let handleSubmit = (e) => {
+    e.preventDefault();
+    
+    fetch(`http://localhost:3000/projects/${project.id}`, {
+      method: 'PATCH',
+      body: JSON.stringify({
+        name: name,
+        kind: kind,
+        date: date
+      }),
+      headers: new Headers( {
+        Authorization: `${sessionStorage.token}`, 
+        'Content-Type': 'application/json'
+      }),
+    })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      updateProject(data);
+      
+      setEditFormOpen(false);
+      e.target.reset();// <-- reset the form inside the second .then() block
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  };
+
+
+
+
+useEffect(() => {
+   
+  setName(project.name)
+  setKind(project.kind)
+  setDate(project.due_date) 
+
+  
+}, []);
+
+  return (
+  <form className='embed' onSubmit={handleSubmit}>
+    <h1>Project Details</h1>
+
     <input required
       type="text"
-      value={name}
-      placeholder="Name"
+      defaultValue={project.name}  
       className='input-container'
       onChange={(e) => setName(e.target.value)}
     />
     <br></br>
     <input 
       type="text"
-      value={kind}
-      placeholder="Type"
+      defaultValue={project.kind}      
       className='input-container'
       maxLength={50}
       onChange={(e) => setKind(e.target.value)}
@@ -65,17 +105,18 @@ let handleSubmit = (e) => {
     <br></br>
     <input required
       type="date"
-      value={date}
-      placeholder="Date"
+      defaultValue={project.due_date}
       className='input-container'
       onChange={(e) => setDate(e.target.value)}
     />
-    <br></br>
-    <button className='normal' type="submit">Create</button>
-    <div className="message">{message ? <p>{message}</p> : null}</div>
     <br />
- </form>
-    )
+
+  
+    <button className='normal' type="submit">Update</button>
+    <div className="message">{message ? <p>{message}</p> : null}</div>
+    
+</form>
+  )
 }
 
 export default editProject

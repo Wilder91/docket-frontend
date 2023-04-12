@@ -9,12 +9,12 @@ class Logout extends Component {
       }
 
       clearUser(){
-        window.localStorage.clear()
-        console.log(localStorage)
+        window.sessionStorage.clear()
+       
       }
       render() {
         return(
-          <Navigate to="/" />
+          <Navigate to="/login" />
         )
       }
   
