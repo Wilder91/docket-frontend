@@ -93,7 +93,30 @@ body {
     display: inline-block;
     /* You can also add some margins here to make it look prettier */
 }
-  
+.fixed-list {
+  position: fixed;
+  top: 50px;
+  bottom: 50px;
+  left: 50px;
+  right: 50px;
+  overflow-y: auto; /* enables scrolling for the fixed list */
+}
+.embed {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.embed input[type="number"] {
+  width: 200%;
+  max-width: 150%;
+  min-width: 90%
+}
+
+.embed.milestone-name {
+  width: 400%;
+  max-width: 400%;
+  min-width: 90%
+}
   .button:hover {
   
     color: white;

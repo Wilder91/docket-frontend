@@ -65,10 +65,10 @@ function AddTemplate({templates, setTemplates, user, setTemplateFormOpen}) {
   };
 
   return (
-    <Form className='embed' onSubmit={handleSubmit}>
+    <Form className='embed'  onSubmit={handleSubmit}>
       <h1>New Template</h1>
 
-      <Form.Group controlId='formTemplateName'>
+      <Form.Group  controlId='formTemplateName'>
         <Form.Label>Template Name</Form.Label>
         <Form.Control
           required
@@ -82,7 +82,7 @@ function AddTemplate({templates, setTemplates, user, setTemplateFormOpen}) {
         <Form.Group key={index} controlId={`formMilestone${index}`}>
           <Row>
             <Col>
-              <Form.Label>Milestone {index + 1}</Form.Label>
+              <Form.Label className='milestone-name'>Milestone {index + 1}</Form.Label>
               <Form.Control
                 required
                 type='text'

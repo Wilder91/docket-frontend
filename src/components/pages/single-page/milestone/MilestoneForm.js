@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-
+import dayjs from 'dayjs';
 function MilestoneForm({project, milestones, setMilestones}) {
   const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
+ 
   const [date, setDate] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [formValid, setFormValid] = useState(false);
@@ -12,29 +12,35 @@ function MilestoneForm({project, milestones, setMilestones}) {
   useEffect(() => {
     setErrorMessage('');
     console.log(project)
-  }, [name, description, date]);
+  }, [name,  date]);
 
   useEffect(() => {
     const isValid = name.trim() !== '' && date.trim() !== '';
     setFormValid(isValid);
-  }, [name, description, date]);
+  }, [name,  date]);
 
   const handleNameChange = (e) => {
     setName(e.target.value);
   };
 
-  const handleDescriptionChange = (e) => {
-    setDescription(e.target.value);
-  };
+
 
   const handleDateChange = (e) => {
     setDate(e.target.value);
   };
 
-  function addMilestone(data){
-    console.log(data)
-    setMilestones(milestones => [...milestones, {id: data.id, name: data.name, description: data.description, due_date: data.due_date, project_id: data.projectId, project_name: data.project_name}].sort(function(a,b){ return new Date(a.due_date) - new Date(b.due_date)}
-    ))
+  function addMilestone(data) {
+    setMilestones((milestones) => [
+      ...milestones,
+      {
+        id: data.id,
+        name: data.name,
+        description: data.description,
+        due_date: data.due_date,
+        project_id: data.projectId,
+        project_name: data.project_name,
+      },
+    ].sort((a, b) => new Date(a.due_date) - new Date(b.due_date)));
   }
 
   const handleSubmit = (e) => {
@@ -48,8 +54,8 @@ function MilestoneForm({project, milestones, setMilestones}) {
       },
       body: JSON.stringify({ 
         name: name,
-        description: description, 
         date: date, 
+        lead_time: dayjs(date).diff(dayjs(project.due_date), 'days'),
         project_name: project.name,
         project_id: project.id })
     })
@@ -60,12 +66,13 @@ function MilestoneForm({project, milestones, setMilestones}) {
       return response.json(); // parse the response body as JSON
     })
     .then(data => {
+      console.log(data)
       addMilestone(data); // call addMilestone with the parsed data
     })
     .catch(error => {
       setErrorMessage(error.message);
     });
-  }
+  };
 
   return (
     <Form className='embed' onSubmit={handleSubmit}>
@@ -80,19 +87,8 @@ function MilestoneForm({project, milestones, setMilestones}) {
           required
         />
       </Form.Group>
-      <Form.Group controlId='formMilestoneDescription'>
-        <Form.Label>Description</Form.Label>
-        <Form.Control
-          type='text'
-          value={description}
-          placeholder='Description (50 character limit)'
-          maxLength={50}
-          onChange={handleDescriptionChange}
-        />
-        <Form.Text>
-          {description.length}/{50}
-        </Form.Text>
-      </Form.Group>
+     
+
       <Form.Group controlId='formMilestoneDate'>
         <Form.Label>Date</Form.Label>
         <Form.Control

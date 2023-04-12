@@ -101,7 +101,7 @@ function Milestone({ milestone, setMilestone, milestones, setMilestones, showMil
         <br></br>
         <p >Due Date: {dayjs(milestone.due_date).format('MM.DD.YYYY')}  </p> 
         
-        {milestone.complete === false &&  
+        {milestone.complete !== true &&  
          <p style={{color: dayjs(milestone.due_date).diff(today, 'day') <= 0 ? "red" : "inherit"}}>
          {dayjs(milestone.due_date).diff(today, 'day') <= 0 ? `${dayjs(milestone.due_date).diff(today, 'day') * -1} days Overdue` :
            `${dayjs(milestone.due_date).diff(today, 'day')} days remaining`}

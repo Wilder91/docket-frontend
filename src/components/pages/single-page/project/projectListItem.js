@@ -6,13 +6,33 @@ import { Card } from 'react-bootstrap';
 function ProjectListItem({ project, showProject, showEditForm, confirmDeleteProject, showMilestoneForm }) {
   const today = dayjs();
 
+  const handleFlagClick = (e) => {
+    e.stopPropagation();
+    console.log(project.id);
+  };
+
+  const handleEditClick = (e) => {
+    e.stopPropagation();
+    showEditForm(project.id);
+  };
+
+  const handleDeleteClick = (e) => {
+    e.stopPropagation();
+    confirmDeleteProject(project.id);
+  };
+
+  const handleMilestoneClick = (e) => {
+    e.stopPropagation();
+    showMilestoneForm(project);
+  };
+
   return (
     <li key={project.id}>
       <Card className='bootstrap_card' onClick={() => showProject(project)}>
         {project.complete === true && <h5>complete</h5>}
         <div className="card-title">
           <FaFlag
-            onClick={() => console.log(project.id)}
+            onClick={handleFlagClick}
             style={{ color: project.complete ? 'grey' : 'red' }}
           />
           <br />
@@ -25,9 +45,9 @@ function ProjectListItem({ project, showProject, showEditForm, confirmDeleteProj
           <br />
           {project.complete === false && `${dayjs(project.due_date).diff(today, 'day')} days remaining `}
           <br />
-          <button className='normal' onClick={() => showEditForm(project.id)}>edit</button>
-          <button className='normal' onClick={() => confirmDeleteProject(project.id)}>delete</button>
-          <button className='normal' onClick={() => showMilestoneForm(project)}>Add Milestone</button>
+          <button className='normal' onClick={handleEditClick}>edit</button>
+          <button className='normal' onClick={handleDeleteClick}>delete</button>
+          <button className='normal' onClick={handleMilestoneClick}>Add Milestone</button>
         </div>
       </Card>
     </li>

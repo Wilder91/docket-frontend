@@ -8,7 +8,6 @@ import {  Container, Modal, Navbar, Nav } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import EditProject from './project/editProject';
 import EditMilestone from './milestone/editMilestone';
-import Urgent from './milestone/Urgent';
 import Milestone from './milestone/Milestone'
 
 function HomePage() {
@@ -23,7 +22,7 @@ function HomePage() {
   const [editFormOpen, setEditFormOpen] = useState(false);
   const [milestone, setMilestone] = useState(false);
   const [editMilestoneFormOpen, setEditMilestoneFormOpen] = useState(false);
-  const [urgentOpen, setUrgentOpen] = useState(false);
+
   const token = sessionStorage.token;
   const today = dayjs();
   const navigate = useNavigate();
@@ -44,19 +43,28 @@ function HomePage() {
   
   /* sets state for the homepage and ensures that projects and milestones are sorted correctly, first
   by date and then by completion status */
-  function setterFunction(users){
+  const setterFunction = (users) => {
+    const currentUser = users.find((user) => user.email === sessionStorage.email);
+    setUser(currentUser);
     
-  const user = users.find(u => u.email === sessionStorage.email);
-  setUser(user);
-  const sortedProjects = user.projects.sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
-  const sortedMilestones = user.milestones.sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
-  sortedMilestones.forEach(milestone => milestone.project_name = sortedProjects.find(project => project.id === milestone.project_id).name);
-  sortedMilestones.sort((a, b) => a.complete - b.complete);
-  setTemplates(user.templates);
-  sessionStorage.user_id = user.id;
-  setProjects(sortedProjects);
-  setMilestones(sortedMilestones);
-  }
+    const { id, projects, milestones, templates } = currentUser;
+    
+    const sortedProjects = [...projects].sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
+    const sortedMilestones = [...milestones].sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
+  
+    sortedMilestones.forEach((milestone) => {
+      const project = sortedProjects.find((project) => project.id === milestone.project_id);
+      milestone.project_name = project ? project.name : '';
+    });
+  
+    sortedMilestones.sort((a, b) => a.complete - b.complete);
+  
+    sessionStorage.user_id = id;
+  
+    setTemplates(templates);
+    setProjects(sortedProjects);
+    setMilestones(sortedMilestones);
+  };
 
   
 
@@ -77,9 +85,7 @@ function HomePage() {
  
 
   /* alternates between showing or hiding the user's urgent milestones*/
-  const showUrgent = () => {
-    setUrgentOpen((current) => !current)
-  }
+ 
 
   const showTemplateForm = () => {
     setTemplateFormOpen((current) => !current)
@@ -159,6 +165,12 @@ function HomePage() {
 
    
   return (
+    <div className='page'>
+    {user.length === 0 ? (
+      <h5> </h5>
+    ) : (
+      <>
+      {
     
     <div className='page'>
    
@@ -169,7 +181,6 @@ function HomePage() {
             <Nav.Link onClick={showTemplates}>Templates</Nav.Link>
             <Nav.Link onClick={showTemplateForm}>Add Template</Nav.Link>
             <Nav.Link onClick={showModal}>Add Project</Nav.Link>
-            <Nav.Link onClick={showUrgent}>Urgent Milestones</Nav.Link>
             <Nav.Link className="ms-auto" href="/logout">Logout</Nav.Link>
           </Nav>
         </Container>
@@ -205,16 +216,13 @@ function HomePage() {
         
       </Modal>
 
-      <Modal className='bootmodal' show={urgentOpen} onHide={showUrgent}>
-        
-        <Modal.Body><Urgent milestones={milestones}  templates={templates} user={user} project={project} /></Modal.Body>
-        
-      </Modal>
+    
    
     <ProjectList user={user} projects={projects} setProjects={setProjects} milestones={milestones} setMilestones={setMilestones} templates={templates}/>
   
   
       <br />
+      <div>
       <h1>Milestones</h1>
       
 
@@ -234,9 +242,16 @@ function HomePage() {
   />
 ))}
        
-    </div>
-  )
-    
+    </div></div>
+  
+}
+
+</>
+    )}
+  </div>
+  
+  );
+  
 }
         
 

@@ -22,23 +22,23 @@ function ProjectList({ user, projects, setProjects, milestones, setMilestones })
   };
 
   function showProject(project) {
-    setSelectProject((current) => !current);
-    if(!selectedProjects.includes(project)) {
-      setSelectedProjects(selectedProjects=> [...selectedProjects, project]);
-    }
-    console.log(selectedProjects);
-    if(selectProject) {
-      setDisplayedProjects(projects.filter(p => p.id === project.id));
-      let projectMilestones = milestones.filter(m => m.project_id === project.id);
-      setMilestones(projectMilestones);
-      console.log(projectMilestones);
-      console.log(displayedProjects);
-    }
-    else {
-      setMilestones(user.milestones);
-      setDisplayedProjects([]);
-    }
+  setSelectProject((current) => !current);
+  if (!selectedProjects.includes(project)) {
+    setSelectedProjects(selectedProjects => [...selectedProjects, project]);
   }
+  console.log(selectedProjects);
+  if (selectProject) {
+    setDisplayedProjects(projects.filter(p => p.id === project.id));
+    let projectMilestones = milestones.filter(m => m.project_id === project.id);
+    projectMilestones.sort((a, b) => new Date(a.due_date) - new Date(b.due_date)); // sort by due date
+    setMilestones(projectMilestones);
+    console.log(projectMilestones);
+    console.log(displayedProjects);
+  } else {
+    setMilestones(user.milestones);
+    setDisplayedProjects([]);
+  }
+}
 
   const confirmDeleteProject = (id) => {
     if (window.confirm('Are you sure you want to delete this project?')) {
