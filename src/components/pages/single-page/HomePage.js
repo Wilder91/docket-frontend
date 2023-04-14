@@ -8,7 +8,7 @@ import {  Container, Modal, Navbar, Nav } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import EditProject from './project/editProject';
 import EditMilestone from './milestone/editMilestone';
-import Milestone from './milestone/Milestone'
+import Milestone from './milestone/milestone'
 
 function HomePage() {
   const [user, setUser] = useState([]);
@@ -212,7 +212,7 @@ function HomePage() {
 
       <Modal className='bootmodal' show={editMilestoneFormOpen} onHide={hideEditMilestoneForm}>
         
-        <Modal.Body><EditMilestone  templates={templates} user={user} milestone={milestone} setMilestone={setMilestone} /></Modal.Body>
+        <Modal.Body><EditMilestone  templates={templates} user={user} milestone={milestone} setMilestone={setMilestone} milestones={milestones} setMilestones={setMilestones} /></Modal.Body>
         
       </Modal>
 

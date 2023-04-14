@@ -1,95 +1,62 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import Form from 'react-bootstrap/Form';
 
-function editMilestone({ milestone, setMilestone }) {
-  const navigate = useNavigate();
-  console.log(navigate);
-  const [name, setName] = useState("");
-  const [date, setDate] = useState("");
-  const [description, setDescription] = useState("");
-  const [checked, setChecked] = useState();
+function editMilestone({ milestone, milestones, setMilestones }) {
+  const [name, setName] = useState(milestone.name);
+  const [date, setDate] = useState(milestone.due_date);
+
   const [message, setMessage] = useState("");
-  const [updatedMilestone, setUpdatedMilestone] = useState(null); // add state variable for updated milestone data
+  const [updatedMilestone, setUpdatedMilestone] = useState(null);
 
   let handleSubmit = (e) => {
-
     e.preventDefault();
     e.target.reset();
-
-
-
 
     fetch(`http://localhost:3000/milestones/${milestone.id}`, {
       method: 'PATCH',
       body: JSON.stringify({
         name: name,
-        description: description,
         date: date,
-        template: checked
+        project_name: milestone.project_name,
       }),
       headers: new Headers({
         Authorization: `${sessionStorage.token}`,
         'Content-Type': 'application/json'
       }),
-    }).then((response) => response.json())
+    })
+      .then((response) => response.json())
       .then((data) => {
-        setUpdatedMilestone(data); // update state variable with fetched data
-        console.log(data);
+        setUpdatedMilestone(data);
+        setMessage("Milestone updated successfully.");
       })
       .catch((error) => console.error(error));
   };
 
-
-  useEffect(() => {
-
-    setName(milestone.name);
-    setDescription(milestone.description);
-    setDate(milestone.due_date);
-    setChecked(milestone.template);
-
-  }, [milestone]);
-
   useEffect(() => {
     if (updatedMilestone) {
       setName(updatedMilestone.name);
-      setDescription(updatedMilestone.description);
       setDate(updatedMilestone.due_date);
-      setChecked(updatedMilestone.template);
-      setMilestone(updatedMilestone); // update state variable with fetched data
-      setMessage("Milestone updated successfully.");
-    }
-  }, [updatedMilestone]);
+      setMilestones(milestones.map(m => m.id === updatedMilestone.id ? updatedMilestone : m));
+    } 
+  }, [updatedMilestone, milestones, setMilestones]);
 
   return (
-    <form className='embed' onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit}>
       <h1>Milestone Details</h1>
 
-      <input required
-        type="text"
-        defaultValue={milestone.name}
-        className='input-container'
-        onChange={(e) => setName(e.target.value)}
-      />
-      <br></br>
-      <input
-        type="text"
-        defaultValue={milestone.kind}
-        className='input-container'
-        maxLength={50}
-        onChange={(e) => setDescription(e.target.value)}
-      />
-      <br></br>
-      <input required
-        type="date"
-        defaultValue={milestone.due_date}
-        className='input-container'
-        onChange={(e) => setDate(e.target.value)}
-      />
+      <Form.Group>
+        <Form.Label>Name</Form.Label>
+        <Form.Control required type="text" value={name} onChange={(e) => setName(e.target.value)} />
+      </Form.Group>
+
+      <Form.Group>
+        <Form.Label>Date</Form.Label>
+        <Form.Control required type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+      </Form.Group>
 
       <button className='normal' type="submit">Update</button>
       <div className="message">{message ? <p>{message}</p> : null}</div>
-
-    </form>
+    </Form>
   )
 }
 
