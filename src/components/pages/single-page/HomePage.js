@@ -174,7 +174,7 @@ function HomePage() {
     
     <div className='page'>
    
-     <Navbar bg="dark" variant="dark">
+     <Navbar bg="dark\" variant="dark" className='Navbar'>
         <Container>
           <Navbar.Brand >{user.name}</Navbar.Brand>
           <Nav className="container-fluid">

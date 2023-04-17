@@ -2,12 +2,33 @@ import React, {useEffect}  from 'react';
 import { Card } from 'react-bootstrap';
 import { FaFlag } from 'react-icons/fa';
 import dayjs from 'dayjs';
+import Overdue from '../../images/Overdue.png';
+import Urgent from '../../images/Upcoming.png';
+import Nonurgent from '../../images/NonUrgent.png';
+import MediumUrgent from '../../images/MediumUrgent.png';
 const token = sessionStorage.token;
 
 
 
-function Milestone({ milestone, setMilestone, milestones, setMilestones, showMilestoneEditForm, today }) {
 
+function Milestone({ milestone, setMilestone, milestones, setMilestones, showMilestoneEditForm, today }) {
+  const dueDate = dayjs(milestone.due_date);
+  const getFlagImage = () => {
+    const daysUntilDue = dueDate.diff(today, 'day');
+
+    if (milestone.complete === true) {
+      return <h5>complete</h5>;
+    } else if (daysUntilDue < 0) {
+      return <img src={Overdue} alt="Overdue" />;
+    } else if (daysUntilDue < 14) {
+      return <img src={Urgent} alt="Urgent" />;
+    } else if (daysUntilDue < 30) {
+      return <img src={MediumUrgent} alt="Urgent" />;
+    }
+     else {
+      return <img src={Nonurgent} alt="Longtime" />;
+    }
+  };
   const confirmDeleteMilestone = (id) => {
     if (window.confirm('Are you sure you want to delete this milestone?')) {
       deleteMilestone(id);
@@ -90,7 +111,7 @@ function Milestone({ milestone, setMilestone, milestones, setMilestones, showMil
       <Card className='bootstrap-card-no-hover'>
         {milestone.complete === true &&
           <h5>complete</h5>}
-        <FaFlag onClick={() => handleMilestoneToggle(milestone.id)} style={{color: milestone.complete ? "grey" : "red", opacity: "100"}}/> 
+         {getFlagImage()}
         <b style={{color: milestone.complete === true && "red"}}> 
           <br />{milestone.name} 
         </b>

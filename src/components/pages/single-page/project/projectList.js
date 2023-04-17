@@ -13,6 +13,13 @@ function ProjectList({ user, projects, setProjects, milestones, setMilestones })
   const [project, setProject] = useState([]);
   const token = sessionStorage.token;
 
+  const handleSelectProject = (project) => {
+    if (selectedProjects.includes(project)) {
+      setSelectedProjects(selectedProjects.filter((p) => p !== project));
+    } else {
+      setSelectedProjects([...selectedProjects, project]);
+    }
+  };
   const hideEditForm = () => {
     setEditFormOpen(false);
   };
@@ -28,7 +35,7 @@ function ProjectList({ user, projects, setProjects, milestones, setMilestones })
     }
     console.log(selectedProjects);
     if (selectProject) {
-      setDisplayedProjects(projects.filter(p => p.id === project.id));
+      setDisplayedProjects([...displayedProjects, project]);
       let projectMilestones = milestones.filter(m => m.project_id === project.id);
       projectMilestones.sort((a, b) => new Date(a.due_date) - new Date(b.due_date)); // sort by due date
       setMilestones(projectMilestones);
@@ -122,10 +129,11 @@ return (
 </Modal>
 <Modal className='bootmodal' show={milestoneFormOpen} onHide={hideMilestoneForm}>
 <Modal.Body>
-<MilestoneForm project={project} milestones={setMilestones} setMilestones={setMilestones}/>
+<MilestoneForm project={project} milestones={setMilestones} setMilestones={setMilestones} hideMilestoneForm={hideMilestoneForm}/>
 </Modal.Body>
 </Modal>
 <h1>Projects</h1>
+
 <br />
 <ul>
 {projects === undefined && <h5>Nothing Here, Yet!</h5>}

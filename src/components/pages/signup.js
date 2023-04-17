@@ -34,19 +34,21 @@ function Signup() {
         }),
         headers: {
           'Content-Type': 'application/json',
-          headers: new Headers( {
-            Authorization: localStorage.token,
-          })
+          Authorization: localStorage.token,
         },
       })
       
-      if (res.status === 200) {
+      if (res.status === 201) {
         setEmail("");
         setPassword("");
         alert("Successfully created account.");
         login(); // Call login function after successful sign up
-        navigate('/'); // Redirect to login page
-      } 
+        navigate('/', { replace: true }); // Redirect to login page
+      } else {
+        let data = await res.json();
+        alert(data.errors);
+        console.log(data)
+      }
     } catch (err) {
       console.log(err);
     }

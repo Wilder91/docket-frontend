@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
-import Logo from '../images/DDLogo.png'
+
 import {UserContext} from '../pages/single-page/util/context'
 
 function LoginForm() {
@@ -86,7 +86,7 @@ function LoginForm() {
     <div>  
       <UserContext.Provider value={[user, setUser]}>
         <form className='normal' onSubmit={handleSubmit}>
-          <img src={Logo} id='DDLogo' alt="logo"></img> 
+          <img src='/images/DDLogo' id='DDLogo' alt="logo"></img> 
           <br />
           <h3>Duedate </h3>
           <div>
