@@ -1,17 +1,16 @@
 import React, {useEffect, useState} from 'react';
 
 import dayjs from 'dayjs';
-function editProject({project, projects, setProjects, setMilestones, setEditFormOpen}) {
-
-
+function editProject({user, project, setProjects, setMilestones, setEditFormOpen, ini}) {
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [kind, setKind] = useState("");
-
   const [message] = useState("");
+ 
+  const [errors, setErrors] = useState({}); 
 
   function updateProject(data) {
-    console.log(data);
+    console.log(user);
     
     setProjects((prevProjects) => {
       const updatedProjects = prevProjects.map((project) => {
@@ -48,7 +47,7 @@ function editProject({project, projects, setProjects, setMilestones, setEditForm
       body: JSON.stringify({
         name: name,
         kind: kind,
-        date: date
+        due_date: date
       }),
       headers: new Headers( {
         Authorization: `${sessionStorage.token}`, 
@@ -76,7 +75,7 @@ function editProject({project, projects, setProjects, setMilestones, setEditForm
 
 
 useEffect(() => {
-   
+   console.log(user)
   setName(project.name)
   setKind(project.kind)
   setDate(project.due_date) 

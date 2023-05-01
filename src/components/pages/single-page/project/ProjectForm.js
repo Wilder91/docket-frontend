@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 
 import {Form, Button} from 'react-bootstrap';
 
-function projectForm({setProjects, templates, milestones ,setMilestones}) {
+function projectForm({user, setUser, setProjects, templates, milestones ,setMilestones}) {
   
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
@@ -31,27 +31,30 @@ function projectForm({setProjects, templates, milestones ,setMilestones}) {
   }*/
 
   function addProject(project) {
-    
-    setProjects( projects => [...projects,{id: project.id, name: project.name, due_date: project.due_date, kind: project.kind, user_id: project.userId}].sort(function(a,b){
-        return new Date(a.due_date) - new Date(b.due_date);
-      }) )
+    setProjects(projects => [...projects, {id: project.id, name: project.name, due_date: project.due_date, kind: project.kind, user_id: project.userId}].sort(function(a,b) {
+      return new Date(a.due_date) - new Date(b.due_date);
+    }));
   
-    const thisTemplate = templates.find(t => t.name === template)
-    if(thisTemplate){
-    const arr_two = project.milestones
-    arr_two.map(m => console.log(m.leadTime))
-    console.log(project)
-
-    console.log(arr_two)
-    arr_two.map(m => m.project_name = project.name)
-    arr_two.map(m => m.complete = false)
-    arr_two.map(m => m.project_id = project.id)
-   
-    console.log(arr_two)
-    setMilestones(milestones => [...milestones, ...arr_two].sort(function(a,b){
-      return new Date(a.due_date) - new Date(b.due_date)}))
-
-    
+    setUser(prevUser => {
+      const updatedProjects = [...prevUser.projects, project];
+      return { ...prevUser, projects: updatedProjects };
+    });
+  
+    const thisTemplate = templates.find(t => t.name === template);
+    if (thisTemplate) {
+      const arrTwo = project.milestones;
+      arrTwo.map(m => m.project_name = project.name);
+      arrTwo.map(m => m.complete = false);
+      arrTwo.map(m => m.project_id = project.id);
+  
+      setMilestones(milestones => [...milestones, ...arrTwo].sort(function(a,b) {
+        return new Date(a.due_date) - new Date(b.due_date);
+      }));
+  
+      setUser(prevUser => {
+        const updatedMilestones = [...prevUser.milestones, ...arrTwo];
+        return { ...prevUser, milestones: updatedMilestones };
+      });
     }
   }
   let handleSubmit = (e) => {

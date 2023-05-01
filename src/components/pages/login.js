@@ -79,7 +79,7 @@ function LoginForm() {
 
   function routeChange() { 
     let path = '/signup'; 
-    navigate(path);
+    navigate(path, {state: {login}});
   }
 
   return (

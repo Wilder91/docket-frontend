@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import dayjs from 'dayjs';
 
-function MilestoneForm({ project, milestones, setMilestones, hideMilestoneForm }) {
+function MilestoneForm({ user, setUser, project, milestones, setMilestones, hideMilestoneForm}) {
   const [name, setName] = useState('');
   const [date, setDate] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -11,6 +11,7 @@ function MilestoneForm({ project, milestones, setMilestones, hideMilestoneForm }
   const [formMessage, setFormMessage] = useState('');
 
   useEffect(() => {
+    console.log(project)
     setErrorMessage('');
   }, [name, date]);
 
@@ -35,10 +36,25 @@ function MilestoneForm({ project, milestones, setMilestones, hideMilestoneForm }
         name: data.name,
         description: data.description,
         due_date: data.due_date,
-        project_id: data.projectId,
+        project_id: project.id,
         project_name: data.project_name,
       },
     ].sort((a, b) => new Date(a.due_date) - new Date(b.due_date)));
+    
+    setUser((user) => ({
+      ...user,
+      milestones: [
+        ...user.milestones,
+        {
+          id: data.id,
+          name: data.name,
+          description: data.description,
+          due_date: data.due_date,
+          project_id: project.id,
+          project_name: data.project_name,
+        },
+      ].sort((a, b) => new Date(a.due_date) - new Date(b.due_date)),
+    }));
   }
 
   const handleSubmit = (e) => {

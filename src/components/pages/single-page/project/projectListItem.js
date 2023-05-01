@@ -1,20 +1,21 @@
-import React from 'react';
+import React, {useState} from 'react';
 import dayjs from 'dayjs';
 import { Card } from 'react-bootstrap';
 
 
-function ProjectListItem({ project, showProject, showEditForm, confirmDeleteProject, showMilestoneForm }) {
+function ProjectListItem({ project, showProject, showEditForm, confirmDeleteProject, showMilestoneForm, selectedProject, hideProject}) {
   const today = dayjs();
   const dueDate = dayjs(project.due_date);
+  const [isClicked, setIsClicked] = useState(false);
 
-  const handleFlagClick = (e) => {
-    e.stopPropagation();
-    console.log(project.id);
-  };
-
+ 
+  function handleClick(project) {
+    showProject(project);
+    setIsClicked(!isClicked);
+  }
   const handleEditClick = (e) => {
     e.stopPropagation();
-    showEditForm(project.id);
+    showEditForm(project);
   };
 
   const handleDeleteClick = (e) => {
@@ -31,7 +32,7 @@ function ProjectListItem({ project, showProject, showEditForm, confirmDeleteProj
 
   return (
     <li key={project.id}>
-      <Card className="bootstrap_card" onClick={() => showProject(project)}>
+      <Card className={project === selectedProject ? 'bootstrap_card grey-effect' : 'bootstrap_card'} onClick={() => handleClick(project)} onHide={() => hideProject(project)}>
       
         <div className="card-title">
           {project.name}

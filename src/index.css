@@ -8,8 +8,23 @@ body {
 
     
   }
+  .nav-link {
+    color: #608bbb !important
+  }
+
+  .NavBarLogo {
+    position: relative;
+    width: 3%;
+    height: auto;
+    margin-left: -80px;
+  }
+  .navbar-brand {
+    color: #608bbb !important
+  } 
+  
   .Navbar {
-    background-color:#000000
+    background-color:#fff;
+    color: #608bbb
   }
   .bootstrap_card {
     flex: 0 50%;
@@ -103,6 +118,12 @@ body {
     transition-duration: 0.4s;
   
     
+  }
+  .grey-effect {
+    background-color: #9fa5a9 !important;
+    color: #fff;
+    transform: scale(1.1);
+    z-index: 9;
   }
   
   ul > li {
@@ -206,7 +227,7 @@ body {
     margin: 5px;
     background-blend-mode: color;
     display: inline-block;
-    background-color: rgb(255, 255, 255);
+   
     border-radius: 10px;
     border-color: rgb(187, 47, 47);
     border-width: 1px;

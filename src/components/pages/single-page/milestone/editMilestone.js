@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 
-function editMilestone({ milestone, milestones, setMilestones }) {
+function editMilestone({user, setUser, milestone, milestones, setMilestones }) {
   const [name, setName] = useState(milestone.name);
   const [date, setDate] = useState(milestone.due_date);
 
@@ -11,12 +11,12 @@ function editMilestone({ milestone, milestones, setMilestones }) {
   let handleSubmit = (e) => {
     e.preventDefault();
     e.target.reset();
-
+  
     fetch(`http://localhost:3000/milestones/${milestone.id}`, {
       method: 'PATCH',
       body: JSON.stringify({
         name: name,
-        date: date,
+        due_date: date,
         project_name: milestone.project_name,
       }),
       headers: new Headers({
@@ -24,15 +24,25 @@ function editMilestone({ milestone, milestones, setMilestones }) {
         'Content-Type': 'application/json'
       }),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+        return response.json();
+      })
       .then((data) => {
+        // Update the milestones array in the user object
+        const updatedMilestones = user.milestones.map((m) =>
+          m.id === data.id ? data : m
+        );
+        setUser((prevUser) => ({ ...prevUser, milestones: updatedMilestones }));
         setUpdatedMilestone(data);
         setMessage("Milestone updated successfully.");
       })
       .catch((error) => console.error(error));
   };
-
   useEffect(() => {
+    console.log(user)
     if (updatedMilestone) {
       setName(updatedMilestone.name);
       setDate(updatedMilestone.due_date);

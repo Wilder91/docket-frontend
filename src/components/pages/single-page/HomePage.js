@@ -8,10 +8,11 @@ import {  Container, Modal, Navbar, Nav } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import EditProject from './project/editProject';
 import EditMilestone from './milestone/editMilestone';
-import Milestone from './milestone/milestone'
+import Milestone from './milestone/milestoneItem';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function HomePage() {
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState({});
   const [projects, setProjects] = useState([]);
   const [milestones, setMilestones] =useState([]);
   const [templates, setTemplates] = useState([]);
@@ -40,13 +41,17 @@ function HomePage() {
     .then(result => result.json())
     .then(users => setterFunction(users)) 
   }
-  
+  useEffect(() => {
+  console.log(user);
+}, [user]);
   /* sets state for the homepage and ensures that projects and milestones are sorted correctly, first
   by date and then by completion status */
   const setterFunction = (users) => {
+    console.log(users)
     const currentUser = users.find((user) => user.email === sessionStorage.email);
-    setUser(currentUser);
-    
+    setUser(prevUser => ({ ...prevUser, ...currentUser }));
+    console.log(user)
+  
     const { id, projects, milestones, templates } = currentUser;
     
     const sortedProjects = [...projects].sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
@@ -96,12 +101,10 @@ function HomePage() {
   /* alternates between showing or hiding a specific project's edit form */
   
 
-  const showMilestoneEditForm = (id) => {
-    const milestone = user.milestones.find(
-      m => m.id === id
-    );
-    setMilestone(milestone)
-    console.log(milestone)
+  const showMilestoneEditForm = (selectedMilestone) => {
+    
+    setMilestone(selectedMilestone)
+    
     setEditMilestoneFormOpen(true);
 
   }
@@ -176,8 +179,10 @@ function HomePage() {
    
      <Navbar bg="dark\" variant="dark" className='Navbar'>
         <Container>
+        <img src='/2.png' className='NavBarLogo' ></img>
           <Navbar.Brand >{user.name}</Navbar.Brand>
           <Nav className="container-fluid">
+            
             <Nav.Link onClick={showTemplates}>Templates</Nav.Link>
             <Nav.Link onClick={showTemplateForm}>Add Template</Nav.Link>
             <Nav.Link onClick={showModal}>Add Project</Nav.Link>
@@ -189,7 +194,7 @@ function HomePage() {
 
       <Modal className='bootmodal' show={isOpen} onHide={showModal}>
         
-        <Modal.Body><ProjectForm setProjects={setProjects} templates={templates} milestones = {milestones} setMilestones={setMilestones}/></Modal.Body>
+        <Modal.Body><ProjectForm user={user} setUser={setUser} setProjects={setProjects} templates={templates} milestones = {milestones} setMilestones={setMilestones}/></Modal.Body>
         
       </Modal>
       <Modal className='bootmodal' show={templatesOpen} onHide={showTemplates}>
@@ -206,19 +211,26 @@ function HomePage() {
 
       <Modal className='bootmodal' show={editFormOpen} onHide={hideEditForm}>
         
-        <Modal.Body><EditProject project={project} projects={projects} setProjects={setProjects} /></Modal.Body>
+        <Modal.Body><EditProject 
+            user={user} 
+            setUser={setUser} 
+            project={project} 
+            projects={projects} 
+            setProjects={setProjects} 
+            initialUser={user}
+          /></Modal.Body>
         
       </Modal>
 
       <Modal className='bootmodal' show={editMilestoneFormOpen} onHide={hideEditMilestoneForm}>
         
-        <Modal.Body><EditMilestone  templates={templates} user={user} milestone={milestone} setMilestone={setMilestone} milestones={milestones} setMilestones={setMilestones} /></Modal.Body>
+        <Modal.Body><EditMilestone user={user} setUser={setUser}  templates={templates} milestone={milestone} setMilestone={setMilestone} milestones={milestones} setMilestones={setMilestones} /></Modal.Body>
         
       </Modal>
 
     
    
-    <ProjectList user={user} projects={projects} setProjects={setProjects} milestones={milestones} setMilestones={setMilestones} templates={templates}/>
+    <ProjectList user={user} setUser={setUser} projects={projects} setProjects={setProjects} milestones={milestones} setMilestones={setMilestones} templates={templates}/>
   
   
       <br />
@@ -231,7 +243,9 @@ function HomePage() {
   <h5>No milestones (yet)</h5> }
 {milestones.map(milestone => (
   <Milestone 
-     
+    key={milestone.id}
+    user={user}
+    setUser={setUser}
     milestone={milestone} 
     setMilestone={setMilestone}
     handleMilestoneToggle={handleMilestoneToggle} 

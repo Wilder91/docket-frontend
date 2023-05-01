@@ -20,19 +20,7 @@ function Project() {
   const nav = useNavigate()
   
 
-  function getProjectImage(milestone) {
-    const timeDiff = dayjs(milestone.due_date).diff(dayjs(), 'day');
-    if (timeDiff < 0) {
-      // The due date has passed
-      return <img src={Urgent} alt="Milestone overdue" />;
-    } else if (timeDiff > 200) {
-      // The milestone is due within a week
-      return <img src={Urgent} alt="Milestone due soon" />;
-    } else {
-      // The milestone is due later than a week
-      return ;
-    }
-  }
+ 
   function deleteMilestone(id) {
     fetch(`http://localhost:3000/milestones/${id}`, { method: 'DELETE', headers: new Headers( {
       Authorization: `${sessionStorage.token}`, })})  
