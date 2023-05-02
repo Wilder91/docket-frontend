@@ -2,10 +2,51 @@ body {
     margin: 0;
     font-family:  'Ek Mukta'; font-size: 22px;
     -webkit-font-smoothing: antialiased;
-    background-color: #eeedec;
-    color: #e74d1c;
+    background-color: #833333;
+    color: #4c4f51;
     text-align: center;
+
     
+  }
+  .nav-link {
+    color: #608bbb !important
+  }
+  
+  .NavBarLogo {
+    width: 3%;
+    height: auto;
+    margin-left: -60px;
+    margin-right: 8px;
+  }
+
+  .LoginLogo {
+    
+    width: 10%;
+    height: auto;
+
+    margin-right: 250px;
+  }
+
+  
+
+  .nav-link {
+    color: #b5b5b5 !important
+  }
+  .navbar-brand {
+    color: #608bbb !important
+  } 
+  .user-name{
+    float: right;
+  }
+  .Navbar {
+    background-color:#fff;
+    color: #608bbb
+  }
+
+  .logout-button{
+    text-decoration: none;
+    margin-right: -60px;
+    color: #b5b5b5 !important;
   }
   .bootstrap_card {
     flex: 0 50%;
@@ -18,8 +59,20 @@ body {
     position: relative;
     z-index: 1;
     overflow: hidden;
-    min-height: 265px;
-    transition: 0.7s;
+    height: 265px; /* Set a fixed height for the elements */
+  }
+  
+  .bootstrap_card > * {
+    /* Set the text and other elements inside the card to take up the full height */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .bootstrap_card > *:first-child {
+    /* Set the first child element (usually the title) to wrap text and scroll if necessary */
+    overflow: auto;
   }
 
   .bootstrap-card-no-hover {
@@ -88,6 +141,12 @@ body {
   
     
   }
+  .grey-effect {
+    background-color: #9fa5a9 !important;
+    color: #fff;
+    transform: scale(1.1);
+    z-index: 9;
+  }
   
   ul > li {
     display: inline-block;
@@ -136,7 +195,7 @@ body {
   .nice-button {
     font-size: 1em;
       text-align: center;
-      background-color: #e74d1c;
+      background-color: #608bbb;
       color: white;
       margin-bottom: 5px;
       padding-top: 5px;
@@ -184,13 +243,14 @@ body {
   
   
   li {
-    
+    list-style-type: none;
+    position: static;
     opacity: 80%;
     text-transform: capitalize;
     margin: 5px;
     background-blend-mode: color;
-    display: inline-block;
-    background-color: rgb(255, 255, 255);
+    float: left;
+   
     border-radius: 10px;
     border-color: rgb(187, 47, 47);
     border-width: 1px;
@@ -257,16 +317,46 @@ body {
   }
   
   h1 {
-    text-align: center;
+    text-align: left;
     line-height: 0.7em;
     display: inline;
     padding-top: 10px;
+    padding-left: 60px;
+    font-size: 1px;
+    color:#608bbb
+  }
+  .ms-auto{
+    font-size: 10pt !important;
+  }
+  .headline {
+    font-size: 15pt !important;
+    position: static;
+    font-weight: normal;
+    text-align: left;
+    line-height: 0.7em;
+   
+    padding-top: 10px;
+    padding-left: 60px;
+   
+    color:#608bbb
   }
 
-
+  .milestone-headline {
+    font-size: 15pt !important;
+    
+    font-weight: normal;
+    text-align: left;
+    line-height: 0.7em;
+   
+    padding-top: 400px;
+    padding-left: 60px;
+   
+    color:#608bbb
+  }
 h1, .h1 {
-    font-size: calc(1.375rem + 1.5vw);
+    font-size: 15pt !important;
     display: inherit;
+    font-weight: normal;
 }
   
   h3 {
@@ -277,12 +367,11 @@ h1, .h1 {
     margin-left: 50px;
   }
   img {
-    scale: 10%;
-    display: flex;
-    border-bottom: 10cm;
-    position: absolute;
-    top: -55%;
-    right: 0;
+    width: 30%;
+    height: auto;
+    display: block;
+  margin-left: auto;
+  margin-right: auto;
   }
   link {
     text-align: center;

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
-import Logo from '../images/DDLogo.png'
+
 import {UserContext} from '../pages/single-page/util/context'
 
 function LoginForm() {
@@ -79,16 +79,16 @@ function LoginForm() {
 
   function routeChange() { 
     let path = '/signup'; 
-    navigate(path);
+    navigate(path, {state: {login}});
   }
 
   return (
     <div>  
       <UserContext.Provider value={[user, setUser]}>
         <form className='normal' onSubmit={handleSubmit}>
-          <img src={Logo} id='DDLogo' alt="logo"></img> 
+          <img src='/2.png' id='DDLogo' className='LoginLogo' alt="logo"></img> 
           <br />
-          <h3>Duedate </h3>
+          <h3>Docket </h3>
           <div>
             <input required className = "input-container"
               placeholder="E-Mail Address"

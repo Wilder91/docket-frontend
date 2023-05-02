@@ -4,12 +4,13 @@ import EditProject from './editProject';
 import MilestoneForm from '../milestone/MilestoneForm';
 import ProjectListItem from './projectListItem';
 
-function ProjectList({ user, projects, setProjects, milestones, setMilestones }) {
+function ProjectList({ user, setUser, projects, setProjects, milestones, setMilestones }) {
   const [editFormOpen, setEditFormOpen] = useState(false);
-  const [selectProject, setSelectProject] = useState(false);
+
   const [milestoneFormOpen, setMilestoneFormOpen] = useState(false);
-  const [selectedProjects, setSelectedProjects] = useState([]);
-  const [displayedProjects, setDisplayedProjects] = useState([]);
+
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [isClicked, setIsClicked] = useState(false);
   const [project, setProject] = useState([]);
   const token = sessionStorage.token;
 
@@ -22,23 +23,36 @@ function ProjectList({ user, projects, setProjects, milestones, setMilestones })
   };
 
   function showProject(project) {
-  setSelectProject((current) => !current);
-  if (!selectedProjects.includes(project)) {
-    setSelectedProjects(selectedProjects => [...selectedProjects, project]);
+    if (selectedProject && selectedProject.id === project.id) {
+      setSelectedProject(null);
+      setMilestones(user.milestones.sort((a, b) => new Date(a.due_date) - new Date(b.due_date)));
+    } else {
+      setSelectedProject(project);
+      const projectMilestones = user.milestones.filter(m => m.project_id === project.id);
+      projectMilestones.sort((a, b) => new Date(a.due_date) - new Date(b.due_date)); // sort by due date
+      setMilestones(projectMilestones);
+  
+      // Copy any changes made to milestones in `projectMilestones` to `user.milestones`
+      const updatedMilestones = user.milestones.map(milestone => {
+        const projectMilestone = projectMilestones.find(m => m.id === milestone.id);
+        return projectMilestone ? projectMilestone : milestone;
+      });
+      setUser({ ...user, milestones: updatedMilestones });
+    }
   }
-  console.log(selectedProjects);
-  if (selectProject) {
-    setDisplayedProjects(projects.filter(p => p.id === project.id));
-    let projectMilestones = milestones.filter(m => m.project_id === project.id);
-    projectMilestones.sort((a, b) => new Date(a.due_date) - new Date(b.due_date)); // sort by due date
-    setMilestones(projectMilestones);
-    console.log(projectMilestones);
-    console.log(displayedProjects);
-  } else {
-    setMilestones(user.milestones);
-    setDisplayedProjects([]);
+
+  
+  
+  function unselectProject() {
+    setSelectedProject(null);
+    setMilestones(user.milestones.sort((a, b) => new Date(a.due_date) - new Date(b.due_date)));
   }
+
+const hideProject = () => { 
+  setMilestones(user.milestones.sort((a, b) => new Date(a.due_date) - new Date(b.due_date)));
+  setSelectedProject(null);
 }
+
 
   const confirmDeleteProject = (id) => {
     if (window.confirm('Are you sure you want to delete this project?')) {
@@ -72,60 +86,72 @@ function ProjectList({ user, projects, setProjects, milestones, setMilestones })
     }
   }
 
-function deleteMilestone(id) {
-  fetch(`http://localhost:3000/milestones/${id}`, {
-method: 'DELETE',
-headers: new Headers({
-Authorization: token,
-})
-})
-.then(response => {
-if (!response.ok) {
-throw new Error('Failed to delete milestone');
-}
-return response.json();
-})
-.then(data => {
-removeMilestone(id);
-})
-.catch(error => {
-console.error('Error deleting milestone:', error);
-});
-}
+  function deleteMilestone(id) {
+    try {
+      fetch(`http://localhost:3000/milestones/${id}`, {
+        method: 'DELETE',
+        headers: new Headers({
+          Authorization: token,
+        })
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to delete milestone');
+        }
+        removeMilestone(id);
+        setUser({
+          ...user,
+          milestones: user.milestones.filter(m => m.id !== id),
+        });
+      })
+      .catch(error => {
+        console.error('Error deleting milestone:', error);
+      });
+    } catch (error) {
+      console.error('Caught error in deleteMilestone:', error);
+    }
+  }
+  function removeMilestone(id) {
+    setMilestones(milestones.filter(m => m.id !== id));
+  }
 
-function removeMilestone(id) {
-  setMilestones(milestones.filter(m => m.id !== id));
-}
+  function removeProject(id) {
+    setProjects(projects.filter((p) => p.id !== id));
+    setMilestones(milestones.filter((p) => p.project_id !== id));
+  }
 
-function removeProject(id) {
-setProjects(projects.filter((p) => p.id !== id));
-setMilestones(milestones.filter((p) => p.project_id !== id));
-}
-
-const showMilestoneForm = project => {
-setProject(project);
-setMilestoneFormOpen(true);
-};
-
-const showEditForm = id => {
-const project = user.projects.find(p => p.id === id);
-setProject(project);
-setEditFormOpen(true);
-};
+  const showMilestoneForm = project => {
+    setProject(project);
+    setMilestoneFormOpen(true);
+  };
+  const showEditForm = (projectToEdit) => {
+    setProject(projectToEdit);
+    setEditFormOpen(true);
+  };
 
 return (
 <div>
 <Modal className='bootmodal' show={editFormOpen} onHide={hideEditForm}>
 <Modal.Body>
-<EditProject project={project} projects={projects} setProjects={setProjects} setMilestones={setMilestones} setEditFormOpen={setEditFormOpen}/>
+<EditProject 
+      user={user} 
+      setUser={setUser} 
+      project={project} 
+      projects={projects} 
+      setMilestones={setMilestones}
+      setEditFormOpen={setEditFormOpen}
+      setProjects={setProjects} 
+      initialUser={user}
+    />
 </Modal.Body>
 </Modal>
 <Modal className='bootmodal' show={milestoneFormOpen} onHide={hideMilestoneForm}>
 <Modal.Body>
-<MilestoneForm project={project} milestones={setMilestones} setMilestones={setMilestones}/>
+<MilestoneForm user={user} setUser={setUser} project={project} milestones={setMilestones} setMilestones={setMilestones} hideMilestoneForm={hideMilestoneForm}/>
 </Modal.Body>
 </Modal>
-<h1>Projects</h1>
+<p className='headline'>Projects</p>
+
 <br />
 <ul>
 {projects === undefined && <h5>Nothing Here, Yet!</h5>}
@@ -134,10 +160,12 @@ return (
       <ProjectListItem
         key={project.id}
         project={project}
+        hideProject={hideProject}
         showProject={showProject}
         showEditForm={showEditForm}
         confirmDeleteProject={confirmDeleteProject}
         showMilestoneForm={showMilestoneForm}
+        selectedProject={selectedProject}
       />
     ))}
 

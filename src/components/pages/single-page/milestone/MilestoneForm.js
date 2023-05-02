@@ -2,28 +2,27 @@ import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import dayjs from 'dayjs';
-function MilestoneForm({project, milestones, setMilestones}) {
+
+function MilestoneForm({ user, setUser, project, milestones, setMilestones, hideMilestoneForm}) {
   const [name, setName] = useState('');
- 
   const [date, setDate] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [formValid, setFormValid] = useState(false);
+  const [formMessage, setFormMessage] = useState('');
 
   useEffect(() => {
-    setErrorMessage('');
     console.log(project)
-  }, [name,  date]);
+    setErrorMessage('');
+  }, [name, date]);
 
   useEffect(() => {
     const isValid = name.trim() !== '' && date.trim() !== '';
     setFormValid(isValid);
-  }, [name,  date]);
+  }, [name, date]);
 
   const handleNameChange = (e) => {
     setName(e.target.value);
   };
-
-
 
   const handleDateChange = (e) => {
     setDate(e.target.value);
@@ -37,43 +36,63 @@ function MilestoneForm({project, milestones, setMilestones}) {
         name: data.name,
         description: data.description,
         due_date: data.due_date,
-        project_id: data.projectId,
+        project_id: project.id,
         project_name: data.project_name,
       },
     ].sort((a, b) => new Date(a.due_date) - new Date(b.due_date)));
+    
+    setUser((user) => ({
+      ...user,
+      milestones: [
+        ...user.milestones,
+        {
+          id: data.id,
+          name: data.name,
+          description: data.description,
+          due_date: data.due_date,
+          project_id: project.id,
+          project_name: data.project_name,
+        },
+      ].sort((a, b) => new Date(a.due_date) - new Date(b.due_date)),
+    }));
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    e.target.reset();
     fetch('http://localhost:3000/milestones', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `${sessionStorage.token}`
+        Authorization: `${sessionStorage.token}`,
       },
-      body: JSON.stringify({ 
+      body: JSON.stringify({
         name: name,
-        date: date, 
+        date: date,
         lead_time: dayjs(date).diff(dayjs(project.due_date), 'days'),
         project_name: project.name,
-        project_id: project.id })
+        project_id: project.id,
+      }),
     })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Error submitting form');
-      }
-      return response.json(); // parse the response body as JSON
-    })
-    .then(data => {
-      console.log(data)
-      addMilestone(data); // call addMilestone with the parsed data
-    })
-    .catch(error => {
-      setErrorMessage(error.message);
-    });
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Error submitting form');
+        }
+        return response.json(); // parse the response body as JSON
+      })
+      .then((data) => {
+        addMilestone(data);
+        setFormMessage('Milestone created successfully.');
+        setTimeout(function () {
+          setFormMessage('');
+          hideMilestoneForm();
+          setName('');
+          setDate('');
+        }, 1000);
+      })
+      .catch((error) => {
+        setErrorMessage(error.message);
+      });
   };
-
   return (
     <Form className='embed' onSubmit={handleSubmit}>
       <h1>New Milestone</h1>
@@ -87,7 +106,6 @@ function MilestoneForm({project, milestones, setMilestones}) {
           required
         />
       </Form.Group>
-     
 
       <Form.Group controlId='formMilestoneDate'>
         <Form.Label>Date</Form.Label>
@@ -100,7 +118,9 @@ function MilestoneForm({project, milestones, setMilestones}) {
         />
       </Form.Group>
       {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-      <Button type='submit' disabled={!formValid}>Submit</Button>
+      {formMessage && <p style={{ color: 'green' }}>{formMessage}</p>}
+      <Button type='submit' disabled={!formValid}>
+        Submit</Button>
     </Form>
   );
 }
