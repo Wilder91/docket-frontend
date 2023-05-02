@@ -138,6 +138,8 @@ return (
       setUser={setUser} 
       project={project} 
       projects={projects} 
+      setMilestones={setMilestones}
+      setEditFormOpen={setEditFormOpen}
       setProjects={setProjects} 
       initialUser={user}
     />
@@ -148,7 +150,7 @@ return (
 <MilestoneForm user={user} setUser={setUser} project={project} milestones={setMilestones} setMilestones={setMilestones} hideMilestoneForm={hideMilestoneForm}/>
 </Modal.Body>
 </Modal>
-<h1>Projects</h1>
+<p className='headline'>Projects</p>
 
 <br />
 <ul>

@@ -180,13 +180,14 @@ function HomePage() {
      <Navbar bg="dark\" variant="dark" className='Navbar'>
         <Container>
         <img src='/2.png' className='NavBarLogo' ></img>
-          <Navbar.Brand >{user.name}</Navbar.Brand>
+          <Navbar.Brand >Docket</Navbar.Brand>
           <Nav className="container-fluid">
             
-            <Nav.Link onClick={showTemplates}>Templates</Nav.Link>
-            <Nav.Link onClick={showTemplateForm}>Add Template</Nav.Link>
-            <Nav.Link onClick={showModal}>Add Project</Nav.Link>
-            <Nav.Link className="ms-auto" href="/logout">Logout</Nav.Link>
+            <Nav.Link onClick={showTemplates} className='nav-link'>Templates</Nav.Link>
+            <Nav.Link onClick={showTemplateForm} className='nav-link'>Add Template</Nav.Link>
+            <Nav.Link onClick={showModal} className='nav-link'>Add Project</Nav.Link>
+            <Navbar.Brand className='ms-auto'>Hello, {user.name}  |  <a href="/logout" className='logout-button'>Logout</a></Navbar.Brand>
+            
           </Nav>
         </Container>
       </Navbar>
@@ -217,6 +218,7 @@ function HomePage() {
             project={project} 
             projects={projects} 
             setProjects={setProjects} 
+            setMilestones={setMilestones}
             initialUser={user}
           /></Modal.Body>
         
@@ -224,39 +226,42 @@ function HomePage() {
 
       <Modal className='bootmodal' show={editMilestoneFormOpen} onHide={hideEditMilestoneForm}>
         
-        <Modal.Body><EditMilestone user={user} setUser={setUser}  templates={templates} milestone={milestone} setMilestone={setMilestone} milestones={milestones} setMilestones={setMilestones} /></Modal.Body>
+        <Modal.Body><EditMilestone user={user} setUser={setUser}  templates={templates} milestone={milestone} setMilestone={setMilestone} milestones={milestones} setMilestones={setMilestones}/></Modal.Body>
         
       </Modal>
 
-    
+    <br />
    
     <ProjectList user={user} setUser={setUser} projects={projects} setProjects={setProjects} milestones={milestones} setMilestones={setMilestones} templates={templates}/>
+    
   
-  
-      <br />
-      <div>
-      <h1>Milestones</h1>
+    <div className='milestones'> 
+      <p className='milestone-headline'>Milestones</p>
       
 
       <br></br>
       {milestones.length === 0 &&
   <h5>No milestones (yet)</h5> }
-{milestones.map(milestone => (
-  <Milestone 
-    key={milestone.id}
-    user={user}
-    setUser={setUser}
-    milestone={milestone} 
-    setMilestone={setMilestone}
-    handleMilestoneToggle={handleMilestoneToggle} 
-    showMilestoneEditForm={showMilestoneEditForm} 
-    milestones={milestones}
-    setMilestones={setMilestones}
-    today={today} 
-  />
-))}
+<ul>
+  {milestones.map(milestone => (
+    <li key={milestone.id}>
+      <Milestone 
+        user={user}
+        setUser={setUser}
+        milestone={milestone} 
+        setMilestone={setMilestone}
+        handleMilestoneToggle={handleMilestoneToggle} 
+        showMilestoneEditForm={showMilestoneEditForm} 
+        milestones={milestones}
+        setMilestones={setMilestones}
+        today={today} 
+      />
+    </li>
+  ))}
+</ul>
+</div>
        
-    </div></div>
+    </div>
   
 }
 

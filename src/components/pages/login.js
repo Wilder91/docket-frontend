@@ -86,9 +86,9 @@ function LoginForm() {
     <div>  
       <UserContext.Provider value={[user, setUser]}>
         <form className='normal' onSubmit={handleSubmit}>
-          <img src='/images/DDLogo' id='DDLogo' alt="logo"></img> 
+          <img src='/2.png' id='DDLogo' className='LoginLogo' alt="logo"></img> 
           <br />
-          <h3>Duedate </h3>
+          <h3>Docket </h3>
           <div>
             <input required className = "input-container"
               placeholder="E-Mail Address"
