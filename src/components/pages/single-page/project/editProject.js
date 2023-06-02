@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 
 import dayjs from 'dayjs';
-function editProject({ user, project, setProjects, setMilestones, setEditFormOpen }) {
+function editProject({ user, setUser, project, setProjects, setMilestones, setEditFormOpen }) {
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [kind, setKind] = useState("");
@@ -19,18 +19,27 @@ function editProject({ user, project, setProjects, setMilestones, setEditFormOpe
       });
       return updatedProjects;
     });
+  
     setMilestones((prevMilestones) => {
       const updatedMilestones = prevMilestones.map((milestone) => {
         if (milestone.project_id === data.id) {
           const dueDate = dayjs(data.due_date).subtract(milestone.lead_time, 'day');
           const updatedMilestone = { ...milestone, project_name: data.name, due_date: dueDate };
-          updateMilestone(updatedMilestone); // <-- Call the updateMilestone function with the updated milestone object
+          updateMilestone(updatedMilestone);
           return updatedMilestone;
         } else {
           return milestone;
         }
       });
+  
       setMilestones(updatedMilestones);
+  
+      // Update user milestones array
+      setUser((prevUser) => {
+        const updatedUser = { ...prevUser, milestones: updatedMilestones };
+        return updatedUser;
+      });
+  
       return updatedMilestones;
     });
   }
@@ -66,6 +75,7 @@ function editProject({ user, project, setProjects, setMilestones, setEditFormOpe
     .catch((error) => {
       console.error(error);
       setErrors({ general: "An error occurred while updating the project." });
+      console.log(errors)
     });
   }
 
@@ -73,6 +83,7 @@ function editProject({ user, project, setProjects, setMilestones, setEditFormOpe
     return fetch(`http://localhost:3000/milestones/${milestone.id}`, {
       method: 'PATCH',
       body: JSON.stringify({
+        name: milestone.name,
         due_date: milestone.due_date
       }),
       headers: new Headers({

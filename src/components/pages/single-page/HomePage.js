@@ -3,12 +3,11 @@ import ProjectList from '../single-page/project/projectList'
 import ProjectForm from './project/ProjectForm'
 import Templates from './templates/templates'
 import TemplateForm from './templates/addTemplate'
-import dayjs from 'dayjs'
 import {  Container, Modal, Navbar, Nav } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import EditProject from './project/editProject';
 import EditMilestone from './milestone/editMilestone';
-import Milestone from './milestone/milestoneItem';
+import MilestoneList from './milestone/milestoneList';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function HomePage() {
@@ -23,9 +22,7 @@ function HomePage() {
   const [editFormOpen, setEditFormOpen] = useState(false);
   const [milestone, setMilestone] = useState(false);
   const [editMilestoneFormOpen, setEditMilestoneFormOpen] = useState(false);
-
   const token = sessionStorage.token;
-  const today = dayjs();
   const navigate = useNavigate();
 
   
@@ -179,7 +176,7 @@ function HomePage() {
    
      <Navbar bg="dark\" variant="dark" className='Navbar'>
         <Container>
-        <img src='/2.png' className='NavBarLogo' ></img>
+        <img src='/2.png' className='NavBarLogo' alt='docket logo'></img>
           <Navbar.Brand >Docket</Navbar.Brand>
           <Nav className="container-fluid">
             
@@ -235,31 +232,6 @@ function HomePage() {
     <ProjectList user={user} setUser={setUser} projects={projects} setProjects={setProjects} milestones={milestones} setMilestones={setMilestones} templates={templates}/>
     
   
-    <div className='milestones'> 
-      <p className='milestone-headline'>Milestones</p>
-      
-
-      <br></br>
-      {milestones.length === 0 &&
-  <h5>No milestones (yet)</h5> }
-<ul>
-  {milestones.map(milestone => (
-    <li key={milestone.id}>
-      <Milestone 
-        user={user}
-        setUser={setUser}
-        milestone={milestone} 
-        setMilestone={setMilestone}
-        handleMilestoneToggle={handleMilestoneToggle} 
-        showMilestoneEditForm={showMilestoneEditForm} 
-        milestones={milestones}
-        setMilestones={setMilestones}
-        today={today} 
-      />
-    </li>
-  ))}
-</ul>
-</div>
        
     </div>
   
@@ -267,6 +239,7 @@ function HomePage() {
 
 </>
     )}
+    <MilestoneList user={user} setUser={setUser} milestones={milestones} setMilestones={setMilestones} projects={projects} setProjects={setProjects} templates={templates} setTemplates={setTemplates} showMilestoneEditForm={showMilestoneEditForm} handleMilestoneToggle={handleMilestoneToggle}/>
   </div>
   
   );

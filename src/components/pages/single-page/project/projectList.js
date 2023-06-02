@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal } from 'react-bootstrap';
+import { Modal, Container } from 'react-bootstrap';
 import EditProject from './editProject';
 import MilestoneForm from '../milestone/MilestoneForm';
 import ProjectListItem from './projectListItem';
@@ -10,7 +10,7 @@ function ProjectList({ user, setUser, projects, setProjects, milestones, setMile
   const [milestoneFormOpen, setMilestoneFormOpen] = useState(false);
 
   const [selectedProject, setSelectedProject] = useState(null);
-  const [isClicked, setIsClicked] = useState(false);
+ 
   const [project, setProject] = useState([]);
   const token = sessionStorage.token;
 
@@ -43,11 +43,7 @@ function ProjectList({ user, setUser, projects, setProjects, milestones, setMile
 
   
   
-  function unselectProject() {
-    setSelectedProject(null);
-    setMilestones(user.milestones.sort((a, b) => new Date(a.due_date) - new Date(b.due_date)));
-  }
-
+ 
 const hideProject = () => { 
   setMilestones(user.milestones.sort((a, b) => new Date(a.due_date) - new Date(b.due_date)));
   setSelectedProject(null);
@@ -86,38 +82,55 @@ const hideProject = () => {
     }
   }
 
-  function deleteMilestone(id) {
+  async function deleteMilestone(id) {
     try {
-      fetch(`http://localhost:3000/milestones/${id}`, {
+      const response = await fetch(`http://localhost:3000/milestones/${id}`, {
         method: 'DELETE',
         headers: new Headers({
           Authorization: token,
         })
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Failed to delete milestone');
-        }
-        removeMilestone(id);
-        setUser({
-          ...user,
-          milestones: user.milestones.filter(m => m.id !== id),
-        });
-      })
-      .catch(error => {
-        console.error('Error deleting milestone:', error);
       });
+      if (!response.ok) {
+        throw new Error(`Failed to delete milestone with ID ${id}. Response status: ${response.status} ${response.statusText}`);
+      }
+  
+      await new Promise((resolve) => {
+        setMilestones(prevMilestones => {
+          const filteredMilestones = prevMilestones.filter(m => m.id !== id);
+          setUser({
+            ...user,
+            milestones: user.milestones.filter(m => m.id !== id),
+          });
+          resolve(filteredMilestones);
+          return filteredMilestones;
+        });
+      });
+  
+      removeMilestone(id);
     } catch (error) {
-      console.error('Caught error in deleteMilestone:', error);
+      console.error(`Error deleting milestone with ID ${id}: ${error.message}`);
+      console.error(error.stack);
+      
     }
+    console.log(milestones)
   }
   function removeMilestone(id) {
     setMilestones(milestones.filter(m => m.id !== id));
+    
   }
 
   function removeProject(id) {
+    setUser(prevUser => {
+      const updatedProjects = prevUser.projects.filter((p) => p.id !== id);
+      const updatedMilestones = prevUser.milestones.filter((m) => m.project_id !== id);
+      return {
+        ...prevUser,
+        projects: updatedProjects,
+        milestones: updatedMilestones
+      };
+    });
     setProjects(projects.filter((p) => p.id !== id));
-    setMilestones(milestones.filter((p) => p.project_id !== id));
+    setMilestones(milestones.filter((m) => m.project_id !== id));
   }
 
   const showMilestoneForm = project => {
@@ -150,12 +163,14 @@ return (
 <MilestoneForm user={user} setUser={setUser} project={project} milestones={setMilestones} setMilestones={setMilestones} hideMilestoneForm={hideMilestoneForm}/>
 </Modal.Body>
 </Modal>
+<Container className='projects-container'>
 <p className='headline'>Projects</p>
 
 <br />
-<ul>
-{projects === undefined && <h5>Nothing Here, Yet!</h5>}
+
+
 {projects.length === 0 && <h5>No projects (yet)</h5>}
+<ul>
     {projects.map((project) => (
       <ProjectListItem
         key={project.id}
@@ -168,9 +183,11 @@ return (
         selectedProject={selectedProject}
       />
     ))}
-
+  <br />
   </ul>
+  </Container>
 </div>
+
 );
 }
 
