@@ -46,7 +46,7 @@ function editMilestone({user, setUser, milestone, milestones, setMilestones }) {
     if (updatedMilestone) {
       setName(updatedMilestone.name);
       setDate(updatedMilestone.due_date);
-      setMilestones(milestones.map(m => m.id === updatedMilestone.id ? updatedMilestone : m));
+      setMilestones(milestones.map(m => m.id === updatedMilestone.id ? updatedMilestone : m).sort((a, b) => new Date(a.due_date) - new Date(b.due_date)));
     } 
   }, [updatedMilestone, milestones, setMilestones]);
 

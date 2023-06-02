@@ -59,22 +59,7 @@ function Milestone({ user, setUser, milestone,  milestones, setMilestones, showM
       });
   }
 
- 
-
-
   
-
-  /* removes a specific milestone from the DOM */
-  function removeMilestone(id) {      
-    setMilestones(milestones.filter(p =>
-        p.id !== id
-      )
-    );
-  }
-
-
-  
- 
   return (
     <li key={milestone.id} style={{opacity: milestone.complete === true && "20%"}}> 
       <Card className='bootstrap-card-no-hover'>
@@ -89,7 +74,7 @@ function Milestone({ user, setUser, milestone,  milestones, setMilestones, showM
         <br/>
         {milestone.description}
         <br></br>
-        <p >Due Date: {dayjs(milestone.due_date).format('MM.DD.YYYY')}  </p> 
+        <p >Due {dayjs(milestone.due_date).format('MM.DD.YYYY')}  </p> 
         
         {milestone.complete !== true &&  
          <p style={{color: dayjs(milestone.due_date).diff(today, 'day') <= 0 ? "red" : "inherit"}}>

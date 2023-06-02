@@ -12,31 +12,35 @@ function LoginForm() {
   const navigate = useNavigate();
 
   function login() {
-  fetch(`http://localhost:3000/auth/login`, {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({email: email, password: password})
-  })
-  .then(resp => {
-    if (resp.ok) {
-      return resp.json();
-    } else {
-      throw new Error('Network response was not ok');
-    }
-  })
-  .then(data => {    
-    console.log(data)
-    sessionStorage.setItem("token", data.token)
-    sessionStorage.setItem("email", data.email)
-    setLoginStatus("success")
-    fetchUsers(); // Call fetchUsers() here
-  })
-  .catch(error => {
-    console.error('Error logging in:', error);
-    setErrorMessage("Incorrect Email or Password"); // Set an error message if login fails
-    setLoginStatus("failure")
-  });
-}
+    fetch(`http://localhost:3000/auth/login`, {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({email: email, password: password})
+    })
+    .then(resp => {
+      if (resp.ok) {
+        return resp.json();
+      } else {
+        throw new Error('Network response was not ok');
+      }
+    })
+    .then(data => {    
+      console.log(data)
+      sessionStorage.setItem("token", data.token)
+      sessionStorage.setItem("email", data.email)
+      setLoginStatus("success")
+      fetchUsers(); // Call fetchUsers() here
+    })
+    .catch(error => {
+      console.error('Error logging in:', error);
+      if (error.message === 'Network response was not ok') {
+        setErrorMessage("Incorrect Email or Password");
+      } else {
+        setErrorMessage("Server is currently unavailable. Please try again later.");
+      }
+      setLoginStatus("failure")
+    });
+  }
     
   function fetchUsers() {
     fetch(`http://localhost:3000/users/`, {

@@ -110,7 +110,7 @@ function Project() {
      
 
      
-      <Modal className='bootmodal' show={editOpen} onHide={hideEdit}>
+      <Modal className='bootmodal' show={editOpen} >
        
         <Modal.Body> <EditProject project={location.state.project.project}templates = {location.state.user.templates}/> </Modal.Body>
   

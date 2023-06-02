@@ -101,7 +101,7 @@ function ProjectList(props) {
 
   return (
     <div>
-      <Modal className='bootmodal' show={editFormOpen} onHide={hideEditForm}>
+      <Modal className='bootmodal' show={editFormOpen}>
         <Modal.Body>
           <EditProject
             project={project}

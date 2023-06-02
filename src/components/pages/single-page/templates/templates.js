@@ -24,10 +24,10 @@ function TemplateIndex({ templates, setTemplates, user }) {
 
   return (
     <Card >
-      <div>
+      <div className="template-container">
         <h1>{user.name}'s Templates</h1>
         {templates.map((template) => (
-          <li key={template.name}>
+          <li className="template-list" key={template.name}>
             <h1 className="project-names">{template.name}</h1>
             {template.milestones
               .sort((a, b) => new Date(b.due_date) - new Date(a.due_date))

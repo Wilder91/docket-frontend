@@ -147,9 +147,21 @@ body {
     transform: scale(1.1);
     z-index: 9;
   }
+  .template-container{
+    align-items: center;
+  }
+  
+ 
+
+  .projects-container{
+    height: 300px;
+    
+    padding-top: 0px;
+  }
   
   ul > li {
     display: inline-block;
+    break-after: always;
     /* You can also add some margins here to make it look prettier */
 }
 .fixed-list {
@@ -262,7 +274,7 @@ body {
     
   }
   .milestone-list{
-    float: left;
+    margin-top: 100px;
   }
   
   .dd-logo {
@@ -330,7 +342,7 @@ body {
   }
   .headline {
     font-size: 15pt !important;
-    position: static;
+    position: relative;
     font-weight: normal;
     text-align: left;
     line-height: 0.7em;
@@ -343,13 +355,13 @@ body {
 
   .milestone-headline {
     font-size: 15pt !important;
-    
+    position: relative;
     font-weight: normal;
     text-align: left;
     line-height: 0.7em;
    
-    padding-top: 400px;
-    padding-left: 60px;
+    padding-top: 40px;
+    padding-left: 90px;
    
     color:#608bbb
   }
