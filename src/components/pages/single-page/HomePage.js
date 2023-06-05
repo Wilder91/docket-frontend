@@ -228,7 +228,7 @@ function HomePage() {
       </Modal>
 
     <br />
-   
+    <p className='headline'>Projects</p>
     <ProjectList user={user} setUser={setUser} projects={projects} setProjects={setProjects} milestones={milestones} setMilestones={setMilestones} templates={templates}/>
     
   
@@ -239,6 +239,10 @@ function HomePage() {
 
 </>
     )}
+    <br />
+
+      <p className='headline'>Milestones</p>
+
     <MilestoneList user={user} setUser={setUser} milestones={milestones} setMilestones={setMilestones} projects={projects} setProjects={setProjects} templates={templates} setTemplates={setTemplates} showMilestoneEditForm={showMilestoneEditForm} handleMilestoneToggle={handleMilestoneToggle}/>
   </div>
   

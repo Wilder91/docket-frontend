@@ -19,7 +19,7 @@ function MilestoneList({user, setUser, milestones, setMilestones, milestone, set
   return (
     <div className="milestone-list">
       <div className='Container'>
-        <p className='milestone-headline'>Milestones</p>
+      
         <br />
         {milestones.length === 0 && <h5>No milestones (yet)</h5> }
         <ul>

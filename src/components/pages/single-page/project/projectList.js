@@ -164,12 +164,13 @@ return (
 </Modal.Body>
 </Modal>
 <Container className='projects-container'>
-<p className='headline'>Projects</p>
+
 
 <br />
 
 
 {projects.length === 0 && <h5>No projects (yet)</h5>}
+<div className='list'>
 <ul>
     {projects.map((project) => (
       <ProjectListItem
@@ -185,6 +186,7 @@ return (
     ))}
   <br />
   </ul>
+  </div>
   </Container>
 </div>
 

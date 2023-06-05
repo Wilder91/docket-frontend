@@ -7,14 +7,12 @@
     "@emotion/styled": "^11.10.5",
     "@mui/material": "^5.10.14",
     "@react-oauth/google": "^0.5.0",
-    
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.5.0",
     "bootstrap": "^5.2.3",
     "dayjs": "^1.11.7",
     "enzyme": "^3.11.0",
     "gapi-script": "^1.2.0",
-   
     "react": "^18.0.0",
     "react-bootstrap": "^2.7.2",
     "react-dom": "^18.0.0",
@@ -30,7 +28,7 @@
     "fsevents": "^2.1.2"
   },
   "scripts": {
-    "start": "set PORT=4000 && react-scripts start",
+    "start": "set PORT=4000 && react-scripts --openssl-legacy-provider start ",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
