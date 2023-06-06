@@ -163,14 +163,17 @@ return (
 <MilestoneForm user={user} setUser={setUser} project={project} milestones={setMilestones} setMilestones={setMilestones} hideMilestoneForm={hideMilestoneForm}/>
 </Modal.Body>
 </Modal>
-<Container className='projects-container'>
 
 
-<br />
+
+  <br />
+
 
 
 {projects.length === 0 && <h5>No projects (yet)</h5>}
+<Container className='projects-container'>
 <div className='list'>
+  
 <ul>
     {projects.map((project) => (
       <ProjectListItem

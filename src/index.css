@@ -1,179 +1,175 @@
 body {
-    margin: 0;
-    font-family:  'Ek Mukta'; font-size: 22px;
-    -webkit-font-smoothing: antialiased;
-    background-color: #833333;
-    color: #4c4f51;
-    text-align: center;
-
-    
-  }
-  .header {
-    padding: 10px;
-    margin-bottom: 1rem;
-  }
-  .nav-link {
-    color: #608bbb !important
-  }
-  
-  .NavBarLogo {
-    width: 3%;
-    height: auto;
-    margin-left: -60px;
-    margin-right: 8px;
-  }
-
-  .LoginLogo {
-    
-    width: 10%;
-    height: auto;
-
-    margin-right: 250px;
-  }
-
-  
-
-  .nav-link {
-    color: #b5b5b5 !important
-  }
-  .navbar-brand {
-    color: #608bbb !important
-  } 
-  .user-name{
-    float: right;
-  }
-  .Navbar {
-    background-color:#fff;
-    color: #608bbb
-  }
-
-  .logout-button{
-    text-decoration: none;
-    margin-right: -60px;
-    color: #b5b5b5 !important;
-  }
-  .bootstrap_card {
-    flex: 0 50%;
-    background: #fff;
-    box-shadow: 0 2px 4px 0 rgba(136, 144, 195, 0.2),
-      0 5px 15px 0 rgba(37, 44, 97, 0.15);
-    border-radius: 15px;
-    margin: 8px;
-    padding: 10px 15px;
-    position: relative;
-    z-index: 1;
-    overflow: hidden;
-    height: 265px; /* Set a fixed height for the elements */
-  }
-  
-  .bootstrap_card > * {
-    /* Set the text and other elements inside the card to take up the full height */
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  
-  .bootstrap_card > *:first-child {
-    /* Set the first child element (usually the title) to wrap text and scroll if necessary */
-    overflow: auto;
-  }
-
-  .bootstrap-card-no-hover {
-    flex: 0 50%;
-    background: #fff;
-    box-shadow: 0 2px 4px 0 rgba(136, 144, 195, 0.2),
-      0 5px 15px 0 rgba(37, 44, 97, 0.15);
-    border-radius: 15px;
-    margin: 8px;
-    padding: 10px 15px;
-    position: relative;
-    z-index: 1;
-    overflow: hidden;
-    min-height: 265px;
-    transition: 0.7s;
-  }
-
- .bootstrap_card:hover {
-    background: #9fa5a9;
-    color: #fff;
-    transform: scale(1.1);
-    z-index: 9;
-  }
-  .bootstrap_card:active {
-    background: #9fa5a9;
-  }
-
-  .bootstrap_card:hover::before {
-    background: rgb(85 108 214 / 10%);
-  }
-  
-  .bootstrap_card:hover .solu_title h3,
-  .bootstrap_cards_box .bootstrap_card:hover .solu_description p {
-    color: #fff;
-  }
-
-  .hover_color_bubble {
-    position: absolute;
-    background: rgb(54 81 207 / 15%);
-    width: 100rem;
-    height: 100rem;
-    left: 0;
-    right: 0;
-    z-index: -1;
-    top: 16rem;
-    border-radius: 50%;
-    transform: rotate(-36deg);
-    left: -18rem;
-    transition: 0.7s;
-  }
-  button.normal {
-    display:inline-block;
-    padding:0.3em 1em;
-    border:0.16em solid #FFFFFF;
-    margin:0 0.3em 0.3em 0;
-    box-sizing: border-box;
-    text-decoration:none;
-    font-family:'Roboto',sans-serif;
-    font-weight:400;
-    color:#9b9b9b;
-    text-align:center;
-    transition: all 0.15s;
-    cursor: pointer;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-  
-    
-  }
-  .grey-effect {
-    background-color: #9fa5a9 !important;
-    color: #fff;
-    transform: scale(1.1);
-    z-index: 9;
-  }
-  .template-container{
-    align-items: center;
-  }
-  
- 
-
-  .projects-container{
-  display: flex;
-  }
-  
-  ul > li {
-    display: inline-block;
-    break-after: always;
-    /* You can also add some margins here to make it look prettier */
+  margin: 0;
+  font-family: 'Ek Mukta';
+  font-size: 22px;
+  -webkit-font-smoothing: antialiased;
+  background-color: #833333;
+  color: #4c4f51;
+  text-align: center;
 }
+
+.header {
+  padding: 10px;
+  margin-bottom: 1rem;
+}
+
+.nav-link {
+  color: #608bbb !important;
+}
+
+.NavBarLogo {
+  width: 3%;
+  height: auto;
+  margin-left: -60px;
+  margin-right: 8px;
+}
+
+.LoginLogo {
+  width: 10%;
+  height: auto;
+  margin-right: 250px;
+}
+
+.navbar-brand {
+  color: #608bbb !important;
+}
+
+.user-name {
+  float: right;
+}
+
+.Navbar {
+  background-color: #fff;
+  color: #608bbb;
+}
+
+.logout-button {
+  text-decoration: none;
+  margin-right: -60px;
+  color: #b5b5b5 !important;
+}
+
+.bootstrap_card {
+  flex: 0 50%;
+  background: #fff;
+  box-shadow: 0 2px 4px 0 rgba(136, 144, 195, 0.2), 0 5px 15px 0 rgba(37, 44, 97, 0.15);
+  border-radius: 15px;
+  margin: 8px;
+  padding: 10px 15px;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  height: 265px;
+}
+
+.bootstrap_card > * {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.bootstrap_card > *:first-child {
+  overflow: auto;
+}
+
+.bootstrap-card-no-hover {
+  flex: 0 50%;
+  background: #fff;
+  box-shadow: 0 2px 4px 0 rgba(136, 144, 195, 0.2), 0 5px 15px 0 rgba(37, 44, 97, 0.15);
+  border-radius: 15px;
+  margin: 8px;
+  padding: 10px 15px;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  min-height: 265px;
+  transition: 0.7s;
+}
+
+.bootstrap_card:hover {
+  background: #9fa5a9;
+  color: #fff;
+  transform: scale(1.1);
+  z-index: 9;
+}
+
+.bootstrap_card:active {
+  background: #9fa5a9;
+}
+
+.bootstrap_card:hover::before {
+  background: rgb(85 108 214 / 10%);
+}
+
+.bootstrap_card:hover .solu_title h3,
+.bootstrap_cards_box .bootstrap_card:hover .solu_description p {
+  color: #fff;
+}
+
+.hover_color_bubble {
+  position: absolute;
+  background: rgb(54 81 207 / 15%);
+  width: 100rem;
+  height: 100rem;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  top: 16rem;
+  border-radius: 50%;
+  transform: rotate(-36deg);
+  left: -18rem;
+  transition: 0.7s;
+}
+
+
+button.normal {
+  display: inline-block;
+  padding: 0.3em 1em;
+  border: 0.16em solid #FFFFFF;
+  margin: 0 0.3em 0.3em 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  color: #9b9b9b;
+  text-align: center;
+  transition: all 0.15s;
+  cursor: pointer;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+}
+
+.grey-effect {
+  background-color: #9fa5a9 !important;
+  color: #fff;
+  transform: scale(1.1);
+  z-index: 9;
+}
+
+.template-container {
+  align-items: center;
+}
+
+.projects-container {
+  display: flex;
+  min-height: 340px;
+}
+
+ul > li {
+  display: inline-block;
+  break-after: always;
+}
+
 .fixed-list {
   position: fixed;
   top: 50px;
   bottom: 50px;
   left: 50px;
   right: 50px;
-  overflow-y: auto; /* enables scrolling for the fixed list */
+  overflow-y: auto;
 }
+
 .embed {
   max-width: 500px;
   margin: 0 auto;
@@ -182,91 +178,84 @@ body {
 .embed input[type="number"] {
   width: 200%;
   max-width: 150%;
-  min-width: 90%
+  min-width: 90%;
 }
 
 .embed.milestone-name {
   width: 400%;
   max-width: 400%;
-  min-width: 90%
+  min-width: 90%;
 }
-  .button:hover {
-  
-    color: white;
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-  }
-  .input-container {
-    border-radius: 8px;
-    width: 200px;
-    height: 35px;
-    font-size: 14px;
-    text-align: left;
-    border-style: solid;
-    border-color: white;
-    
-    
-  }
-  .nice-button {
-    font-size: 1em;
-      text-align: center;
-      background-color: #608bbb;
-      color: white;
-      margin-bottom: 5px;
-      padding-top: 5px;
-    padding-bottom: 6px;
-      border: none;
-      cursor: pointer;
-    border-radius: 10px;
-    opacity: 100%;
-    text-decoration: none;
-    width: 210px;
-  
-  }
-  
-  .signup-button {
-    font-size: 1em;
-      text-align: center;
-      background-color: gray;
-      color: white;
-      margin: 0;
-      padding-top: 5px;
-    padding-bottom: 6px;
-    text-decoration: none;
-      border: none;
-      cursor: pointer;
-    border-radius: 10px;
-    opacity: 100%;
-    width: 210px;
-  }
-  
-  .signup {
-    background-color: gray;
-  }
-  
-  #main{
-    margin: 0px auto;
-  }
-  
-  
-  
-  code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-      monospace;
-  }
-  
- 
-  
-  li {
-    list-style-type: none;
-    position: static;
-    opacity: 80%;
-    text-transform: capitalize;
-    margin: 5px;
-    background-blend-mode: color;
-    float: left;
-   
-    border-radius: 10px;
-    border-color: rgb(187, 47, 47);
+
+.button:hover {
+  color: white;
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+.input-container {
+  border-radius: 8px;
+  width: 200px;
+  height: 35px;
+  font-size: 14px;
+  text-align: left;
+  border-style: solid;
+  border-color: white;
+}
+
+.nice-button {
+  font-size: 1em;
+  text-align: center;
+  background-color: #608bbb;
+  color: white;
+  margin-bottom: 5px;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  opacity: 100%;
+  text-decoration: none;
+  width: 210px;
+}
+
+.signup-button {
+  font-size: 1em;
+  text-align: center;
+  background-color: gray;
+  color: white;
+  margin: 0;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  opacity: 100%;
+  width: 210px;
+}
+
+.signup {
+  background-color: gray;
+}
+
+#main {
+  margin: 0px auto;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+li {
+  list-style-type: none;
+  position: static;
+  opacity: 80%;
+  text-transform: capitalize;
+  margin: 5px;
+  background-blend-mode: color;
+  float: left;
+  border-radius: 10px;
+  border-color: rgb(187, 47, 47);
     border-width: 1px;
     padding: 10px 20px 10px;
     
@@ -276,7 +265,7 @@ body {
     
   }
   .milestone-list{
-    margin-top: 100px;
+    margin-top: 40px;
   }
   
   .dd-logo {
