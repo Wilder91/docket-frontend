@@ -148,12 +148,17 @@ button.normal {
 }
 
 .template-container {
-  align-items: center;
+  align-items: right;
+}
+.project-list {
+  margin-left: 0px;
 }
 
-.projects-container {
+
+.projects-container.container {
   display: flex;
   min-height: 340px;
+  margin-left: 0%;
 }
 
 ul > li {
@@ -161,14 +166,6 @@ ul > li {
   break-after: always;
 }
 
-.fixed-list {
-  position: fixed;
-  top: 50px;
-  bottom: 50px;
-  left: 50px;
-  right: 50px;
-  overflow-y: auto;
-}
 
 .embed {
   max-width: 500px;
@@ -190,6 +187,10 @@ ul > li {
 .button:hover {
   color: white;
   box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+.container {
+  margin-left: 0px;
 }
 
 .input-container {
@@ -405,9 +406,11 @@ h1, .h1 {
    width: 200px;
    height: 35px;
   }
-
+  .edit-project-form{
+    background-color: red;
+  }
   .modal-body {
-    padding: 1px;
+    padding: 0px !important;
   }
 
   .form-select{

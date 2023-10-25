@@ -1,6 +1,6 @@
-import React  from 'react';
+import React, { useEffect } from 'react';
 import { Card } from 'react-bootstrap';
-
+import { gapi } from 'gapi-script';
 import dayjs from 'dayjs';
 import Overdue from '../../images/Overdue.png';
 import Urgent from '../../images/Upcoming.png';
@@ -8,10 +8,7 @@ import Nonurgent from '../../images/NonUrgent.png';
 import MediumUrgent from '../../images/MediumUrgent.png';
 const token = sessionStorage.token;
 
-
-
-
-function Milestone({ user, setUser, milestone,  milestones, setMilestones, showMilestoneEditForm, today }) {
+function Milestone({ user, setUser, milestone, milestones, setMilestones, showMilestoneEditForm, today }) {
   const dueDate = dayjs(milestone.due_date);
   const getFlagImage = () => {
     const daysUntilDue = dueDate.diff(today, 'day');
@@ -24,16 +21,56 @@ function Milestone({ user, setUser, milestone,  milestones, setMilestones, showM
       return <img src={Urgent} alt="Urgent" />;
     } else if (daysUntilDue < 30) {
       return <img src={MediumUrgent} alt="Urgent" />;
-    }
-     else {
+    } else {
       return <img src={Nonurgent} alt="Longtime" />;
     }
   };
+
   const confirmDeleteMilestone = (id) => {
     if (window.confirm('Are you sure you want to delete this milestone?')) {
       deleteMilestone(id);
     }
   };
+
+  const handleAddToCalendar = (milestone) => {
+    addMilestoneToCalendar(milestone);
+  };
+  
+  async function addMilestoneToCalendar(milestone) {
+    try {
+      console.log(milestone);
+      await gapi.client.init({
+        apiKey: 'AIzaSyCks7n4bwt0j9-R2socxXOh1ZfNKvQ57TA',
+        clientId: '289087849938-v7ckrcf04la568qv6iuepemv7n9qkvcu.apps.googleusercontent.com',
+        discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'],
+        scope: 'email'
+      });
+  
+      await gapi.client.load('calendar', 'v3');
+      
+      const event = {
+        summary: milestone.name,
+        description: milestone.description,
+        start: {
+          date: milestone.date,
+        },
+        end: {
+          date: milestone.date,
+        },
+      };
+  
+      const response = await gapi.client.calendar.events.insert({
+        calendarId: 'primary',
+        resource: event,
+      });
+  
+      console.log('Event added:', response.result);
+    } catch (error) {
+      console.error('Error adding event to Google Calendar:', error);
+    }
+  }
+  
+
   function deleteMilestone(id) {
     fetch(`http://localhost:3000/milestones/${id}`, {
       method: 'DELETE',
@@ -44,10 +81,8 @@ function Milestone({ user, setUser, milestone,  milestones, setMilestones, showM
       .then((response) => {
         if (response.ok) {
           console.log('Milestone deleted successfully:', response);
-          // Remove the milestone from the milestones state array
           const updatedMilestones = milestones.filter((milestone) => milestone.id !== id);
           setMilestones(updatedMilestones);
-          // Remove the milestone from the user.milestones array
           const updatedUserMilestones = user.milestones.filter((milestone) => milestone.id !== id);
           setUser({ ...user, milestones: updatedUserMilestones });
         } else {
@@ -59,33 +94,50 @@ function Milestone({ user, setUser, milestone,  milestones, setMilestones, showM
       });
   }
 
-  
+  useEffect(() => {
+    function start() {
+      gapi.client.init({
+        clientId: '289087849938-vvfo0f1giiiecbqd05blifubb9rr43kk.apps.googleusercontent.com',
+        scope: 'email',
+      });
+    }
+
+    gapi.load('client:auth2', start);
+  }, []);
+
   return (
-    <li key={milestone.id} style={{opacity: milestone.complete === true && "20%"}}> 
-      <Card className='bootstrap-card-no-hover'>
-        {milestone.complete === true &&
-          <h5>complete</h5>}
-         {getFlagImage()}
-        <b style={{color: milestone.complete === true && "red"}}> 
-          <br />{milestone.name} 
+    <li key={milestone.id} style={{ opacity: milestone.complete === true && '20%' }}>
+      <Card className="bootstrap-card-no-hover">
+        {milestone.complete === true && <h5>complete</h5>}
+        {getFlagImage()}
+        <b style={{ color: milestone.complete === true && 'red' }}>
+          <br />
+          {milestone.name}
         </b>
         <br />
-        {milestone.project_name} 
-        <br/>
+        {milestone.project_name}
+        <br />
         {milestone.description}
-        <br></br>
-        <p >Due {dayjs(milestone.due_date).format('MM.DD.YYYY')}  </p> 
-        
-        {milestone.complete !== true &&  
-         <p style={{color: dayjs(milestone.due_date).diff(today, 'day') <= 0 ? "red" : "inherit"}}>
-         {dayjs(milestone.due_date).diff(today, 'day') <= 0 ? `${dayjs(milestone.due_date).diff(today, 'day') * -1} days Overdue` :
-           `${dayjs(milestone.due_date).diff(today, 'day')} days remaining`}
-       </p> }
-        <button className='normal' onClick={() => showMilestoneEditForm(milestone)}>edit</button>   
-        <button className='normal' onClick={() => confirmDeleteMilestone(milestone.id)}>delete</button>   
+        <br />
+        <p>Due {dayjs(milestone.due_date).format('MM.DD.YYYY')} </p>
+
+        {milestone.complete !== true && (
+          <p style={{ color: dayjs(milestone.due_date).diff(today, 'day') <= 0 ? 'red' : 'inherit' }}>
+            {dayjs(milestone.due_date).diff(today, 'day') <= 0
+              ? `${dayjs(milestone.due_date).diff(today, 'day') * -1} days Overdue`
+              : `${dayjs(milestone.due_date).diff(today, 'day')} days remaining`}
+          </p>
+        )}
+        <button onClick={() => handleAddToCalendar(milestone)}>Add to Calendar</button>
+        <button className="normal" onClick={() => showMilestoneEditForm(milestone)}>
+          edit
+        </button>
+        <button className="normal" onClick={() => confirmDeleteMilestone(milestone.id)}>
+          delete
+        </button>
       </Card>
     </li>
   );
 }
 
-export default Milestone
+export default Milestone;

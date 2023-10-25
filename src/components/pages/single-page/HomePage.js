@@ -166,86 +166,67 @@ function HomePage() {
    
   return (
     <div className='page'>
-    {user.length === 0 ? (
-      <h5> </h5>
-    ) : (
-      <>
-      {
-    
-    <div className='page'>
-   
-     <Navbar bg="dark\" variant="dark" className='Navbar'>
-        <Container>
-        <img src='/2.png' className='NavBarLogo' alt='docket logo'></img>
-          <Navbar.Brand >Docket</Navbar.Brand>
-          <Nav className="container-fluid">
-            
-            <Nav.Link onClick={showTemplates} className='nav-link'>Templates</Nav.Link>
-            <Nav.Link onClick={showTemplateForm} className='nav-link'>Add Template</Nav.Link>
-            <Nav.Link onClick={showModal} className='nav-link'>Add Project</Nav.Link>
-            <Navbar.Brand className='ms-auto'>Hello, {user.name}  |  <a href="/logout" className='logout-button'>Logout</a></Navbar.Brand>
-            
-          </Nav>
-        </Container>
-      </Navbar>
+      {user.length === 0 ? (
+        <h5> </h5>
+      ) : (
+        <>
+          <Navbar bg="dark\" variant="dark" className='Navbar'>
+            <Container>
+              <img src='/2.png' className='NavBarLogo' alt='docket logo'></img>
+              <Navbar.Brand >Docket</Navbar.Brand>
+              <Nav className="container-fluid">
+                <Nav.Link onClick={showTemplates} className='nav-link'>Templates</Nav.Link>
+                <Nav.Link onClick={showTemplateForm} className='nav-link'>Add Template</Nav.Link>
+                <Nav.Link onClick={showModal} className='nav-link'>Add Project</Nav.Link>
+                <Navbar.Brand className='ms-auto'>Hello, {user.name} | <a href="/logout" className='logout-button'>Logout</a></Navbar.Brand>
+              </Nav>
+            </Container>
+          </Navbar>
   
-
-      <Modal className='bootmodal' show={isOpen} onHide={showModal}>
-        
-        <Modal.Body><ProjectForm user={user} setUser={setUser} setProjects={setProjects} templates={templates} milestones = {milestones} setMilestones={setMilestones}/></Modal.Body>
-        
-      </Modal>
-      <Modal className='bootmodal' show={templatesOpen} onHide={showTemplates}>
-        
-        <Modal.Body><Templates templates={templates} setTemplates={setTemplates} user={user} /></Modal.Body>
-        
-      </Modal>
-
-      <Modal className='bootmodal' show={templateFormOpen} onHide={showTemplateForm}>
-        
-        <Modal.Body><TemplateForm templates={templates} setTemplates={setTemplates} user={user} setTemplateFormOpen={setTemplateFormOpen} /></Modal.Body>
-        
-      </Modal>
-
-      <Modal className='bootmodal' show={editFormOpen} onHide={hideEditForm}>
-        
-        <Modal.Body><EditProject 
-            user={user} 
-            setUser={setUser} 
-            project={project} 
-            projects={projects} 
-            setProjects={setProjects} 
-            setMilestones={setMilestones}
-            initialUser={user}
-          /></Modal.Body>
-        
-      </Modal>
-
-      <Modal className='bootmodal' show={editMilestoneFormOpen} onHide={hideEditMilestoneForm}>
-        
-        <Modal.Body><EditMilestone user={user} setUser={setUser}  templates={templates} milestone={milestone} setMilestone={setMilestone} milestones={milestones} setMilestones={setMilestones}/></Modal.Body>
-        
-      </Modal>
-
-    <br />
-    <p className='headline'>Projects</p>
-    <ProjectList user={user} setUser={setUser} projects={projects} setProjects={setProjects} milestones={milestones} setMilestones={setMilestones} templates={templates}/>
-    
+          <Modal className='bootmodal' show={isOpen} onHide={showModal}>
+            <Modal.Body><ProjectForm user={user} setUser={setUser} setProjects={setProjects} templates={templates} milestones={milestones} setMilestones={setMilestones} /></Modal.Body>
+          </Modal>
   
-       
-    </div>
+          <Modal className='bootmodal' show={templatesOpen} onHide={showTemplates}>
+            <Modal.Body><Templates templates={templates} setTemplates={setTemplates} user={user} /></Modal.Body>
+          </Modal>
   
-}
-
-</>
-    )}
-    <br />
-
+          <Modal className='bootmodal' show={templateFormOpen} onHide={showTemplateForm}>
+            <Modal.Body><TemplateForm templates={templates} setTemplates={setTemplates} user={user} setTemplateFormOpen={setTemplateFormOpen} /></Modal.Body>
+          </Modal>
+  
+          <Modal className='bootmodal' id="edit-project" show={editFormOpen} onHide={hideEditForm}>
+            <Modal.Body>
+              <EditProject
+                user={user}
+                setUser={setUser}
+                project={project}
+                projects={projects}
+                setProjects={setProjects}
+                setMilestones={setMilestones}
+                initialUser={user}
+              />
+            </Modal.Body>
+          </Modal>
+  
+          <Modal className='bootmodal' show={editMilestoneFormOpen} onHide={hideEditMilestoneForm}>
+            <Modal.Body>
+              <EditMilestone user={user} setUser={setUser} templates={templates} milestone={milestone} setMilestone={setMilestone} milestones={milestones} setMilestones={setMilestones} />
+            </Modal.Body>
+          </Modal>
+  
+          <br />
+          <div className='project-list'>
+          <p className='headline'>Projects</p>
+          <ProjectList user={user} setUser={setUser} projects={projects} setProjects={setProjects} milestones={milestones} setMilestones={setMilestones} templates={templates} />
+          </div>
+        </>
+      )}
+  
+      <br />
       <p className='headline'>Milestones</p>
-
-    <MilestoneList user={user} setUser={setUser} milestones={milestones} setMilestones={setMilestones} projects={projects} setProjects={setProjects} templates={templates} setTemplates={setTemplates} showMilestoneEditForm={showMilestoneEditForm} handleMilestoneToggle={handleMilestoneToggle}/>
-  </div>
-  
+      <MilestoneList user={user} setUser={setUser} milestones={milestones} setMilestones={setMilestones} projects={projects} setProjects={setProjects} templates={templates} setTemplates={setTemplates} showMilestoneEditForm={showMilestoneEditForm} handleMilestoneToggle={handleMilestoneToggle} />
+    </div>
   );
   
 }

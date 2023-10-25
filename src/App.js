@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { BrowserRouter, Route, Routes,  } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './components/pages/login';
@@ -12,9 +13,10 @@ import { UserContext } from './components/pages/single-page/util/context';
 
 
 const App = () => {
- 
+  
   return (
-    <>
+    <div>
+    
       <UserContext.Provider value={'hello'}>
       <BrowserRouter >
         <Routes>
@@ -25,7 +27,7 @@ const App = () => {
         </Routes>
       </BrowserRouter>
       </UserContext.Provider>
-    </>
+    </div>
   );
 };
 

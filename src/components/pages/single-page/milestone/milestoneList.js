@@ -3,7 +3,7 @@ import Milestone from './milestoneItem';
 function MilestoneList({user, setUser, milestones, setMilestones, milestone, setMilestone, handleMilestoneToggle, showMilestoneEditForm, today}) {
 
 
-
+  
 
 
 

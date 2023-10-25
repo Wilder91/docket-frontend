@@ -109,8 +109,7 @@ function editProject({ user, setUser, project, setProjects, setMilestones, setEd
   }, []);
 
   return (
-    <form className='embed' onSubmit={handleSubmit}>
-      <h1>Project Details</h1>
+    <form onSubmit={handleSubmit}>
 
       <input required
         type="text"

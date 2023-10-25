@@ -88,6 +88,7 @@ function LoginForm() {
 
   return (
     <div>  
+        <div id='signinDiv'></div>
       <UserContext.Provider value={[user, setUser]}>
         <form className='normal' onSubmit={handleSubmit}>
           <img src='/2.png' id='DDLogo' className='LoginLogo' alt="logo"></img> 
