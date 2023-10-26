@@ -70,16 +70,19 @@ function ProjectForm({ user, setUser, setProjects, templates, milestones, setMil
     const thisTemplate = userTemplates.find((t) => t.name === template);
     if (thisTemplate) {
       const arrTwo = thisTemplate.milestones;
+      
       arrTwo.forEach((m) => {
         m.project_name = project.name;
         m.complete = false;
         m.project_id = project.id;
+        m.lead_time = parseInt(m.leadTime);
       });
+     
 
       setMilestones((milestones) => [...milestones, ...arrTwo].sort(function (a, b) {
         return new Date(a.due_date) - new Date(b.due_date);
       }));
-
+      
       setUser((prevUser) => {
         const updatedMilestones = [...prevUser.milestones, ...arrTwo];
         return { ...prevUser, milestones: updatedMilestones };

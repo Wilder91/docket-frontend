@@ -37,9 +37,10 @@ function DeleteUser({ user, onConfirmDelete, onCancelDelete }) {
         <p>{user.name} has been deleted.</p>
       ) : (
         <div>
-          <p>Are you sure you want to delete {user.name}?</p>
-          <button onClick={handleConfirm}>Yes</button>
-          <button onClick={onCancelDelete}>No</button>
+          <p>Are you sure you want to delete your profile?</p>
+          <button className="signup-button" onClick={handleConfirm}>Yes</button>
+          <br />
+          <button className="nice-button" onClick={onCancelDelete}>No</button>
         </div>
       )}
     </div>
