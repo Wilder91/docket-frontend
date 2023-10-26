@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import EditProject from './project/editProject';
 import EditMilestone from './milestone/editMilestone';
 import MilestoneList from './milestone/milestoneList';
+import DeleteUser from './user/deleteUser'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function HomePage() {
@@ -22,6 +23,7 @@ function HomePage() {
   const [editFormOpen, setEditFormOpen] = useState(false);
   const [milestone, setMilestone] = useState(false);
   const [editMilestoneFormOpen, setEditMilestoneFormOpen] = useState(false);
+  const [deleteUserOpen, setDeleteUserOpen] = useState(false);
   const token = sessionStorage.token;
   const navigate = useNavigate();
 
@@ -70,7 +72,12 @@ function HomePage() {
 
   
 
-  
+  function onConfirmDelete() {
+    console.log('yup');
+    alert("Your account has been deleted successfully.");
+    sessionStorage.clear();
+    navigate('/login'); // Now it's valid to use navigate here
+  }
 
   
   /* alternates between showing or hiding the project form */
@@ -113,6 +120,14 @@ function HomePage() {
   const hideEditMilestoneForm = () => {
     setEditMilestoneFormOpen(false);
   }
+
+  const showDeleteUserModal = () => {
+    setDeleteUserOpen(true);
+  };
+  
+  const hideDeleteUserModal = () => {
+    setDeleteUserOpen(false);
+  };
   
 
 
@@ -178,6 +193,7 @@ function HomePage() {
                 <Nav.Link onClick={showTemplates} className='nav-link'>Templates</Nav.Link>
                 <Nav.Link onClick={showTemplateForm} className='nav-link'>Add Template</Nav.Link>
                 <Nav.Link onClick={showModal} className='nav-link'>Add Project</Nav.Link>
+                <Nav.Link onClick={showDeleteUserModal} className='nav-link'>Delete User</Nav.Link>
                 <Navbar.Brand className='ms-auto'>Hello, {user.name} | <a href="/logout" className='logout-button'>Logout</a></Navbar.Brand>
               </Nav>
             </Container>
@@ -212,6 +228,12 @@ function HomePage() {
           <Modal className='bootmodal' show={editMilestoneFormOpen} onHide={hideEditMilestoneForm}>
             <Modal.Body>
               <EditMilestone user={user} setUser={setUser} templates={templates} milestone={milestone} setMilestone={setMilestone} milestones={milestones} setMilestones={setMilestones} />
+            </Modal.Body>
+          </Modal>
+
+          <Modal className='bootmodal' show={deleteUserOpen} onHide={hideDeleteUserModal}>
+            <Modal.Body>
+              <DeleteUser user={user} onConfirmDelete={onConfirmDelete}/>
             </Modal.Body>
           </Modal>
   

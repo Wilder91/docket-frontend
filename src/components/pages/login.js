@@ -64,6 +64,13 @@ function LoginForm() {
     });
   }
 
+  useEffect(() => {
+    if (sessionStorage.token) {
+      // Redirect to the home page if logged in
+      navigate('/');
+    }
+  }, [navigate]);
+
   function findUser(users) {
     let user = users.find(u => u.email === sessionStorage.email)
     setUser(user)

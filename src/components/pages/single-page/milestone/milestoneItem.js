@@ -32,43 +32,9 @@ function Milestone({ user, setUser, milestone, milestones, setMilestones, showMi
     }
   };
 
-  const handleAddToCalendar = (milestone) => {
-    addMilestoneToCalendar(milestone);
-  };
+ 
   
-  async function addMilestoneToCalendar(milestone) {
-    try {
-      console.log(milestone);
-      await gapi.client.init({
-        apiKey: 'AIzaSyCks7n4bwt0j9-R2socxXOh1ZfNKvQ57TA',
-        clientId: '289087849938-v7ckrcf04la568qv6iuepemv7n9qkvcu.apps.googleusercontent.com',
-        discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'],
-        scope: 'email'
-      });
-  
-      await gapi.client.load('calendar', 'v3');
-      
-      const event = {
-        summary: milestone.name,
-        description: milestone.description,
-        start: {
-          date: milestone.date,
-        },
-        end: {
-          date: milestone.date,
-        },
-      };
-  
-      const response = await gapi.client.calendar.events.insert({
-        calendarId: 'primary',
-        resource: event,
-      });
-  
-      console.log('Event added:', response.result);
-    } catch (error) {
-      console.error('Error adding event to Google Calendar:', error);
-    }
-  }
+
   
 
   function deleteMilestone(id) {
@@ -128,7 +94,7 @@ function Milestone({ user, setUser, milestone, milestones, setMilestones, showMi
               : `${dayjs(milestone.due_date).diff(today, 'day')} days remaining`}
           </p>
         )}
-        <button onClick={() => handleAddToCalendar(milestone)}>Add to Calendar</button>
+
         <button className="normal" onClick={() => showMilestoneEditForm(milestone)}>
           edit
         </button>
