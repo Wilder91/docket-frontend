@@ -112,7 +112,7 @@ const hideProject = () => {
       console.error(error.stack);
       
     }
-    console.log(milestones)
+   
   }
   function removeMilestone(id) {
     setMilestones(milestones.filter(m => m.id !== id));

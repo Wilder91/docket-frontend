@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 
@@ -76,6 +77,9 @@ function ProjectForm({ user, setUser, setProjects, templates, milestones, setMil
         m.complete = false;
         m.project_id = project.id;
         m.lead_time = parseInt(m.leadTime);
+        m.due_date = dayjs(project.due_date).subtract(m.lead_time, 'day').format('MM.DD.YYYY')
+        console.log(dayjs(project.due_date).subtract(m.lead_time, 'day').format('MM.DD.YYYY'))
+      
       });
      
 

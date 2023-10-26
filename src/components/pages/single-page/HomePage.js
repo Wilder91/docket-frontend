@@ -40,16 +40,15 @@ function HomePage() {
     .then(result => result.json())
     .then(users => setterFunction(users)) 
   }
-  useEffect(() => {
-  console.log(user);
-}, [user]);
+ 
   /* sets state for the homepage and ensures that projects and milestones are sorted correctly, first
   by date and then by completion status */
   const setterFunction = (users) => {
-    console.log(users)
+
     const currentUser = users.find((user) => user.email === sessionStorage.email);
     setUser(prevUser => ({ ...prevUser, ...currentUser }));
-    console.log(user)
+
+
   
     const { id, projects, milestones, templates } = currentUser;
     
@@ -73,7 +72,7 @@ function HomePage() {
   
 
   function onConfirmDelete() {
-    console.log('yup');
+   
     alert("Your account has been deleted successfully.");
     sessionStorage.clear();
     navigate('/login'); // Now it's valid to use navigate here
