@@ -14,6 +14,7 @@ function editMilestone({user, setUser, milestone, milestones, setMilestones }) {
   
     fetch(`http://localhost:3000/milestones/${milestone.id}`, {
       method: 'PATCH',
+     
       body: JSON.stringify({
         name: name,
         due_date: date,

@@ -8,7 +8,8 @@ import { useNavigate } from 'react-router-dom';
 import EditProject from './project/editProject';
 import EditMilestone from './milestone/editMilestone';
 import MilestoneList from './milestone/milestoneList';
-import DeleteUser from './user/deleteUser'
+
+import UserProfile from './user/profile'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function HomePage() {
@@ -23,7 +24,8 @@ function HomePage() {
   const [editFormOpen, setEditFormOpen] = useState(false);
   const [milestone, setMilestone] = useState(false);
   const [editMilestoneFormOpen, setEditMilestoneFormOpen] = useState(false);
-  const [deleteUserOpen, setDeleteUserOpen] = useState(false);
+
+  const [userProfileOpen, setUserProfileOpen] = useState(false);
   const token = sessionStorage.token;
   const navigate = useNavigate();
 
@@ -120,15 +122,15 @@ function HomePage() {
     setEditMilestoneFormOpen(false);
   }
 
-  const showDeleteUserModal = () => {
-    setDeleteUserOpen(true);
-  };
   
-  const hideDeleteUserModal = () => {
-    setDeleteUserOpen(false);
+  const showUserProfile = () => {
+    console.log('showUserProfile function called');
+    setUserProfileOpen(true);
   };
-  
-
+  const hideUserProfile= () => {
+    setUserProfileOpen(false);
+    console.log(userProfileOpen)
+  }
 
   
 
@@ -192,9 +194,10 @@ function HomePage() {
                 <Nav.Link onClick={showTemplates} className='nav-link'>Templates</Nav.Link>
                 <Nav.Link onClick={showTemplateForm} className='nav-link'>Add Template</Nav.Link>
                 <Nav.Link onClick={showModal} className='nav-link'>Add Project</Nav.Link>
-                <Nav.Link onClick={showDeleteUserModal} className='nav-link'>Delete User</Nav.Link>
+                
+                <Nav.Link onClick={showUserProfile} className='nav-link' user={user} s> Account </Nav.Link>
                 <Navbar.Brand className='ms-auto'>Hello, {user.name} | <a href="/logout" className='logout-button'>Logout</a></Navbar.Brand>
-              </Nav>
+                </Nav>
             </Container>
           </Navbar>
   
@@ -230,9 +233,11 @@ function HomePage() {
             </Modal.Body>
           </Modal>
 
-          <Modal className='bootmodal' show={deleteUserOpen} onHide={hideDeleteUserModal}>
+          
+
+          <Modal className='bootmodal' show={userProfileOpen} onHide={hideUserProfile}>
             <Modal.Body>
-              <DeleteUser user={user} onConfirmDelete={onConfirmDelete}/>
+              <UserProfile user={user} setUser={setUser} onConfirmDelete={onConfirmDelete}/>
             </Modal.Body>
           </Modal>
   

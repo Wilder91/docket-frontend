@@ -108,12 +108,18 @@ function ProjectForm({ user, setUser, setProjects, templates, milestones, setMil
       </Form.Group>
 
       <Form.Group controlId='formProjectKind'>
-        <Form.Label>Kind</Form.Label>
-        <Form.Control type='text' value={kind} onChange={(e) => setKind(e.target.value)}></Form.Control>
+        <Form.Label>Type of Project: (You Can Also Use a Template)</Form.Label>
+        <Form.Control 
+        type='text'
+         value={kind} 
+         placeholder='ex: "Wedding Invite Suite'
+         onChange={(e) => setKind(e.target.value)}>
+          
+         </Form.Control>
       </Form.Group>
 
       <Form.Group controlId='formProjectTemplate'>
-        <Form.Label>Or Create from Template</Form.Label>
+        <Form.Label></Form.Label>
         <Form.Control
           as='select'
           aria-label='Default select example'

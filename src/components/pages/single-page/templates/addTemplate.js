@@ -62,7 +62,7 @@ function AddTemplate({templates, setTemplates, user, setTemplateFormOpen}) {
   };
 
   return (
-    <Form className='embed'  onSubmit={handleSubmit}>
+    <Form   onSubmit={handleSubmit}>
       <h1>New Template</h1>
 
       <Form.Group  controlId='formTemplateName'>
@@ -80,7 +80,8 @@ function AddTemplate({templates, setTemplates, user, setTemplateFormOpen}) {
           <Row>
             <Col>
               <Form.Label className='milestone-name'>Milestone {index + 1}</Form.Label>
-              <Form.Control
+              <Form.Control 
+                className='milestone-name-input'
                 required
                 type='text'
                 value={milestone.name}
@@ -93,6 +94,7 @@ function AddTemplate({templates, setTemplates, user, setTemplateFormOpen}) {
               <Form.Label>Lead Time</Form.Label>
               <Form.Control
                 required
+                className='milestone-lead-time-input'
                 type='number'
                 min='1'
                 step='1'
@@ -103,15 +105,15 @@ function AddTemplate({templates, setTemplates, user, setTemplateFormOpen}) {
           />
         </Col>
         <Col>
-          {index !== 0 && (
-            <Button
-              variant='danger'
-              type='button'
-              onClick={() => deleteMilestone(index)}
-            >
-              Delete
-            </Button>
-          )}
+        {index !== 0 && (
+          <Button
+            variant='danger'
+            type='button'
+            onClick={() => deleteMilestone(index)}
+          >
+            Delete #{index }
+          </Button>
+        )}
         </Col>
       </Row>
     </Form.Group>
@@ -122,7 +124,7 @@ function AddTemplate({templates, setTemplates, user, setTemplateFormOpen}) {
   </Button>
   <br />
   <Button className='normal'  type='submit'>
-    Create
+    Create Template
   </Button>
   <p>{formMessage}</p>
 </Form> 

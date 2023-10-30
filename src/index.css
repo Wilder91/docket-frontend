@@ -184,6 +184,14 @@ ul > li {
   min-width: 90%;
 }
 
+.milestone-name-input {
+  min-width: 250px;
+}
+
+.milestone-lead-time-input {
+  max-width: 90px;
+}
+
 .button:hover {
   color: white;
   box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
@@ -321,11 +329,11 @@ li {
   }
   
   h1 {
-    text-align: left;
+  
     line-height: 0.7em;
     display: inline;
     padding-top: 10px;
-    padding-left: 60px;
+    
     font-size: 1px;
     color:#608bbb
   }
@@ -388,7 +396,7 @@ h1, .h1 {
     display: inline-block;
     border-radius: 30px;
     margin: 0 auto; 
-    padding: 90px;
+    
     padding-top: 40px;
 
     width: 320px;
@@ -405,12 +413,18 @@ h1, .h1 {
    background-color: none;
    width: 200px;
    height: 35px;
+   margin-top: 10px;
+  }
+
+  .btn-danger {
+    width: 100px;
+    height: 35px;
   }
   .edit-project-form{
     background-color: red;
   }
   .modal-body {
-    padding: 0px !important;
+    display: block;
   }
 
   .form-select{

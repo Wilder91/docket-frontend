@@ -63,7 +63,8 @@ function Milestone({ user, setUser, milestone, milestones, setMilestones, showMi
   useEffect(() => {
     function start() {
       gapi.client.init({
-        clientId: '289087849938-vvfo0f1giiiecbqd05blifubb9rr43kk.apps.googleusercontent.com',
+        clientId: '289087849938-v7ckrcf04la568qv6iuepemv7n9qkvcu.apps.googleusercontent.com'
+                   ,
         scope: 'email',
       });
     }
