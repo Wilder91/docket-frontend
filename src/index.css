@@ -188,13 +188,22 @@ ul > li {
   min-width: 250px;
 }
 
-.milestone-lead-time-input {
-  max-width: 90px;
+.milestone-lead-time-input.form-control {
+  width: 120px;
 }
 
 .button:hover {
   color: white;
   box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+.milestone-group {
+  display: flex;
+  align-items: center;
+}
+
+.delete-button-col {
+  margin-top: 20px; /* Adjust the margin as needed to align the delete button */
 }
 
 .container {
@@ -416,15 +425,17 @@ h1, .h1 {
    margin-top: 10px;
   }
 
-  .btn-danger {
-    width: 100px;
-    height: 35px;
+  .btn.btn-danger {
+    width: 40px;
+    height: 40px;
+    margin-top: 25px;
   }
   .edit-project-form{
     background-color: red;
   }
   .modal-body {
     display: block;
+    font-size: 9.5pt
   }
 
   .form-select{

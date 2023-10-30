@@ -76,48 +76,48 @@ function AddTemplate({templates, setTemplates, user, setTemplateFormOpen}) {
       </Form.Group>
 
       {milestones.map((milestone, index) => (
-        <Form.Group key={index} controlId={`formMilestone${index}`}>
-          <Row>
-            <Col>
-              <Form.Label className='milestone-name'>Milestone {index + 1}</Form.Label>
-              <Form.Control 
-                className='milestone-name-input'
-                required
-                type='text'
-                value={milestone.name}
-                onChange={(e) =>
-                  handleMilestoneChange(index, 'name', e.target.value)
-                }
-              />
-            </Col>
-            <Col>
-              <Form.Label>Lead Time</Form.Label>
-              <Form.Control
-                required
-                className='milestone-lead-time-input'
-                type='number'
-                min='1'
-                step='1'
-            value={milestone.leadTime}
-            onChange={(e) =>
-              handleMilestoneChange(index, 'leadTime', e.target.value)
-            }
-          />
-        </Col>
-        <Col>
+  <Form.Group key={index} controlId={`formMilestone${index}`} className="milestone-group">
+    <Row>
+      <Col>
+        <Form.Label className='milestone-name'>Milestone {index + 1}</Form.Label>
+        <Form.Control 
+          className='milestone-name-input'
+          required
+          type='text'
+          value={milestone.name}
+          onChange={(e) =>
+            handleMilestoneChange(index, 'name', e.target.value)
+          }
+        />
+      </Col>
+      <Col>
+        <Form.Label>Lead Time in Days</Form.Label>
+        <Form.Control
+          required
+          className='milestone-lead-time-input'
+          type='number'
+          min='1'
+          step='1'
+          value={milestone.leadTime}
+          onChange={(e) =>
+            handleMilestoneChange(index, 'leadTime', e.target.value)
+          }
+        />
+      </Col>
+      <Col className='delete-button-col'>
         {index !== 0 && (
           <Button
             variant='danger'
             type='button'
             onClick={() => deleteMilestone(index)}
           >
-            Delete #{index }
+            ⨉
           </Button>
         )}
-        </Col>
-      </Row>
-    </Form.Group>
-  ))}
+      </Col>
+    </Row>
+  </Form.Group>
+))}
   <br />
   <Button className='button.normal' type='button' onClick={addMilestone}>
     Add Milestone
