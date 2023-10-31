@@ -75,10 +75,12 @@ function Milestone({ user, setUser, milestone, milestones, setMilestones, showMi
   return (
     <li key={milestone.id} style={{ opacity: milestone.complete === true && '20%' }}>
       <Card className="bootstrap-card-no-hover">
+      <div className='card-content'>
         {milestone.complete === true && <h5>complete</h5>}
         {getFlagImage()}
         <b style={{ color: milestone.complete === true && 'red' }}>
-          <br />
+       
+         
           {milestone.name}
         </b>
         <br />
@@ -96,12 +98,14 @@ function Milestone({ user, setUser, milestone, milestones, setMilestones, showMi
           </p>
         )}
 
-        <button className="normal" onClick={() => showMilestoneEditForm(milestone)}>
+        <p className="card-links" onClick={() => showMilestoneEditForm(milestone)}>
           edit
-        </button>
-        <button className="normal" onClick={() => confirmDeleteMilestone(milestone.id)}>
+        </p>
+     
+        <p className="card-links" onClick={() => confirmDeleteMilestone(milestone.id)}>
           delete
-        </button>
+        </p>
+        </div>
       </Card>
     </li>
   );

@@ -49,6 +49,10 @@ body {
   color: #b5b5b5 !important;
 }
 
+.card-content {
+  text-align: left;
+}
+
 .bootstrap_card,
 
 .bootstrap-card-no-hover {
@@ -137,7 +141,14 @@ body {
 
 .card {
   border: none !important;
+  display: flow !important;
  
+}
+
+.card-links {
+  
+  cursor: pointer;
+
 }
 
 .template-headline {
@@ -241,6 +252,7 @@ ul > li {
 .account-delete-button {
   text-decoration: underline;
   cursor: pointer;
+  display: inline-block;
 }
 
 .project-form-label {

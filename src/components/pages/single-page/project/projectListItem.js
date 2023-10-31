@@ -34,25 +34,26 @@ function ProjectListItem({ project, showProject, showEditForm, confirmDeleteProj
     <li key={project.id}>
       <Card className={project === selectedProject ? 'bootstrap_card grey-effect' : 'bootstrap_card'} onClick={() => handleClick(project)} onHide={() => hideProject(project)}>
       
-        <b >
-          {project.name}
-        </b>
-        <p>
-          {project.kind}</p>
-          <br />
-         <p> Deadline | {dueDate.format('MM.DD.YYYY')}</p>
-          <br />
-          {!project.complete && `${dueDate.diff(today, 'day')} days remaining`}
-          <br />
-          <button className="normal" onClick={handleEditClick}>
+      <div className="card-content">
+      <b>{project.name}</b>
+      <p>{project.kind}</p>
+      <br />
+      <p>Deadline | {dueDate.format('MM.DD.YYYY')}</p>
+      <br />
+      {!project.complete && `${dueDate.diff(today, 'day')} days remaining`}
+  
+          <p className="card-links" onClick={handleEditClick}>
             edit
-          </button>
-          <button className="normal" onClick={handleDeleteClick}>
-            delete
-          </button>
-          <button className="normal" onClick={handleMilestoneClick}>
+          </p>
+    
+          <p className="card-links" onClick={handleMilestoneClick}>
             Add Milestone
-          </button>
+          </p>
+
+          <p className="card-links" onClick={handleDeleteClick}>
+            delete
+          </p>
+          </div>
        
       </Card>
     </li>
