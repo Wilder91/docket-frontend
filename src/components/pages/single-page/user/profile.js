@@ -2,53 +2,62 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import EditUser from './edituser'
 
-function userProfile({user, setUser, setUsers, onConfirmDelete, onCancelDelete}) {
+function userProfile({ user, setUser, setUsers, setEditFormOpen, onConfirmDelete, onCancelDelete }) {
     const [confirmDelete, setConfirmDelete] = useState(false);
     const navigate = useNavigate();
-  
+
     const handleConfirm = () => {
-      fetch(`http://localhost:3000/users/delete/${sessionStorage.user_id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => {
-          if (response.ok) {
-            onConfirmDelete();
-            setConfirmDelete(false);
-  
-            // Redirect to the /login route
-            navigate("/login");
-          } else {
-            console.error("Failed to delete user");
-          }
+        fetch(`http://localhost:3000/users/delete/${sessionStorage.user_id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
         })
-        .catch((error) => {
-          console.error("Error deleting user:", error);
-        });
-  
-      setConfirmDelete(true);
-      window.alert(`You are about to delete ${user.name}. Click "Yes" again to confirm.`);
+            .then((response) => {
+                if (response.ok) {
+                    onConfirmDelete();
+                    setConfirmDelete(false);
+
+                    // Redirect to the /login route
+                    navigate("/login");
+                } else {
+                    console.error("Failed to delete user");
+                }
+            })
+            .catch((error) => {
+                console.error("Error deleting user:", error);
+            });
+
+        setConfirmDelete(true);
     }
-    return(
+
+    const handleDeleteAccount = () => {
+        // Use window.confirm to ask the user for confirmation
+        const shouldDelete = window.confirm(`Are you sure you want to delete your account? This action cannot be undone.`);
+        if (shouldDelete) {
+            // If the user confirms, proceed with the delete action
+            handleConfirm();
+        }
+    }
+
+    return (
         <div>
-            Hello {user.name}
-            <EditUser user={user} setUser={setUser} setUsers={setUsers}/>
-           
-      {confirmDelete ? (
-        <p>{user.name} has been deleted.</p>
-      ) : (
-        <div>
-          <p>Would you like to delete your profile?</p>
-          <button className="signup-button" onClick={handleConfirm}>Yes</button>
-          <br />
-          <button className="nice-button" onClick={onCancelDelete}>No</button>
+            <p className="profile-text">Hello {user.name}</p>
+            <EditUser user={user} setUser={setUser} setUsers={setUsers} setEditFormOpen={setEditFormOpen} />
+
+            {confirmDelete ? (
+                <p>{user.name} has been deleted.</p>
+            ) : (
+                <div>
+                    <br />
+                    {/* Use the Delete Account link to initiate the confirmation dialog */}
+                    <p className="account-delete-button" onClick={handleDeleteAccount}>Delete Account</p>
+                    <br />
+
+                </div>
+            )}
         </div>
-      )}    
-    </div>
-        
     )
 }
 
-export default userProfile
+export default userProfile;

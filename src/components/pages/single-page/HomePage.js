@@ -127,6 +127,7 @@ function HomePage() {
     console.log('showUserProfile function called');
     setUserProfileOpen(true);
   };
+
   const hideUserProfile= () => {
     setUserProfileOpen(false);
     console.log(userProfileOpen)
@@ -237,7 +238,7 @@ function HomePage() {
 
           <Modal className='bootmodal' show={userProfileOpen} onHide={hideUserProfile}>
             <Modal.Body>
-              <UserProfile user={user} setUser={setUser} onConfirmDelete={onConfirmDelete}/>
+              <UserProfile user={user} setUser={setUser} setEditFormOpen={setEditFormOpen} onConfirmDelete={onConfirmDelete}/>
             </Modal.Body>
           </Modal>
   

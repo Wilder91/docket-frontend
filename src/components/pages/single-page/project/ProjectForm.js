@@ -97,7 +97,7 @@ function ProjectForm({ user, setUser, setProjects, templates, milestones, setMil
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Group controlId='formProjectName'>
-        <Form.Label>Name</Form.Label>
+        <Form.Label className='project-form-label'>Name</Form.Label>
         <Form.Control
           required
           type='text'
@@ -108,7 +108,7 @@ function ProjectForm({ user, setUser, setProjects, templates, milestones, setMil
       </Form.Group>
 
       <Form.Group controlId='formProjectKind'>
-        <Form.Label>Type of Project: (You Can Also Use a Template)</Form.Label>
+        <Form.Label className='project-form-label'>Type of Project (You Can Also Use a Template)</Form.Label>
         <Form.Control 
         type='text'
          value={kind} 
@@ -136,8 +136,9 @@ function ProjectForm({ user, setUser, setProjects, templates, milestones, setMil
       </Form.Group>
 
       <Form.Group controlId='formProjectDueDate'>
-        <Form.Label>Due Date</Form.Label>
-        <Form.Control
+        <Form.Label className='project-form-label'>Due Date</Form.Label>
+        <Form.Control 
+        
           required
           type='date'
           value={date}

@@ -1,6 +1,6 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
-
+import List from 'react-bootstrap/ListGroup'
 function TemplateIndex({ templates, setTemplates, user }) {
   const removeTemplate = async (id) => {
     try {
@@ -23,26 +23,26 @@ function TemplateIndex({ templates, setTemplates, user }) {
   };
 
   return (
-    <Card >
+    <Card className="template-list">
       <div id='template.id' className="template-container">
         <h1>{user.name}'s Templates</h1>
         {templates.map((template) => (
-          <li className="template-list" key={template.id}>
+          <List  key={template.id}>
             <h1 className="project-names">{template.name}</h1>
             {template.milestones
               .sort((a, b) => new Date(b.due_date) - new Date(a.due_date))
               .map((milestone) => (
                 <Card  key={milestone.id}>
-                  {milestone.name}
-                  <br />
-                  {milestone.leadTime} Days Before Due Date
+                  <Card.Text className="template-details"> {milestone.name} {milestone.leadTime} Days Before Due Date</Card.Text>
+          
+                
                   <br />{" "}
                 </Card>
               ))}
             <button className="normal" onClick={() => removeTemplate(template.id)}>
               Delete
             </button>{" "}
-          </li>
+          </List>
         ))}
         <br />
       </div>

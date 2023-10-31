@@ -60,6 +60,7 @@ body {
   z-index: 1;
   overflow: hidden;
   height: 265px;
+  border-width: 0px;
 }
 
 .bootstrap_card > * {
@@ -150,6 +151,13 @@ button.normal {
 .template-container {
   align-items: right;
 }
+
+.template-list.list-group{
+
+  margin: auto;
+  
+}
+
 .project-list {
   margin-left: 0px;
 }
@@ -191,6 +199,31 @@ ul > li {
 .milestone-lead-time-input.form-control {
   width: 120px;
 }
+
+.form-control {
+  margin-bottom: 10px;
+}
+
+.form-label {
+  float: left;
+  color: #608bbb;
+}
+
+.profile-text {
+  color: #608bbb;
+}
+
+.template-details {
+  border-radius: 0px;
+}
+
+.account-delete-button {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.project-form-label {
+  float: left;
+} 
 
 .button:hover {
   color: white;
@@ -425,10 +458,14 @@ h1, .h1 {
    margin-top: 10px;
   }
 
+  .x {
+    margin: auto;
+  }
+
   .btn.btn-danger {
-    width: 40px;
-    height: 40px;
+   text-align: center;
     margin-top: 25px;
+    
   }
   .edit-project-form{
     background-color: red;
@@ -447,6 +484,7 @@ h1, .h1 {
   }
   .project-names{
     color: #7B7575;
+    margin:auto;
   }
   .Invisible{
     height: 100vh;

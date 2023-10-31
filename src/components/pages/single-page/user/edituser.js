@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-
+import Form from 'react-bootstrap/Form'
 function EditUser({ user, setUser,  setEditFormOpen }) {
   const [name, setName] = useState(user.name || '');
   const [email, setEmail] = useState(user.email || '');
-  const [password, setPassword] = useState('');
+
   const [message, setMessage] = useState('');
-  const [errors, setErrors] = useState({});
+
 
   function updateUser(data) {
     setUser((prevUser) => {
@@ -20,7 +20,7 @@ function EditUser({ user, setUser,  setEditFormOpen }) {
       body: JSON.stringify({
         name,
         email,
-        password,
+   
       }),
       headers: new Headers({
         Authorization: `${sessionStorage.token}`,
@@ -37,12 +37,10 @@ function EditUser({ user, setUser,  setEditFormOpen }) {
         updateUser(data);
         setEditFormOpen(false);
         setMessage('User updated!');
+        setTimeout(() => setMessage(''), 2000);
         e.target.reset();
       })
-      .catch((error) => {
-        console.error(error);
-        setErrors({ general: 'An error occurred while updating the user.' });
-      });
+     
   }
 
   useEffect(() => {
@@ -53,8 +51,9 @@ function EditUser({ user, setUser,  setEditFormOpen }) {
   }, [user]); // Dependency array to re-run the effect when user changes
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
+    <Form onSubmit={handleSubmit}>
+       <Form.Label className='project-form-label'>Name</Form.Label>
+      <Form.Control
         required
         type="text"
         value={name}
@@ -63,9 +62,12 @@ function EditUser({ user, setUser,  setEditFormOpen }) {
           console.log('Name input value:', e.target.value);
           setName(e.target.value);
         }}
+        
       />
       <br></br>
-      <input
+      <Form.Label className='project-form-label'>Email</Form.Label>
+      <Form.Control
+      
         type="text"
         value={email}
         className="input-container"
@@ -75,12 +77,12 @@ function EditUser({ user, setUser,  setEditFormOpen }) {
           setEmail(e.target.value);
         }}
       />
-      <br></br>
+    
       <button className="normal" type="submit">
         Update
       </button>
       <div className="message">{message ? <p>{message}</p> : null}</div>
-    </form>
+    </Form>
   );
 }
 
