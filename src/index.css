@@ -162,10 +162,7 @@ body {
   align-items: center;
   margin-right: 10px; /* Adjust the margin as needed */
 }
-.milestone-card:first-child {
-  margin: 0;
-  padding: 0;
-}
+
 
 .milestones-container {
   /* Styles for the container of milestones */

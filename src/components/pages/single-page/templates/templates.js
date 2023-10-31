@@ -1,62 +1,80 @@
-import React from "react";
+import React, { useState } from "react";
 import Card from "react-bootstrap/Card";
-import List from 'react-bootstrap/ListGroup'
+import EditTemplate from "./editTemplate";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+
 function TemplateIndex({ templates, setTemplates, user }) {
-  const removeTemplate = async (id) => {
-    try {
-      const response = await fetch(`http://localhost:3000/templates/${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `${sessionStorage.token}`,
-        },
-      });
+  const [showEditTemplateModal, setShowEditTemplateModal] = useState(false);
+  const [templateToEdit, setTemplateToEdit] = useState(null);
 
-      if (!response.ok) {
-        throw new Error("Failed to delete template");
-      }
+  const openEditTemplateModal = (template) => {
+    setTemplateToEdit(template);
+    setShowEditTemplateModal(true);
+  };
 
-      const updatedTemplates = templates.filter((t) => t.id !== id);
-      setTemplates(updatedTemplates);
-    } catch (error) {
-      console.error("Error deleting template:", error);
-    }
+  const closeEditTemplateModal = () => {
+    setShowEditTemplateModal(false);
   };
 
   return (
     <Card className="template-list">
-    <div id="template.id" className="Card">
-      <h1 className="template-headline">My Templates</h1>
-      <br />
-      {templates.map((template) => (
-        <div key={template.id} className="template-info">
-          <h1 className="project-names">{template.name}</h1>
-          <br/>
-          <div className="milestones-container">
-            {template.milestones
-              .sort((a, b) => new Date(b.due_date) - new Date(a.due_date))
-              .map((milestone, index) => (
-                <Card key={milestone.id} className="milestone-card">
-                  <div className="milestone-info">
-                    <p>
-                      {index + 1} {milestone.name} {milestone.leadTime} Days Before Due Date
-                    </p>
-                  </div>
-                  <br />
-                </Card>
-              ))}
+      <div id="template.id" className="Card">
+        <h1 className="template-headline">My Templates</h1>
+        <br />
+        {templates.map((template) => (
+          <div key={template.id} className="template-info">
+            <h1 className="project-names">{template.name}</h1>
+            <btn
+              className="normal"
+              onClick={() => openEditTemplateModal(template)}
+            >
+              Edit
+            </btn>
+            <br />
+            <br />
+            <div className="milestones-container">
+              {template.milestones
+                .sort((a, b) => new Date(b.due_date) - new Date(a.due_date))
+                .map((milestone, index) => (
+                  <Card key={milestone.id} className="milestone-card">
+                    <div className="milestone-info">
+                      <p>
+                        {index + 1} {milestone.name} {milestone.leadTime} Days Before Due Date
+                      </p>
+                    </div>
+                    <br />
+                  </Card>
+                ))}
+            </div>
           </div>
-          <button className="normal" onClick={() => removeTemplate(template.id)}>
-            Delete
-          </button>{" "}
-        </div>
-      ))}
-      <br />
-    </div>
-  </Card>
-  
+        ))}
+        <br />
+      </div>
 
+      <Modal show={showEditTemplateModal} onHide={closeEditTemplateModal}>
+  <Modal.Header closeButton>
+    <Modal.Title>Edit Template</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+  <EditTemplate
+  templates={templates}
+  setTemplates={setTemplates}
+  user={user}
+  templateToEdit={templateToEdit}
+  show={showEditTemplateModal}
+  onHide={closeEditTemplateModal}
+  setShowEditTemplateModal={setShowEditTemplateModal}
+/>
+  </Modal.Body>
+  <Modal.Footer>
+    <Button variant="secondary" onClick={closeEditTemplateModal}>
+      Close
+    </Button>
+  </Modal.Footer>
+</Modal>
+    </Card>
   );
-  
 }
 
 export default TemplateIndex;

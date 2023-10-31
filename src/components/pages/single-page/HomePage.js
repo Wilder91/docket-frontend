@@ -196,7 +196,7 @@ function HomePage() {
                 <Nav.Link onClick={showTemplateForm} className='nav-link'>Add Template</Nav.Link>
                 <Nav.Link onClick={showModal} className='nav-link'>Add Project</Nav.Link>
                 
-                <Nav.Link onClick={showUserProfile} className='nav-link' user={user} s> Account </Nav.Link>
+                <Nav.Link onClick={showUserProfile} className='nav-link' user={user} > Account </Nav.Link>
                 <Navbar.Brand className='ms-auto'>Hello, {user.name} | <a href="/logout" className='logout-button'>Logout</a></Navbar.Brand>
                 </Nav>
             </Container>
