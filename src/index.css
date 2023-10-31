@@ -49,7 +49,9 @@ body {
   color: #b5b5b5 !important;
 }
 
-.bootstrap_card {
+.bootstrap_card,
+
+.bootstrap-card-no-hover {
   flex: 0 50%;
   background: #fff;
   box-shadow: 0 2px 4px 0 rgba(136, 144, 195, 0.2), 0 5px 15px 0 rgba(37, 44, 97, 0.15);
@@ -63,7 +65,8 @@ body {
   border-width: 0px;
 }
 
-.bootstrap_card > * {
+.bootstrap_card > *,
+.bootstrap_card > *:first-child {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -72,20 +75,6 @@ body {
 
 .bootstrap_card > *:first-child {
   overflow: auto;
-}
-
-.bootstrap-card-no-hover {
-  flex: 0 50%;
-  background: #fff;
-  box-shadow: 0 2px 4px 0 rgba(136, 144, 195, 0.2), 0 5px 15px 0 rgba(37, 44, 97, 0.15);
-  border-radius: 15px;
-  margin: 8px;
-  padding: 10px 15px;
-  position: relative;
-  z-index: 1;
-  overflow: hidden;
-  min-height: 265px;
-  transition: 0.7s;
 }
 
 .bootstrap_card:hover {
@@ -103,11 +92,6 @@ body {
   background: rgb(85 108 214 / 10%);
 }
 
-.bootstrap_card:hover .solu_title h3,
-.bootstrap_cards_box .bootstrap_card:hover .solu_description p {
-  color: #fff;
-}
-
 .hover_color_bubble {
   position: absolute;
   background: rgb(54 81 207 / 15%);
@@ -122,6 +106,7 @@ body {
   left: -18rem;
   transition: 0.7s;
 }
+
 .project-card-details {
   margin: 0;
 }
@@ -151,24 +136,25 @@ body {
 }
 
 .card {
-  border: none !important; 
+  border: none !important;
+ 
 }
 
 .template-headline {
-  float: left;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .template-info {
   float: left;
-}
-
-.list-group {
-  float: left;
+  clear: both;
 }
 
 .milestone-card {
-  display: flex;
-  align-items: center;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px 0;
 }
 
 .milestone-info {
@@ -176,22 +162,31 @@ body {
   align-items: center;
   margin-right: 10px; /* Adjust the margin as needed */
 }
+.milestone-card:first-child {
+  margin: 0;
+  padding: 0;
+}
 
+.milestones-container {
+  /* Styles for the container of milestones */
+  margin-top: 30px; /* Adjust the margin as needed */
+}
+
+.milestone-details {
+  float: left;
+}
 .template-container {
   align-items: right;
   border: none !important;
 }
 
-.template-list.list-group{
-
+.template-list.list-group {
   margin: auto;
-  
 }
 
 .project-list {
   margin-left: 0px;
 }
-
 
 .projects-container.container {
   display: flex;
@@ -203,7 +198,6 @@ ul > li {
   display: inline-block;
   break-after: always;
 }
-
 
 .embed {
   max-width: 500px;
@@ -251,9 +245,10 @@ ul > li {
   text-decoration: underline;
   cursor: pointer;
 }
+
 .project-form-label {
   float: left;
-} 
+}
 
 .button:hover {
   color: white;
@@ -337,223 +332,205 @@ li {
   float: left;
   border-radius: 10px;
   border-color: rgb(187, 47, 47);
-    border-width: 1px;
-    padding: 10px 20px 10px;
-    
-    width: 320px;
-    box-sizing: border-box;
-  
-    
-  }
-  .milestone-list{
-    margin-top: 40px;
-  }
-  
-  .dd-logo {
-    width: 10px;
-    display: inline;
-  
-  }
-  
- 
-  
-  
-  h2 {
-    display: table;
-    margin: 0 auto;
-    align-items: center;
-    background-color: #f5e9e9;
-    width: 300px;
-    height: 100px;
-    margin-right: 10px;
-    margin-top: 10px;
-    padding-top: 24px;
-    display: inline-block;
-  
-    background-size: 50%;
-   
-    border: white;
-    border-radius: 10px;
-  }
-  
-  h4 {
-    cursor:pointer;
-    margin-bottom: 0px;
-    display: inline;
-  }
-  form.normal {
-   
-    opacity: 80%;
-    
-    background-blend-mode: color;
-    display: inline-block;
-  
-    background-color: white;
-    border-radius: 30px;
-    margin: 5px;
-    margin-top: 100px;
-    padding-top: 10px;
-    box-shadow: 0 5px 15px rgba(185, 154, 154, 0.2);
-    width: 320px;
-    height: 380px;
-    box-shadow: 0px 50px 100px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(7.5px);
-  }
-  
-  h1 {
-  
-    line-height: 0.7em;
-    display: inline;
-    padding-top: 10px;
-    
-    font-size: 1px;
-    color:#608bbb
-  }
-  .ms-auto{
-    font-size: 10pt !important;
-  }
-  .headline {
-    font-size: 15pt !important;
-    position: relative;
-    font-weight: normal;
-    text-align: left;
-    line-height: 0.7em;
-   
-    padding-top: 10px;
-    padding-left: 60px;
-   
-    color:#608bbb
-  }
-
-  .milestone-headline {
-    font-size: 15pt !important;
-    position: relative;
-    font-weight: normal;
-    text-align: left;
-    line-height: 0.7em;
-   justify-content: left;
-    padding-top: 40px;
-   
-   
-    color:#608bbb
-  }
-h1, .h1 {
-    font-size: 15pt !important;
-    display: inherit;
-    font-weight: normal;
+  border-width: 1px;
+  padding: 10px 20px 10px;
+  width: 320px;
+  box-sizing: border-box;
 }
-  
-  h3 {
-    text-align: -webkit-left;
-    font-size:xx-large;
-    margin-top: 0px;
-    margin-bottom: 5px;
-    margin-left: 50px;
-  }
-  img {
-    width: 30%;
-    height: auto;
-    display: block;
+
+.milestone-list {
+  margin-top: 40px;
+}
+
+.dd-logo {
+  width: 10px;
+  display: inline;
+}
+
+h2 {
+  display: table;
+  margin: 0 auto;
+  align-items: center;
+  background-color: #f5e9e9;
+  width: 300px;
+  height: 100px;
+  margin-right: 10px;
+  margin-top: 10px;
+  padding-top: 24px;
+  display: inline-block;
+  background-size: 50%;
+  border: white;
+  border-radius: 10px;
+}
+
+h4 {
+  cursor: pointer;
+  margin-bottom: 0px;
+  display: inline;
+}
+
+form.normal {
+  opacity: 80%;
+  background-blend-mode: color;
+  display: inline-block;
+  background-color: white;
+  border-radius: 30px;
+  margin: 5px;
+  margin-top: 100px;
+  padding-top: 10px;
+  box-shadow: 0 5px 15px rgba(185, 154, 154, 0.2);
+  width: 320px;
+  height: 380px;
+  box-shadow: 0px 50px 100px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(7.5px);
+}
+
+h1 {
+  line-height: 0.7em;
+  display: inline;
+  padding-top: 10px;
+  font-size: 1px;
+  color: #608bbb;
+}
+
+.ms-auto {
+  font-size: 10pt !important;
+}
+
+.headline {
+  font-size: 15pt !important;
+  position: relative;
+  font-weight: normal;
+  text-align: left;
+  line-height: 0.7em;
+  padding-top: 10px;
+  padding-left: 60px;
+  color: #608bbb;
+}
+
+milestone-headline {
+  font-size: 15pt !important;
+  position: relative;
+  font-weight: normal;
+  text-align: left;
+  line-height: 0.7em;
+  justify-content: left;
+  padding-top: 40px;
+  color: #608bbb;
+}
+
+h1, .h1 {
+  font-size: 15pt !important;
+  display: inherit;
+  font-weight: normal;
+}
+
+h3 {
+  text-align: -webkit-left;
+  font-size: xx-large;
+  margin-top: 0px;
+  margin-bottom: 5px;
+  margin-left: 50px;
+}
+
+img {
+  width: 30%;
+  height: auto;
+  display: block;
   margin-left: auto;
   margin-right: auto;
-  }
-  link {
-    text-align: center;
-    
-  }
-  
-  form.embed {
-    opacity: 1;  
-    background-blend-mode: color;
-    display: inline-block;
-    border-radius: 30px;
-    margin: 0 auto; 
-    
-    padding-top: 40px;
-
-    width: 320px;
-    height: 220px;
-
-    backdrop-filter: blur(7.5px);
-  }
-
-  h5{
-    display: inline;
-  }
-
-  .btn-primary {
-   background-color: none;
-   width: 200px;
-   height: 35px;
-   margin-top: 10px;
-  }
-
-  .x {
-    margin: auto;
-  }
-
-  .btn.btn-danger {
-   text-align: center;
-    margin-top: 25px;
-    
-  }
-  .edit-project-form{
-    background-color: red;
-  }
-  .modal-body {
-    display: block;
-    font-size: 9.5pt
-  }
-
-  .form-select{
-    width: 200px;
-  }
-  a {
-    text-decoration: none;
-    color: #e74d1c;
-  }
-  .project-names{
-    color: #7B7575;
-    margin:auto;
-  }
-  .Invisible{
-    height: 100vh;
-    left: 0;
-    position: fixed;
-    top: 0;
-    width: 100vw;
-    z-index: 0;
-  }
-  
-  svg {
-    position: absolute;
-    
 }
-  a:active{
-    color:#8982ca
-  }
-  
-  b{
-    color: #7B7575;
-  }
 
- 
+link {
+  text-align: center;
+}
 
-  .bootmodal{
-    background:none;
-  }
+form.embed {
+  opacity: 1;
+  background-blend-mode: color;
+  display: inline-block;
+  border-radius: 30px;
+  margin: 0 auto;
+  padding-top: 40px;
+  width: 320px;
+  height: 220px;
+  backdrop-filter: blur(7.5px);
+}
 
-  .Overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rebeccapurple;
-  }
-  /*
-  a:visited{
-    color: #e74d1c;
-  
-  }*/
-  
+h5 {
+  display: inline;
+}
+
+.btn-primary {
+  background-color: none;
+  width: 200px;
+  height: 35px;
+  margin-top: 10px;
+}
+
+.x {
+  margin: auto;
+}
+
+.btn.btn-danger {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.edit-project-form {
+  background-color: red;
+}
+
+.modal-body {
+  display: block;
+  font-size: 9.5pt;
+}
+
+.form-select {
+  width: 200px;
+}
+
+a {
+  text-decoration: none;
+  color: #e74d1c;
+}
+
+.project-names {
+  color: #7B7575;
+  float: left;
+  margin-right: 10px;
+}
+
+.Invisible {
+  height: 100vh;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  z-index: 0;
+}
+
+svg {
+  position: absolute;
+}
+
+a:active {
+  color: #8982ca;
+}
+
+b {
+  color: #7B7575;
+}
+
+.bootmodal {
+  background: none;
+}
+
+.Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rebeccapurple;
+}
