@@ -122,9 +122,11 @@ body {
   left: -18rem;
   transition: 0.7s;
 }
+.project-card-details {
+  margin: 0;
+}
 
-
-button.normal {
+.normal {
   display: inline-block;
   padding: 0.3em 1em;
   border: 0.16em solid #FFFFFF;
@@ -148,8 +150,36 @@ button.normal {
   z-index: 9;
 }
 
+.card {
+  border: none !important; 
+}
+
+.template-headline {
+  float: left;
+}
+
+.template-info {
+  float: left;
+}
+
+.list-group {
+  float: left;
+}
+
+.milestone-card {
+  display: flex;
+  align-items: center;
+}
+
+.milestone-info {
+  display: flex;
+  align-items: center;
+  margin-right: 10px; /* Adjust the margin as needed */
+}
+
 .template-container {
   align-items: right;
+  border: none !important;
 }
 
 .template-list.list-group{

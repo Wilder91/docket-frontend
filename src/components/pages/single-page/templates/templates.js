@@ -25,29 +25,31 @@ function TemplateIndex({ templates, setTemplates, user }) {
   return (
     <Card className="template-list">
       <div id='template.id' className="template-container">
-        <h1>{user.name}'s Templates</h1>
+        <h1 className="template-headline">My Templates</h1>
+        <br />
         {templates.map((template) => (
-          <List  key={template.id}>
+          <div key={template.id} className="template-info">
             <h1 className="project-names">{template.name}</h1>
             {template.milestones
               .sort((a, b) => new Date(b.due_date) - new Date(a.due_date))
-              .map((milestone) => (
-                <Card  key={milestone.id}>
-                  <Card.Text className="template-details"> {milestone.name} {milestone.leadTime} Days Before Due Date</Card.Text>
-          
-                
-                  <br />{" "}
+              .map((milestone, index) => (
+                <Card key={milestone.id} className="milestone-card">
+                  <div className="milestone-info">
+                    <p>{index + 1} {milestone.name} {milestone.leadTime} Days Before Due Date</p>
+                  </div>
+                  <br />
                 </Card>
               ))}
             <button className="normal" onClick={() => removeTemplate(template.id)}>
               Delete
             </button>{" "}
-          </List>
+          </div>
         ))}
         <br />
       </div>
     </Card>
   );
+  
 }
 
 export default TemplateIndex;
