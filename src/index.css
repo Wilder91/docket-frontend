@@ -503,7 +503,16 @@ form.embed {
 h5 {
   display: inline;
 }
+.CircularProgressbar {
+  scale: 30%;
+  width: 30% !important;
+  margin-left: 10px;
 
+}
+.project-progress{
+  display: flex;
+  align-items: center;
+}
 .logout-button.btn.btn-primary {
   background-color: gray;
   border: none;

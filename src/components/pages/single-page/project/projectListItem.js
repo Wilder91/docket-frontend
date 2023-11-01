@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import dayjs from 'dayjs';
 import { Card } from 'react-bootstrap';
-
+import { CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
 function ProjectListItem({ project, showProject, showEditForm, confirmDeleteProject, showMilestoneForm, selectedProject, hideProject}) {
   const today = dayjs();
@@ -35,7 +36,10 @@ function ProjectListItem({ project, showProject, showEditForm, confirmDeleteProj
       <Card  className={project === selectedProject ? 'bootstrap_card grey-effect' : 'bootstrap_card'} onClick={() => handleClick(project) } onHide={() => hideProject(project)}>
       
       <div className="card-content">
-      <b>{project.name}</b>
+         <div className="project-progress">
+            <b>{project.name}</b>
+            <CircularProgressbar value="30" className="circular-progress" />
+          </div>
       <p className='project-type'>{project.kind}</p>
 
       <p>Deadline | {dueDate.format('MM.DD.YYYY')}</p>

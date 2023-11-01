@@ -7,6 +7,7 @@ import Urgent from '../../images/Upcoming.png';
 import Nonurgent from '../../images/NonUrgent.png';
 import MediumUrgent from '../../images/MediumUrgent.png';
 import Button from 'react-bootstrap/Button'
+
 const token = sessionStorage.token;
 
 function Milestone({ user, setUser, milestone, milestones, setMilestones, showMilestoneEditForm, today }) {
@@ -115,12 +116,15 @@ function Milestone({ user, setUser, milestone, milestones, setMilestones, showMi
     <Card className="bootstrap-card-no-hover">
       <div className='flag-container'>
         {getFlagImage()}
+      
       </div>
+     
       <div className='card-content'>
       
         <b style={{ color: milestone.complete === true && 'red' }}>
           {milestone.name}
         </b>
+      
         <br />
         {milestone.project_name}
         {milestone.description}
