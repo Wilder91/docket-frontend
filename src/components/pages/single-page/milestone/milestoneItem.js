@@ -137,8 +137,8 @@ function Milestone({ user, setUser, milestone, milestones, setMilestones, showMi
               : `${dayjs(milestone.due_date).diff(today, 'day')} days remaining`}
           </p>
         )}
-          <Button onClick={() => handleComplete(milestone.id)} className='logout-button'>mark complete</Button>
-        <div className='card-link-list'>
+          <p onClick={() => handleComplete(milestone.id)} className='card-links' id='complete-button'>mark complete</p>
+        <div className='card-link-list' id='milestone-link-list'>
         <p className="card-links" onClick={() => showMilestoneEditForm(milestone)}>
           edit
         </p>

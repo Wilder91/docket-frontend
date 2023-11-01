@@ -164,6 +164,8 @@ p{
 .card-link-list {
   display: flex;
   padding-top: 25px;
+  padding-bottom: 0;
+
 }
 .card-links {
   font-size: 9.5pt;
@@ -172,7 +174,10 @@ p{
   line-height: 1;
   padding-right: 18px;
 
-  padding-bottom: 25px;
+}
+
+#complete-button {
+  color: #608bbb;
 }
 
 .template-headline {
@@ -504,6 +509,8 @@ form.embed {
 }
 h5 {
   display: inline;
+  color: #608bbb; 
+  opacity: 70%;
 }
 .CircularProgressbar {
   scale: 30%;
@@ -546,6 +553,10 @@ h5 {
   padding: 0;
 }
 
+
+#milestone-link-list {
+  padding-top: 13px;
+}
 .milestone-options-button {
   padding-right:10px;
   cursor: pointer;
