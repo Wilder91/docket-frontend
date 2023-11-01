@@ -179,6 +179,7 @@ return (
       <ProjectListItem
         key={project.id}
         project={project}
+        milestones={milestones}
         hideProject={hideProject}
         showProject={showProject}
         showEditForm={showEditForm}

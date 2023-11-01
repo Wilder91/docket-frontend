@@ -1,15 +1,16 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import dayjs from 'dayjs';
 import { Card } from 'react-bootstrap';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
-function ProjectListItem({ project, showProject, showEditForm, confirmDeleteProject, showMilestoneForm, selectedProject, hideProject}) {
+function ProjectListItem({ project, showProject, milestones, showEditForm, confirmDeleteProject, showMilestoneForm, selectedProject, hideProject}) {
   const today = dayjs();
   const dueDate = dayjs(project.due_date);
   const [isClicked, setIsClicked] = useState(false);
+  const [completionPercentage, setCompletionPercentage] = useState([])
+  const project_milestones = milestones.filter(p => p.project_id === project.id)
 
- 
   function handleClick(project) {
     showProject(project);
     setIsClicked(!isClicked);
@@ -29,6 +30,14 @@ function ProjectListItem({ project, showProject, showEditForm, confirmDeleteProj
     showMilestoneForm(project);
   };
 
+  useEffect(() => {
+    const projectMilestones = milestones.filter((p) => p.project_id === project.id);
+    const completedMilestones = projectMilestones.filter((p) => p.complete === true);
+    const percentage = (completedMilestones.length / projectMilestones.length) * 100;
+
+    setCompletionPercentage(percentage);
+    console.log(completionPercentage)
+  }, [milestones, project.id]);
   
 
   return (
@@ -37,8 +46,8 @@ function ProjectListItem({ project, showProject, showEditForm, confirmDeleteProj
       
       <div className="card-content">
          <div className="project-progress">
-            <b>{project.name}</b>
-            <CircularProgressbar value="30" className="circular-progress" />
+            <b className='project-name'>{project.name}</b>
+            <CircularProgressbar value={completionPercentage} className="circular-progress" />
           </div>
       <p className='project-type'>{project.kind}</p>
 

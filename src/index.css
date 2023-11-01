@@ -507,6 +507,7 @@ h5 {
   scale: 30%;
   width: 30% !important;
   margin-left: 10px;
+  position: relative;
 
 }
 .project-progress{
