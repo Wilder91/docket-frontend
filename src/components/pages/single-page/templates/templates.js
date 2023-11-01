@@ -40,7 +40,7 @@ function TemplateIndex({ templates, setTemplates, user }) {
                   <Card key={milestone.id} className="milestone-card">
                     <div className="milestone-info">
                       <p>
-                        {index + 1} {milestone.name} {milestone.leadTime} Days Before Due Date
+                        {index + 1}. {milestone.name} {milestone.leadTime} Days Before Due Date
                       </p>
                     </div>
                     <br />

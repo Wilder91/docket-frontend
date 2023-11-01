@@ -18,9 +18,7 @@ function EditTemplate({
   );
   const [formMessage, setFormMessage] = useState('');
 
-  const handleClose = () => {
-    setTemplateFormOpen(false); // Close the modal
-  };
+ 
 
   useEffect(() => {
     if (templateToEdit) {

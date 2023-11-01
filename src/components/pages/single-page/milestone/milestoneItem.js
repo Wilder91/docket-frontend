@@ -16,13 +16,13 @@ function Milestone({ user, setUser, milestone, milestones, setMilestones, showMi
     if (milestone.complete === true) {
       return <h5>complete</h5>;
     } else if (daysUntilDue < 0) {
-      return <img src={Overdue} alt="Overdue" />;
+      return <img src={Overdue} className='flag' alt="Overdue" />;
     } else if (daysUntilDue < 14) {
-      return <img src={Urgent} alt="Urgent" />;
+      return <img src={Urgent} className='flag' alt="Urgent" />;
     } else if (daysUntilDue < 30) {
-      return <img src={MediumUrgent} alt="Urgent" />;
+      return <img src={MediumUrgent} className='flag' alt="Urgent" />;
     } else {
-      return <img src={Nonurgent} alt="Longtime" />;
+      return <img src={Nonurgent} className='flag' alt="Longtime" />;
     }
   };
 
@@ -74,22 +74,20 @@ function Milestone({ user, setUser, milestone, milestones, setMilestones, showMi
 
   return (
     <li key={milestone.id} style={{ opacity: milestone.complete === true && '20%' }}>
-      <Card className="bootstrap-card-no-hover">
+    <Card className="bootstrap-card-no-hover">
+      <div className='flag-container'>
+        {getFlagImage()}
+      </div>
       <div className='card-content'>
         {milestone.complete === true && <h5>complete</h5>}
-        {getFlagImage()}
         <b style={{ color: milestone.complete === true && 'red' }}>
-       
-         
           {milestone.name}
         </b>
         <br />
         {milestone.project_name}
-        <br />
         {milestone.description}
         <br />
         <p>Due {dayjs(milestone.due_date).format('MM.DD.YYYY')} </p>
-
         {milestone.complete !== true && (
           <p style={{ color: dayjs(milestone.due_date).diff(today, 'day') <= 0 ? 'red' : 'inherit' }}>
             {dayjs(milestone.due_date).diff(today, 'day') <= 0
@@ -97,18 +95,18 @@ function Milestone({ user, setUser, milestone, milestones, setMilestones, showMi
               : `${dayjs(milestone.due_date).diff(today, 'day')} days remaining`}
           </p>
         )}
-
+        <div className='card-link-list'>
         <p className="card-links" onClick={() => showMilestoneEditForm(milestone)}>
           edit
         </p>
-     
         <p className="card-links" onClick={() => confirmDeleteMilestone(milestone.id)}>
           delete
         </p>
         </div>
-      </Card>
-    </li>
-  );
+      </div>
+    </Card>
+  </li>
+);
 }
 
 export default Milestone;

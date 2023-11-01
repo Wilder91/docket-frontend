@@ -36,25 +36,29 @@ function ProjectListItem({ project, showProject, showEditForm, confirmDeleteProj
       
       <div className="card-content">
       <b>{project.name}</b>
-      <p>{project.kind}</p>
-      <br />
-      <p>Deadline | {dueDate.format('MM.DD.YYYY')}</p>
-      <br />
-      {!project.complete && `${dueDate.diff(today, 'day')} days remaining`}
-  
-          <p className="card-links" onClick={handleEditClick}>
-            edit
-          </p>
-    
-          <p className="card-links" onClick={handleMilestoneClick}>
-            Add Milestone
-          </p>
+      <p className='project-type'>{project.kind}</p>
 
-          <p className="card-links" onClick={handleDeleteClick}>
-            delete
-          </p>
+      <p>Deadline | {dueDate.format('MM.DD.YYYY')}</p>
+
+     <p>{!project.complete && `${dueDate.diff(today, 'day')} days remaining`}</p> 
+        <div className='card-link-list'>
+
+        <div className="card-links" onClick={handleMilestoneClick}>
+             add milestone
+          </div> 
+
+          <div className="card-links" onClick={handleEditClick}>
+            edit
           </div>
-       
+
+          <div className="card-links" onClick={handleDeleteClick}>
+            delete
+          </div>
+    
+        
+
+            </div>
+            </div>
       </Card>
     </li>
   );
