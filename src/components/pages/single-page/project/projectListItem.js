@@ -32,7 +32,7 @@ function ProjectListItem({ project, showProject, showEditForm, confirmDeleteProj
 
   return (
     <li key={project.id}>
-      <Card className={project === selectedProject ? 'bootstrap_card grey-effect' : 'bootstrap_card'} onClick={() => handleClick(project)} onHide={() => hideProject(project)}>
+      <Card  className={project === selectedProject ? 'bootstrap_card grey-effect' : 'bootstrap_card'} onClick={() => handleClick(project) } onHide={() => hideProject(project)}>
       
       <div className="card-content">
       <b>{project.name}</b>

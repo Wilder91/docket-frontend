@@ -1,7 +1,7 @@
 import React, { useEffect, useState} from 'react'
 import ProjectList from '../single-page/project/projectList'
 import ProjectForm from './project/ProjectForm'
-import Templates from './templates/templates'
+import Templates from './templates/templateList'
 import TemplateForm from './templates/addTemplate'
 import {  Container, Modal, Navbar, Nav } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';

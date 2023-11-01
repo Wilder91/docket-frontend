@@ -1,19 +1,15 @@
 import React from 'react';
 import Milestone from './milestoneItem';
-function MilestoneList({user, setUser, milestones, setMilestones, milestone, setMilestone, handleMilestoneToggle, showMilestoneEditForm, today}) {
-
-
-  
-
-
-
-
-
-
-
-
-
-
+function MilestoneList({
+  user,
+  setUser, 
+  milestones, 
+  setMilestones, 
+  milestone, 
+  setMilestone, 
+  handleMilestoneToggle, 
+  showMilestoneEditForm, 
+  today}) {
 
 
   return (

@@ -57,7 +57,7 @@ p{
 .logout-button {
   text-decoration: none;
   margin-right: -60px;
-  color: #b5b5b5 !important;
+  color: #d8d8d8 !important;
 }
 
 .card-content {
@@ -96,15 +96,15 @@ p{
 }
 
 .bootstrap_card:hover {
-  background: #9fa5a9;
+  background: #edf0f1;
   opacity: 75%;
-  color: #fff;
+  color: #000000;
  
   z-index: 9;
 }
 
 .bootstrap_card:active {
-  background: #9fa5a9;
+  background: #edf0f1;
 }
 
 .bootstrap_card:hover::before {
@@ -148,8 +148,8 @@ p{
 }
 
 .grey-effect {
-  background-color: #9fa5a9 !important;
-  color: #fff;
+  background-color: #edf0f1 !important;
+  color: #0c0c0c;
 
   z-index: 9;
 }
@@ -157,7 +157,9 @@ p{
 .card {
   border: none !important;
   display: flow !important;
- 
+  min-height: 260px;
+  max-height: 260px;
+  overflow-y: auto;
 }
 .card-link-list {
   display: flex;
@@ -502,8 +504,9 @@ h5 {
   display: inline;
 }
 
-.btn-primary {
-  background-color: none;
+.logout-button.btn.btn-primary {
+  background-color: gray;
+  border: none;
   width: 200px;
   height: 35px;
   margin-top: 10px;

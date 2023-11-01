@@ -19,6 +19,7 @@ function TemplateIndex({ templates, setTemplates, user }) {
 
   return (
     <Card className="template-list">
+      <br />
       <div id="template.id" className="Card">
         <h1 className="template-headline">My Templates</h1>
         <br />

@@ -6,6 +6,7 @@ import Overdue from '../../images/Overdue.png';
 import Urgent from '../../images/Upcoming.png';
 import Nonurgent from '../../images/NonUrgent.png';
 import MediumUrgent from '../../images/MediumUrgent.png';
+import Button from 'react-bootstrap/Button'
 const token = sessionStorage.token;
 
 function Milestone({ user, setUser, milestone, milestones, setMilestones, showMilestoneEditForm, today }) {
@@ -32,6 +33,43 @@ function Milestone({ user, setUser, milestone, milestones, setMilestones, showMi
     }
   };
 
+  const handleComplete = (id) => {
+    const newComplete = !milestone.complete;
+    const updatedData = {
+      complete: newComplete,
+    };
+  
+    fetch(`http://localhost:3000/milestones/${id}/complete`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `${sessionStorage.token}`,
+      },
+      body: JSON.stringify(updatedData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Error updating milestone');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // Milestone has been successfully marked as complete, update state:
+        const updatedMilestones = milestones.map((m) => {
+          if (m.id === id) {
+            return { ...m, complete: newComplete };
+          }
+          return m;
+        });
+        setMilestones(updatedMilestones);
+        console.log('Milestones after update:', updatedMilestones); // Log the updated state
+  
+        console.log('Milestone updated successfully:', data);
+      })
+      .catch((error) => {
+        console.error('Error updating milestone:', error);
+      });
+  };
  
   
 
@@ -79,7 +117,7 @@ function Milestone({ user, setUser, milestone, milestones, setMilestones, showMi
         {getFlagImage()}
       </div>
       <div className='card-content'>
-        {milestone.complete === true && <h5>complete</h5>}
+      
         <b style={{ color: milestone.complete === true && 'red' }}>
           {milestone.name}
         </b>
@@ -95,6 +133,7 @@ function Milestone({ user, setUser, milestone, milestones, setMilestones, showMi
               : `${dayjs(milestone.due_date).diff(today, 'day')} days remaining`}
           </p>
         )}
+          <Button onClick={() => handleComplete(milestone.id)} className='logout-button'>mark complete</Button>
         <div className='card-link-list'>
         <p className="card-links" onClick={() => showMilestoneEditForm(milestone)}>
           edit
@@ -102,6 +141,7 @@ function Milestone({ user, setUser, milestone, milestones, setMilestones, showMi
         <p className="card-links" onClick={() => confirmDeleteMilestone(milestone.id)}>
           delete
         </p>
+      
         </div>
       </div>
     </Card>

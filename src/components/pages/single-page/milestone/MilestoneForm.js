@@ -57,6 +57,8 @@ function MilestoneForm({ user, setUser, project, milestones, setMilestones, hide
     }));
   }
 
+  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     fetch('http://localhost:3000/milestones', {
