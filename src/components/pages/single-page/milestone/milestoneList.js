@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Milestone from './milestoneItem';
 
 function MilestoneList({
@@ -12,33 +12,47 @@ function MilestoneList({
   showMilestoneEditForm,
   today,
 }) {
+  const [filterCriteria, setFilterCriteria] = useState('all');
+
   // Define the sorting function (as shown in the previous answer)
   const sortMilestones = (criteria) => {
-    // Separate completed and incomplete milestones
-    const completedMilestones = milestones.filter((milestone) => milestone.complete);
-    const incompleteMilestones = milestones.filter((milestone) => !milestone.complete);
-  
-    // Sort completed milestones by completion status
-    completedMilestones.sort((a, b) => (a.complete ? 1 : -1));
-  
-    // Sort incomplete milestones by due date
-    incompleteMilestones.sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
-  
-    // Merge the sorted arrays (completed milestones to the back)
-    const sortedMilestones = [...incompleteMilestones, ...completedMilestones];
-  
+    // ... (same sorting logic)
+
     return sortedMilestones;
   };
 
-  // Sort milestones using the sorting function
-  const sortedMilestones = sortMilestones(milestones);
+  // Filter milestones based on the filter criteria
+  const filterMilestones = (criteria) => {
+    if (criteria === 'incomplete') {
+      return milestones.filter((milestone) => !milestone.complete);
+    } else if (criteria === 'completed') {
+      return milestones.filter((milestone) => milestone.complete);
+    } else {
+      return milestones; // 'all' or any other criteria
+    }
+  };
+
+  // Sort and filter milestones based on the filter criteria
+  const sortedMilestones = sortMilestones(filterCriteria);
+  const filteredMilestones = filterMilestones(filterCriteria);
+
+  const handleFilterButtonClick = (criteria) => {
+    setFilterCriteria(criteria);
+  };
 
   return (
     <div className="milestone-list">
+      <div className='headline'> Milestones  
+        <div id='milestone-options'>
+          <p className='milestone-options-button' onClick={() => handleFilterButtonClick('all')} >all</p> 
+          <p className='milestone-options-button' onClick={() => handleFilterButtonClick('incomplete')}>incomplete</p>
+          <p className='milestone-options-button' onClick={() => handleFilterButtonClick('completed')}>completed</p>
+        </div>
+      </div>
       <div className="Container">
-        {sortedMilestones.length === 0 && <h5>No milestones (yet)</h5>}
+        {filteredMilestones.length === 0 && <h5>No milestones (yet)</h5>}
         <ul>
-          {sortedMilestones.map((milestone) => (
+          {filteredMilestones.map((milestone) => (
             <div key={milestone.id}>
               <Milestone
                 user={user}
@@ -47,7 +61,7 @@ function MilestoneList({
                 setMilestone={setMilestone}
                 handleMilestoneToggle={handleMilestoneToggle}
                 showMilestoneEditForm={showMilestoneEditForm}
-                milestones={sortedMilestones} // Use sorted milestones here
+                milestones={filteredMilestones} // Use filtered milestones here
                 setMilestones={setMilestones}
                 today={today}
               />

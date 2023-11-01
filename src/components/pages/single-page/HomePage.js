@@ -251,7 +251,7 @@ function HomePage() {
       )}
   
    
-      <p className='headline'>Milestones</p>
+     
       <MilestoneList user={user} setUser={setUser} milestones={milestones} setMilestones={setMilestones} projects={projects} setProjects={setProjects} templates={templates} setTemplates={setTemplates} showMilestoneEditForm={showMilestoneEditForm} handleMilestoneToggle={handleMilestoneToggle} />
     </div>
   );

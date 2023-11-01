@@ -9,7 +9,7 @@ function ProjectListItem({ project, showProject, milestones, showEditForm, confi
   const dueDate = dayjs(project.due_date);
   const [isClicked, setIsClicked] = useState(false);
   const [completionPercentage, setCompletionPercentage] = useState([])
-  const project_milestones = milestones.filter(p => p.project_id === project.id)
+
 
   function handleClick(project) {
     showProject(project);

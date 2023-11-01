@@ -18,8 +18,6 @@ function EditTemplate({
   );
   const [formMessage, setFormMessage] = useState('');
 
- 
-
   useEffect(() => {
     if (templateToEdit) {
       setName(templateToEdit.name);
@@ -41,18 +39,15 @@ function EditTemplate({
 
     if (templateToEdit) {
       // Handle editing an existing template
-      console.log('Edit Template URL:', `http://localhost:3000/templates/${templateToEdit.id}`);
-      console.log('Edit Template Request Data:', JSON.stringify({ name, milestones }));
-
       fetch(`http://localhost:3000/templates/${templateToEdit.id}`, {
         method: 'PUT',
         body: JSON.stringify({
           name: name,
           milestones: milestones,
         }),
-        headers: new Headers( {
-          Authorization: `${sessionStorage.token}`, 
-          'Content-Type': 'application/json'
+        headers: new Headers({
+          Authorization: `${sessionStorage.token}`,
+          'Content-Type': 'application/json',
         }),
       })
         .then((response) => {
@@ -95,9 +90,35 @@ function EditTemplate({
     setMilestones(newMilestones);
   };
 
+  const handleDeleteTemplate = () => {
+    if (templateToEdit) {
+      fetch(`http://localhost:3000/templates/${templateToEdit.id}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `${sessionStorage.token}`,
+        },
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Failed to delete template');
+          }
+          // Remove the deleted template from the templates state
+          setTemplates(templates.filter((t) => t.id !== templateToEdit.id));
+
+          // Close the form 2 seconds after successful deletion
+          setTimeout(() => {
+            setShowEditTemplateModal(false);
+          }, 2000);
+        })
+        .catch((error) => {
+          console.error('Error deleting template:', error);
+        });
+    }
+  };
+
   return (
     <Form className='embed' onSubmit={handleSubmit}>
-      <h1>{templateToEdit ? 'Edit Template' : 'New Template'}</h1>
+    
 
       <Form.Group controlId='formTemplateName'>
         <Form.Label>Template Name</Form.Label>
@@ -143,7 +164,7 @@ function EditTemplate({
                   type='button'
                   onClick={() => deleteMilestone(index)}
                 >
-                  Delete
+                  <div className='x'>⨉</div>
                 </Button>
               )}
             </Col>
@@ -158,6 +179,10 @@ function EditTemplate({
       <Button variant='primary' type='submit'>
         {templateToEdit ? 'Update' : 'Create'}
       </Button>
+      <br/>
+      <p className='account-delete-button' type='button' onClick={handleDeleteTemplate}>
+        Delete Template
+      </p>
       <p>{formMessage}</p>
     </Form>
   );

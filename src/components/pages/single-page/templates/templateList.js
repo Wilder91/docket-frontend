@@ -32,16 +32,15 @@ function TemplateIndex({ templates, setTemplates, user }) {
             >
               Edit
             </btn>
-            <br />
-            <br />
+          
             <div className="milestones-container">
               {template.milestones
                 .sort((a, b) => new Date(b.due_date) - new Date(a.due_date))
                 .map((milestone, index) => (
-                  <Card key={milestone.id} className="milestone-card">
+                  <Card key={milestone.id} className="template-milestones">
                     <div className="milestone-info">
                       <p>
-                        {index + 1}. {milestone.name} {milestone.leadTime} Days Before Due Date
+                        {index + 1}. {milestone.name} {milestone.leadTime} day(s) before due date
                       </p>
                     </div>
                     <br />
@@ -53,11 +52,11 @@ function TemplateIndex({ templates, setTemplates, user }) {
         <br />
       </div>
 
-      <Modal show={showEditTemplateModal} onHide={closeEditTemplateModal}>
+      <Modal id='template-modal' show={showEditTemplateModal} onHide={closeEditTemplateModal}>
   <Modal.Header closeButton>
     <Modal.Title>Edit Template</Modal.Title>
   </Modal.Header>
-  <Modal.Body>
+  <Modal.Body id="template-modal">
   <EditTemplate
   templates={templates}
   setTemplates={setTemplates}
