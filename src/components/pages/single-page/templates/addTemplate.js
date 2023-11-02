@@ -117,11 +117,11 @@ function AddTemplate({templates, setTemplates, user, setTemplateFormOpen}) {
   </Form.Group>
 ))}
   <br />
-  <Button className='normal'  onClick={addMilestone}>
+  <b className='milestone-options-button'  onClick={addMilestone}>
     Add Milestone
-  </Button>
+  </b>
   <br />
-  <Button className='normal'  type='submit'>
+  <Button className='normal' id='template-form-button'  type='submit'>
     Create Template
   </Button>
   <p>{formMessage}</p>

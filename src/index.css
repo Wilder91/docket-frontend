@@ -176,14 +176,25 @@ p{
 
 }
 
+b.completion-date {
+  padding-right: 10px;
+}
+
 #complete-button {
   color: #608bbb;
+  scale: 1.0;
 }
 
 .template-headline {
   position: absolute;
   top: 0;
   left: 0;
+}
+
+#template-form-button {
+  background-color: rgb(145, 144, 144);
+  border: none;
+  opacity: 80%;
 }
 
 .template-info {
@@ -289,9 +300,13 @@ ul > li {
 }
 
 .account-delete-button {
-  text-decoration: underline;
+
   cursor: pointer;
   display: inline-block;
+}
+
+#complete {
+  float:left;
 }
 
 .project-form-label {
@@ -512,6 +527,8 @@ h5 {
   color: #608bbb; 
   opacity: 70%;
 }
+
+
 .CircularProgressbar {
   scale: 30%;
   width: 30% !important;
@@ -603,6 +620,10 @@ b {
   color: #7B7575;
   padding-top: 15px;
   padding-bottom: 10px;
+}
+
+.milestone-due-date {
+  line-height: 1.6;
 }
 
 .bootmodal {

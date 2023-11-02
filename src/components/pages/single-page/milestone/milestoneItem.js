@@ -6,17 +6,19 @@ import Overdue from '../../images/Overdue.png';
 import Urgent from '../../images/Upcoming.png';
 import Nonurgent from '../../images/NonUrgent.png';
 import MediumUrgent from '../../images/MediumUrgent.png';
-import Button from 'react-bootstrap/Button'
+import Button from 'react-bootstrap/Button';
 
 const token = sessionStorage.token;
 
 function Milestone({ user, setUser, milestone, milestones, setMilestones, showMilestoneEditForm, today }) {
   const dueDate = dayjs(milestone.due_date);
+  const isComplete = milestone.complete;
+
   const getFlagImage = () => {
     const daysUntilDue = dueDate.diff(today, 'day');
 
-    if (milestone.complete === true) {
-      return <h5>complete</h5>;
+    if (isComplete) {
+      return <img src={Nonurgent} className='flag' alt="Longtime" />;
     } else if (daysUntilDue < 0) {
       return <img src={Overdue} className='flag' alt="Overdue" />;
     } else if (daysUntilDue < 14) {
@@ -26,6 +28,14 @@ function Milestone({ user, setUser, milestone, milestones, setMilestones, showMi
     } else {
       return <img src={Nonurgent} className='flag' alt="Longtime" />;
     }
+  };
+
+  const getCompletionDate = () => {
+    if (isComplete) {
+      return <div className='completion-date'>Completed on {dayjs(milestone.completion_date).format('MM/DD/YYYY')} <br /> </div>;
+      
+    }
+    return null; // Return null when not complete
   };
 
   const confirmDeleteMilestone = (id) => {
@@ -38,6 +48,7 @@ function Milestone({ user, setUser, milestone, milestones, setMilestones, showMi
     const newComplete = !milestone.complete;
     const updatedData = {
       complete: newComplete,
+      completion_date: dayjs().format('DD/MM/YYYY')
     };
   
     fetch(`http://localhost:3000/milestones/${id}/complete`, {
@@ -58,7 +69,7 @@ function Milestone({ user, setUser, milestone, milestones, setMilestones, showMi
         // Milestone has been successfully marked as complete, update state:
         const updatedMilestones = milestones.map((m) => {
           if (m.id === id) {
-            return { ...m, complete: newComplete };
+            return { ...m, complete: newComplete, completion_date: updatedData.completion_date };
           }
           return m;
         });
@@ -71,10 +82,6 @@ function Milestone({ user, setUser, milestone, milestones, setMilestones, showMi
         console.error('Error updating milestone:', error);
       });
   };
- 
-  
-
-  
 
   function deleteMilestone(id) {
     fetch(`http://localhost:3000/milestones/${id}`, {
@@ -102,8 +109,7 @@ function Milestone({ user, setUser, milestone, milestones, setMilestones, showMi
   useEffect(() => {
     function start() {
       gapi.client.init({
-        clientId: '289087849938-v7ckrcf04la568qv6iuepemv7n9qkvcu.apps.googleusercontent.com'
-                   ,
+        clientId: '289087849938-v7ckrcf04la568qv6iuepemv7n9qkvcu.apps.googleusercontent.com',
         scope: 'email',
       });
     }
@@ -112,45 +118,48 @@ function Milestone({ user, setUser, milestone, milestones, setMilestones, showMi
   }, []);
 
   return (
-    <li key={milestone.id} style={{ opacity: milestone.complete === true && '20%' }}>
-    <Card className="bootstrap-card-no-hover">
-      <div className='flag-container'>
-        {getFlagImage()}
-      
-      </div>
-     
-      <div className='card-content'>
-      
-        <b style={{ color: milestone.complete === true && 'red' }}>
-          {milestone.name}
-        </b>
-      
-        <br />
-        {milestone.project_name}
-        {milestone.description}
-        <br />
-        <p>Due {dayjs(milestone.due_date).format('MM.DD.YYYY')} </p>
-        {milestone.complete !== true && (
-          <p style={{ color: dayjs(milestone.due_date).diff(today, 'day') <= 0 ? 'red' : 'inherit' }}>
-            {dayjs(milestone.due_date).diff(today, 'day') <= 0
-              ? `${dayjs(milestone.due_date).diff(today, 'day') * -1} days Overdue`
-              : `${dayjs(milestone.due_date).diff(today, 'day')} days remaining`}
-          </p>
-        )}
-          <p onClick={() => handleComplete(milestone.id)} className='card-links' id='complete-button'>mark complete</p>
-        <div className='card-link-list' id='milestone-link-list'>
-        <p className="card-links" onClick={() => showMilestoneEditForm(milestone)}>
-          edit
-        </p>
-        <p className="card-links" onClick={() => confirmDeleteMilestone(milestone.id)}>
-          delete
-        </p>
-      
+    <li key={milestone.id} style={{ opacity: isComplete && '40%' }}>
+      <Card className="bootstrap-card-no-hover">
+        <div className='flag-container'>
+          {getFlagImage()}
         </div>
-      </div>
-    </Card>
-  </li>
-);
+        <br />
+        <div className='card-content'>
+          <b>
+            {milestone.name}
+          </b>
+          <br />
+          {getCompletionDate()} {/* Render completion date when complete */}
+   
+          {milestone.complete ? (
+  <p style={{ lineHeight: 2 }}>{milestone.project_name}</p>
+) : (
+  milestone.project_name
+)}
+          {milestone.description}
+     
+          <p className='milestone-due-date'>Due {dayjs(milestone.due_date).format('MM.DD.YYYY')} </p>
+     
+          {!isComplete && (
+           <p style={{ lineHeight: 0, color: dayjs(milestone.due_date).diff(today, 'day') <= 0 ? 'red' : 'inherit' }}>
+           {dayjs(milestone.due_date).diff(today, 'day') <= 0
+             ? `${dayjs(milestone.due_date).diff(today, 'day') * -1} days Overdue`
+             : `${dayjs(milestone.due_date).diff(today, 'day')} days remaining`}
+         </p>
+          )}
+          <p onClick={() => handleComplete(milestone.id)} className='card-links' id='complete-button'>mark complete</p>
+          <div className='card-link-list' id='milestone-link-list'>
+            <p className="card-links" onClick={() => showMilestoneEditForm(milestone)}>
+              edit
+            </p>
+            <p className="card-links" onClick={() => confirmDeleteMilestone(milestone.id)}>
+              delete
+            </p>
+          </div>
+        </div>
+      </Card>
+    </li>
+  );
 }
 
 export default Milestone;
