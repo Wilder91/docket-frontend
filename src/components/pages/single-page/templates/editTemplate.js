@@ -92,27 +92,33 @@ function EditTemplate({
 
   const handleDeleteTemplate = () => {
     if (templateToEdit) {
-      fetch(`http://localhost:3000/templates/${templateToEdit.id}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `${sessionStorage.token}`,
-        },
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error('Failed to delete template');
-          }
-          // Remove the deleted template from the templates state
-          setTemplates(templates.filter((t) => t.id !== templateToEdit.id));
-
-          // Close the form 2 seconds after successful deletion
-          setTimeout(() => {
-            setShowEditTemplateModal(false);
-          }, 2000);
+      const confirmDelete = window.confirm(
+        'Are you sure you want to delete this template?'
+      );
+  
+      if (confirmDelete) {
+        fetch(`http://localhost:3000/templates/${templateToEdit.id}`, {
+          method: 'DELETE',
+          headers: {
+            Authorization: `${sessionStorage.token}`,
+          },
         })
-        .catch((error) => {
-          console.error('Error deleting template:', error);
-        });
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error('Failed to delete template');
+            }
+            // Remove the deleted template from the templates state
+            setTemplates(templates.filter((t) => t.id !== templateToEdit.id));
+  
+            // Close the form 2 seconds after successful deletion
+            setTimeout(() => {
+              setShowEditTemplateModal(false);
+            }, 2000);
+          })
+          .catch((error) => {
+            console.error('Error deleting template:', error);
+          });
+      }
     }
   };
 

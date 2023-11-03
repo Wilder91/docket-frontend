@@ -4,7 +4,7 @@ import MilestoneForm from '../milestone/MilestoneForm';
 
 
 
-function MilestoneList({ milestones, setMilestones, templates, user }) {
+function MilestoneList({ milestones, setMilestone, setMilestones, templates, user }) {
     const [isOpen, setIsOpen] = useState(false);
     const [milestoneToEdit, setMilestoneToEdit] = useState(null);
     
@@ -44,6 +44,8 @@ function MilestoneList({ milestones, setMilestones, templates, user }) {
           <MilestoneItem
             key={milestone.id}
             milestone={milestone}
+            setMilestone={setMilestone}
+            setMilestones={setMilestones}
             handleCompleteMilestone={handleCompleteMilestone}
             handleDeleteMilestone={handleDeleteMilestone}
             handleShowEditForm={handleShowEditForm}

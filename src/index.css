@@ -638,3 +638,8 @@ b {
   bottom: 0;
   background-color: rebeccapurple;
 }
+
+#milestone-notes{
+  float: right;
+  margin-top: 30px;
+}

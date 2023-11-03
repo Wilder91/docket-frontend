@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState} from 'react';
 import { Card } from 'react-bootstrap';
 import { gapi } from 'gapi-script';
 import dayjs from 'dayjs';
@@ -6,13 +6,14 @@ import Overdue from '../../images/Overdue.png';
 import Urgent from '../../images/Upcoming.png';
 import Nonurgent from '../../images/NonUrgent.png';
 import MediumUrgent from '../../images/MediumUrgent.png';
-import Button from 'react-bootstrap/Button';
-
+import Modal from 'react-bootstrap/Modal';
+import Notes from './notes.js'
 const token = sessionStorage.token;
 
-function Milestone({ user, setUser, milestone, milestones, setMilestones, showMilestoneEditForm, today }) {
+function Milestone({ user, setUser, milestone, milestones, setMilestone, setMilestones, showMilestoneEditForm, today }) {
   const dueDate = dayjs(milestone.due_date);
   const isComplete = milestone.complete;
+  const [showNotesModal, setShowNotesModal] = useState(false);
 
   const getFlagImage = () => {
     const daysUntilDue = dueDate.diff(today, 'day');
@@ -36,6 +37,15 @@ function Milestone({ user, setUser, milestone, milestones, setMilestones, showMi
       
     }
     return null; // Return null when not complete
+  };
+
+  const openNotesModal = () => {
+    setShowNotesModal(true);
+  };
+
+  // Function to close the notes modal
+  const closeNotesModal = () => {
+    setShowNotesModal(false);
   };
 
   const confirmDeleteMilestone = (id) => {
@@ -121,7 +131,7 @@ function Milestone({ user, setUser, milestone, milestones, setMilestones, showMi
     <li key={milestone.id} style={{ opacity: isComplete && '40%' }}>
       <Card className="bootstrap-card-no-hover">
         <div className='flag-container'>
-          {getFlagImage()}
+          {getFlagImage()}  <p className='account-delete-button'  id='milestone-notes'  onClick={openNotesModal}> notes</p>
         </div>
         <br />
         <div className='card-content'>
@@ -156,6 +166,15 @@ function Milestone({ user, setUser, milestone, milestones, setMilestones, showMi
               delete
             </p>
           </div>
+          <Modal show={showNotesModal} onHide={closeNotesModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Notes on {milestone.name}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Notes milestone={milestone} setMilestone={setMilestone} setMilestones={setMilestones}/> {/* Render your Notes component here */}
+        </Modal.Body>
+        {/* Add a footer or additional styling for the modal as needed */}
+      </Modal>
         </div>
       </Card>
     </li>
