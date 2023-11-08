@@ -12,7 +12,7 @@ function Project() {
   const [milestones, setMilestones] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
-  
+   
   const [project, setProject] = useState('')
   const location = useLocation()
 

@@ -157,8 +157,8 @@ p{
 .card {
   border: none !important;
   display: flow !important;
-  min-height: 260px;
-  max-height: 260px;
+  min-height: 265px;
+  max-height: 265px;
   overflow-y: auto;
 }
 .card-link-list {
@@ -530,11 +530,16 @@ h5 {
 
 
 .CircularProgressbar {
-  scale: 30%;
+  scale: 70%;
   width: 30% !important;
-  margin-left: 10px;
+  margin-left: 55px;
   position: relative;
+  font-size: 20pt;
 
+}
+
+#progress-bar-text{
+  font-size: 20pt;
 }
 .project-progress{
   display: flex;

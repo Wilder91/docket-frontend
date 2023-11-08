@@ -201,6 +201,8 @@ function HomePage() {
                 </Nav>
             </Container>
           </Navbar>
+
+       
   
           <Modal className='bootmodal' show={isOpen} onHide={showModal}>
             <Modal.Body><ProjectForm user={user} setUser={setUser} setProjects={setProjects} templates={templates} milestones={milestones} setMilestones={setMilestones} /></Modal.Body>

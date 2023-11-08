@@ -47,7 +47,7 @@ function ProjectListItem({ project, showProject, milestones, showEditForm, confi
       <div className="card-content">
          <div className="project-progress">
             <b className='project-name'>{project.name}</b>
-            <CircularProgressbar value={completionPercentage} className="circular-progress" />
+           <div id='progress-bar-text'> <CircularProgressbar text={completionPercentage}styles={{ textSize:'150px'}} value={completionPercentage} className="circular-progress" /></div>
           </div>
       <p className='project-type'>{project.kind}</p>
 
