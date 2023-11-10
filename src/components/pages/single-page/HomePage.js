@@ -46,14 +46,25 @@ function HomePage() {
   /* sets state for the homepage and ensures that projects and milestones are sorted correctly, first
   by date and then by completion status */
   const setterFunction = (users) => {
-
+    
     const currentUser = users.find((user) => user.email === sessionStorage.email);
+  
+    if (!currentUser) {
+      // Handle the case where the current user is not found
+      console.error("Current user not found");
+      return;
+    }
+  
     setUser(prevUser => ({ ...prevUser, ...currentUser }));
-
-
   
     const { id, projects, milestones, templates } = currentUser;
-    
+  
+    if (!id || !projects || !milestones || !templates) {
+      // Handle the case where some required data is missing
+      console.error("Missing required data for user");
+      return;
+    }
+  
     const sortedProjects = [...projects].sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
     const sortedMilestones = [...milestones].sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
   

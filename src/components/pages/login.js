@@ -83,10 +83,16 @@ function LoginForm() {
     // This function will be called when Google Sign-In is successful.
     // You can handle the successful sign-in and send the Google authentication token to the backend here.
     console.log('Google sign-in successful:', response);
+    
+    // Extract the Google authentication token and email from the response
+    const google_token = response.credential;
+    const decodedToken = JSON.parse(atob(google_token.split('.')[1])); 
+    console.log(decodedToken)// You should verify the actual structure of the response object
+    const google_email = decodedToken.email; // Assuming this structure, update accordingly
   
-    // Extract the Google authentication token from the response
-    const google_token = response.credential; // You should verify the actual structure of the response object
-    console.log(response)
+    // Set the Google email in sessionStorage
+    sessionStorage.setItem('email', google_email);
+  
     // Send the Google authentication token to the backend
     fetch('http://localhost:3000/auth/login', {
       method: 'POST',
@@ -105,12 +111,13 @@ function LoginForm() {
       .then((data) => {
         // Handle the response from the backend, which may include a custom authentication token
         const customAuthToken = data.token;
-        console.log(data)
+        console.log(data);
+  
         // Store the custom authentication token in session storage or elsewhere
         sessionStorage.setItem('token', customAuthToken);
   
         // Redirect to the home page or protected route
-        console.log(sessionStorage)
+        console.log(sessionStorage);
         fetchUsers();
         navigate('/');
       })
