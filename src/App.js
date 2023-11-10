@@ -7,7 +7,7 @@ import Signup from './components/pages/signup';
 import Home from './components/pages/single-page/HomePage';
 import Logout from './components/pages/logout';
 import { UserContext } from './components/pages/single-page/util/context';
-
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 
 
@@ -16,7 +16,7 @@ const App = () => {
   
   return (
     <div>
-    
+    <GoogleOAuthProvider clientId="494043831138-f2m2q99nb0if9m034el6vp645n9sffsn.apps.googleusercontent.com">
       <UserContext.Provider value={'hello'}>
       <BrowserRouter >
         <Routes>
@@ -27,6 +27,7 @@ const App = () => {
         </Routes>
       </BrowserRouter>
       </UserContext.Provider>
+      </GoogleOAuthProvider>
     </div>
   );
 };
