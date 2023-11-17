@@ -92,7 +92,7 @@ function LoginForm() {
   
     // Set the Google email in sessionStorage
     sessionStorage.setItem('email', google_email);
-  
+    sessionStorage.setItem('google_token', google_token)
     // Send the Google authentication token to the backend
     fetch('http://localhost:3000/auth/login', {
       method: 'POST',
@@ -197,16 +197,21 @@ function LoginForm() {
             Sign Up
           </button>
           <br></br>
-        </form>
-        <p className='account-delete-button' onClick={handleGoogleLogin}>
-          {/* Implement Google Sign-In using the `GoogleLogin` component from @react-oauth/google */}
+          <div className='google-button'>
           <GoogleLogin
             onSuccess={handleGoogleLogin}
+            
             onError={() => {
               console.log('Login Failed');
             }}
-          />
-        </p>
+            shape='pill'
+
+          /></div>
+        </form>
+      
+          {/* Implement Google Sign-In using the `GoogleLogin` component from @react-oauth/google */}
+          
+    
       </UserContext.Provider>
     </div>
   );

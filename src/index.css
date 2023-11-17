@@ -405,6 +405,10 @@ li {
   margin-top: 40px;
 }
 
+.google-button {
+  padding-left: 30px;
+  padding-top: 9px;
+}
 .dd-logo {
   width: 10px;
   display: inline;

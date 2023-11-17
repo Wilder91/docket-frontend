@@ -46,9 +46,9 @@ function HomePage() {
   /* sets state for the homepage and ensures that projects and milestones are sorted correctly, first
   by date and then by completion status */
   const setterFunction = (users) => {
-    
+   
     const currentUser = users.find((user) => user.email === sessionStorage.email);
-  
+    
     if (!currentUser) {
       // Handle the case where the current user is not found
       console.error("Current user not found");

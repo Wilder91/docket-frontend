@@ -36,7 +36,7 @@ function ProjectListItem({ project, showProject, milestones, showEditForm, confi
     const percentage = (completedMilestones.length / projectMilestones.length) * 100;
 
     setCompletionPercentage(percentage);
-    console.log(completionPercentage)
+   
   }, [milestones, project.id]);
   
 

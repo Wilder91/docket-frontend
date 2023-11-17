@@ -20,7 +20,8 @@ function Milestone({
   today,
 }) {
   const dueDate = dayjs(milestone.due_date);
-  const iso8601DueDate = dueDate.set('hour', 12).format('YYYY-MM-DDTHH:mm:ss[Z]');
+  const iso8601DueDate = dayjs(milestone.due_date).format('YYYY-MM-DDTHH:mm:ssZ');
+const iso8601EndDate = dayjs(milestone.due_date).add(1, 'hour').format('YYYY-MM-DDTHH:mm:ssZ');
   const isComplete = milestone.complete;
   const [showNotesModal, setShowNotesModal] = useState(false);
   const token = sessionStorage.token;
@@ -86,7 +87,56 @@ function Milestone({
       });
   }
 
-  function removeEventFromGoogleCalendar(eventId) {
+  const createGoogleCalendarEvent = async () => {
+    const event = {
+      'summary':milestone.name,
+      'description': milestone.project_name,
+      'start': {
+        'dateTime': iso8601DueDate,
+        'timeZone': 'UTC',
+      },
+      'end': {
+        'dateTime': iso8601EndDate,
+        'timeZone': 'UTC',
+      },
+    };
+    console.log('Event info: ', event)
+    console.log(iso8601DueDate)
+    console.log(iso8601EndDate)
+
+    console.log('Google Calendar API Request Payload:', {
+      method: 'POST',
+      url: 'https://content.googleapis.com/calendar/v3/calendars/primary/events',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.google_token}`,
+      },
+      body: JSON.stringify({ resource: event }),
+    });
+    try {
+      console.log('Before Google Calendar API Request');
+      const response = await gapi.client.calendar.events.insert({
+        calendarId: 'primary',
+        resource: event,
+      });
+      console.log('Response:', response);
+      setGoogleEventId(response.result.id);
+      console.log('Event added to Google Calendar:', response);
+    }  catch (error) {
+      console.error('Error adding event to Google Calendar:', error);
+      
+      if (error.result && error.result.error) {
+        console.error('Google Calendar API Error:', error.result.error);
+      }
+  
+      if (error.status === 401) {
+        console.error('Authentication error. User is not signed in or token expired.');
+      }
+    }
+  };
+  
+  
+  const removeEventFromGoogleCalendar = (eventId) => {
     // Check if the Google API client is loaded and authenticated
     if (gapi.auth2.getAuthInstance().isSignedIn.get()) {
       // Make a request to the Google Calendar API to delete the event
@@ -104,60 +154,25 @@ function Milestone({
     } else {
       console.error('User is not signed in to Google Calendar or token has expired.');
     }
-  }
-
-  const createGoogleCalendarEvent = async () => {
-    const event = {
-      summary: milestone.name,
-      description: milestone.description,
-      start: {
-        dateTime: iso8601DueDate,
-      },
-      end: {
-        dateTime: iso8601DueDate,
-      },
-    };
-
-    console.log('Event data:', event); // Add this line for logging
-
-    try {
-      const response = await gapi.client.calendar.events.insert({
-        calendarId: 'primary',
-        resource: event,
-      });
-
-      // Store the Google Calendar event ID
-      setGoogleEventId(response.result.id);
-
-      console.log('Event added to Google Calendar:', response);
-
-      // You can handle the response as needed, e.g., display a success message.
-    } catch (error) {
-      console.error('Error adding event to Google Calendar:', error);
-
-      if (error.result && error.result.error) {
-        console.error('Google Calendar API Error:', error.result.error);
-      }
-
-      if (error.status === 401) {
-        console.error('Authentication error. User is not signed in or token expired.');
-      }
-    }
   };
+  
 
   const handleGoogleSignIn = async () => {
     try {
+      console.log('Initiating Google Sign-In...');
       await gapi.auth2.getAuthInstance().signIn();
+      console.log('Google Sign-In successful. Creating Google Calendar Event...');
       // After successful sign-in, you can proceed to create the event.
       createGoogleCalendarEvent();
     } catch (error) {
       console.error('Google Sign-In Error:', error);
-
+  
       if (error.details) {
         console.error('Google Sign-In Error Details:', error.details);
       }
     }
   };
+  
 
   // Function to open the notes modal
   const openNotesModal = () => {
@@ -220,10 +235,12 @@ function Milestone({
   useEffect(() => {
     async function start() {
       await gapi.client.init({
-        clientId: '494043831138-l9q7nokb9l3daht5f9p0dbfbb49l3jh6.apps.googleusercontent.com',
+        clientId: '494043831138-f2m2q99nb0if9m034el6vp645n9sffsn.apps.googleusercontent.com',
         apiKey: 'AIzaSyD-p5VKHy-5uiw2o_-hjdO0Pnvly2TSnEg', // If you're using an API key
         discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'],
         scope: 'https://www.googleapis.com/auth/calendar', // Use the appropriate scope for calendar access
+        ux_mode: 'popup',
+        plugin_name:'login',
       });
 
       // The client is now initialized and can be used for API calls.
