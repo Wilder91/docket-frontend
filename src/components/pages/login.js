@@ -99,7 +99,7 @@ function LoginForm() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ google_token }),
+      body: JSON.stringify({ google_email, google_token }),
     })
       .then((response) => {
         if (response.ok) {
@@ -147,7 +147,7 @@ function LoginForm() {
 
   function routeChange() {
     let path = '/signup';
-    navigate(path, { state: { login } });
+    navigate(path);
   }
 
   // Use useEffect to navigate to the home page if login was successful

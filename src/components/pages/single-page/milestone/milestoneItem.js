@@ -63,7 +63,7 @@ const iso8601EndDate = dayjs(milestone.due_date).add(1, 'hour').format('YYYY-MM-
     fetch(`http://localhost:3000/milestones/${id}`, {
       method: 'DELETE',
       headers: {
-        Authorization: `${token}`,
+        Authorization: `${token}`, 
       },
     })
       .then((response) => {
@@ -121,6 +121,7 @@ const iso8601EndDate = dayjs(milestone.due_date).add(1, 'hour').format('YYYY-MM-
       });
       console.log('Response:', response);
       setGoogleEventId(response.result.id);
+      updateMilestoneWithGoogleEventId(response.result.id);
       console.log('Event added to Google Calendar:', response);
     }  catch (error) {
       console.error('Error adding event to Google Calendar:', error);
@@ -171,6 +172,36 @@ const iso8601EndDate = dayjs(milestone.due_date).add(1, 'hour').format('YYYY-MM-
         console.error('Google Sign-In Error Details:', error.details);
       }
     }
+  };
+
+  const updateMilestoneWithGoogleEventId = (eventId) => {
+    // Prepare the data to update the milestone
+    const updatedData = {
+      google_event_id: eventId, // Update the milestone with the Google Calendar event ID
+    };
+    console.log(eventId)
+    // Send a PATCH request to update the milestone with the Google Calendar event ID
+    fetch(`http://localhost:3000/milestones/${milestone.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `${token}`,
+      },
+      body: JSON.stringify(updatedData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Error updating milestone with Google Calendar event ID');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // Handle successful update of the milestone
+        console.log('Milestone updated with Google Calendar event ID:', data);
+      })
+      .catch((error) => {
+        console.error('Error updating milestone with Google Calendar event ID:', error);
+      });
   };
   
 
@@ -234,14 +265,20 @@ const iso8601EndDate = dayjs(milestone.due_date).add(1, 'hour').format('YYYY-MM-
 
   useEffect(() => {
     async function start() {
+      try {
       await gapi.client.init({
         clientId: '494043831138-f2m2q99nb0if9m034el6vp645n9sffsn.apps.googleusercontent.com',
-        apiKey: 'AIzaSyD-p5VKHy-5uiw2o_-hjdO0Pnvly2TSnEg', // If you're using an API key
+        // If you're using an API key
         discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'],
         scope: 'https://www.googleapis.com/auth/calendar', // Use the appropriate scope for calendar access
         ux_mode: 'popup',
-        plugin_name:'login',
+        plugin_name:'calendar',
+        
       });
+    } catch (error) {
+      console.error('Error google', error);
+    }
+
 
       // The client is now initialized and can be used for API calls.
     }

@@ -35,7 +35,7 @@ function MilestoneList({
   // Sort and filter milestones based on the filter criteria
   const sortedMilestones = sortMilestones(filterCriteria);
   const filteredMilestones = filterMilestones(filterCriteria);
-
+  console.log(filteredMilestones)
   const handleFilterButtonClick = (criteria) => {
     setFilterCriteria(criteria);
   };

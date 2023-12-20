@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import EditProject from './project/editProject';
 import EditMilestone from './milestone/editMilestone';
 import MilestoneList from './milestone/milestoneList';
+import UserCalendar from './user/calendar'
 
 import UserProfile from './user/profile'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -24,11 +25,11 @@ function HomePage() {
   const [editFormOpen, setEditFormOpen] = useState(false);
   const [milestone, setMilestone] = useState(false);
   const [editMilestoneFormOpen, setEditMilestoneFormOpen] = useState(false);
-
+  const [calendarOpen, setCalendarOpen] = useState(false);
   const [userProfileOpen, setUserProfileOpen] = useState(false);
   const token = sessionStorage.token;
   const navigate = useNavigate();
-
+  
   
 
   /* retrieves index of all users, should really be a call for a specific user with user id */
@@ -96,6 +97,12 @@ function HomePage() {
   const showModal = () => {
     setIsOpen((current) => !current);
   };
+
+  const showCalendar = () => {
+    setCalendarOpen((current) => !current);
+  };
+
+
 
 
 
@@ -194,23 +201,23 @@ function HomePage() {
    
   return (
     <div className='page'>
-      {user.length === 0 ? (
-        <h5> </h5>
-      ) : (
-        <>
+      
+      
           <Navbar bg="dark\" variant="dark" className='Navbar'>
             <Container>
               <img src='/2.png' className='NavBarLogo' alt='docket logo'></img>
               <Navbar.Brand >Docket</Navbar.Brand>
-              <Nav className="container-fluid">
-                <Nav.Link onClick={showTemplates} className='nav-link'>Templates</Nav.Link>
-                <Nav.Link onClick={showTemplateForm} className='nav-link'>Add Template</Nav.Link>
-                <Nav.Link onClick={showModal} className='nav-link'>Add Project</Nav.Link>
-                
-                <Nav.Link onClick={showUserProfile} className='nav-link' user={user} > Account </Nav.Link>
-                <Navbar.Brand className='ms-auto'>Hello, {user.name} | <a href="/logout" className='logout-button'>Logout</a></Navbar.Brand>
+              <Nav id ='navbar-links' className="container-fluid">
+                <Nav.Link onClick={showTemplates} >Templates</Nav.Link>
+                <Nav.Link onClick={showTemplateForm} >Add Template</Nav.Link>
+                <Nav.Link onClick={showModal} >Add Project</Nav.Link>
+                <Nav.Link onClick={showCalendar} >Calendar</Nav.Link>
+                <Nav.Link onClick={showUserProfile} user={user} > Account </Nav.Link>
+                <Navbar.Brand  id = 'logout-group' className='ms-auto'>Hello, {user.name} | <a href="/logout" className='logout-button'>Logout</a></Navbar.Brand>
                 </Nav>
+               
             </Container>
+            
           </Navbar>
 
        
@@ -254,18 +261,29 @@ function HomePage() {
               <UserProfile user={user} setUser={setUser} setEditFormOpen={setEditFormOpen} onConfirmDelete={onConfirmDelete}/>
             </Modal.Body>
           </Modal>
+
+          <Modal className='calendar-bootmodal' show={calendarOpen} onHide={showCalendar}>
+      
+            <UserCalendar milestones={milestones}/>
+         
+          </Modal>
   
           <br />
           <div className='project-list'>
           <p className='headline'>Projects</p>
           <ProjectList user={user} setUser={setUser} projects={projects} setProjects={setProjects} milestones={milestones} setMilestones={setMilestones} templates={templates} />
           </div>
-        </>
-      )}
+      
+      
   
    
      
       <MilestoneList user={user} setUser={setUser} milestones={milestones} setMilestone={setMilestone} setMilestones={setMilestones} projects={projects} setProjects={setProjects} templates={templates} setTemplates={setTemplates} showMilestoneEditForm={showMilestoneEditForm} handleMilestoneToggle={handleMilestoneToggle} />
+        <br />
+        <br />
+        <div>
+      
+      </div>
     </div>
   );
   

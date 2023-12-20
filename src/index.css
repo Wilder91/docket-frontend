@@ -3,7 +3,7 @@ body {
   font-family: 'Ek Mukta';
   font-size: 22px;
   -webkit-font-smoothing: antialiased;
-  background-color: #833333;
+
   color: #4c4f51;
   text-align: center;
 }
@@ -31,8 +31,37 @@ p{
 .NavBarLogo {
   width: 3%;
   height: auto;
-  margin-left: -60px;
-  margin-right: 8px;
+  
+}
+navbar-expand .navbar-nav .nav-link {
+  padding-right: 0; 
+  padding-left: 0; 
+}
+
+.calendar-box {
+  width: 600px !important; 
+}
+
+.react-calendar {
+  width: 600px !important;
+ 
+  background: white;
+  border: none !important;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.125em;
+}
+
+.calendar-details {
+  width: 600px;
+}
+
+.navbar-nav.container-fluid {
+  color: red !important;
+}
+
+#navbar-links{ 
+  color: red !important;
+  justify-content: left !important;
 }
 
 .LoginLogo {
@@ -49,15 +78,30 @@ p{
   float: right;
 }
 
-.Navbar {
+.navbar {
   background-color: #fff;
   color: #608bbb;
+
 }
 
+.container-fluid.navbar-row{
+  color: red;
+}
+
+.container-fluid{
+  padding-left:5px;
+}
 .logout-button {
   text-decoration: none;
   margin-right: -60px;
   color: #d8d8d8 !important;
+
+}
+
+#logout-group {
+  align-self: center;
+  padding-left: 535px;
+  padding-right: 0px;
 }
 
 .card-content {
@@ -436,6 +480,9 @@ h4 {
   display: inline;
 }
 
+.page {
+  background-color: white;
+}
 form.normal {
   opacity: 80%;
   background-blend-mode: color;
@@ -575,10 +622,27 @@ h5 {
   font-size: 9.5pt;
 }
 
+.modal-content {
+  max-width: 620px !important;
+  width: 600px !important;
+  border: none !important;
+}
+
 #template-modal.modal-body {
   padding: 0;
 }
 
+
+:root {
+  --fc-border-color: black;
+  --fc-daygrid-event-dot-width: 5px;
+}
+
+.fc .fc-toolbar-title {
+  font-size: 1.75em;
+  background: none;
+  margin: 0px;
+}
 
 #milestone-link-list {
   padding-top: 13px;
@@ -638,6 +702,13 @@ b {
 .bootmodal {
   background: none;
 }
+
+.calendar-bootmodal {
+  background: none;
+  border: none !important;
+}
+
+
 
 .Overlay {
   position: fixed;
