@@ -29,9 +29,12 @@ p{
 }
 
 .NavBarLogo {
-  width: 3%;
+  width: 2.75%;
   height: auto;
-  
+  justify-content: end !important;
+  margin-left: 50px;
+  margin-bottom: 10px;
+  margin-right: 10px;
 }
 navbar-expand .navbar-nav .nav-link {
   padding-right: 0; 
@@ -39,7 +42,7 @@ navbar-expand .navbar-nav .nav-link {
 }
 
 .calendar-box {
-  width: 600px !important; 
+  width: 600px ; 
 }
 
 .react-calendar {
@@ -98,11 +101,15 @@ navbar-expand .navbar-nav .nav-link {
 
 }
 
-#logout-group {
-  align-self: center;
-  padding-left: 535px;
-  padding-right: 0px;
+.logout-group{
+  float: right;
+  width: 250px;
+  padding-top: 15px;
 }
+
+
+
+
 
 .card-content {
   text-align: left;
@@ -371,9 +378,6 @@ ul > li {
   margin-top: 20px; /* Adjust the margin as needed to align the delete button */
 }
 
-.container {
-  margin-left: 0px;
-}
 
 .input-container {
   border-radius: 8px;
@@ -516,7 +520,7 @@ h1 {
   position: relative;
   font-weight: normal;
   text-align: left;
-  line-height: 0.7em;
+  line-height: 0.9em;
   padding-top: 10px;
   padding-left: 60px;
   color: #608bbb;
@@ -551,8 +555,8 @@ img {
   width: 30%;
   height: auto;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
+  align-self: baseline;
+  
 }
 
 link {
@@ -623,7 +627,7 @@ h5 {
 }
 
 .modal-content {
-  max-width: 620px !important;
+  max-width: 620px ;
   width: 600px !important;
   border: none !important;
 }
@@ -722,4 +726,45 @@ b {
 #milestone-notes{
   float: right;
   margin-top: 30px;
+}
+
+#small-navbar{
+  padding-left: 30px;
+  align-items: center;
+}
+
+#dropdown-basic-button{
+  background-color: white;
+  border: none;
+  color:#7B7575;
+}
+
+#nav-container {
+  justify-content: start !important;
+  position:absolute;
+  left: 0;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 800px) {
+  .NavBarLogo{
+    width: 30px;
+   
+    margin: 0px;
+  }
+  .modal-body{
+    max-width: 400px;
+  }
+
+  .modal-content{
+    max-width: 400px;
+  }
+
+  .calendar-box{
+    max-width: 400px;
+  }
+  
+  
+
+  
 }

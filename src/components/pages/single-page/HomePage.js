@@ -3,7 +3,7 @@ import ProjectList from '../single-page/project/projectList'
 import ProjectForm from './project/ProjectForm'
 import Templates from './templates/templateList'
 import TemplateForm from './templates/addTemplate'
-import {  Container, Modal, Navbar, Nav } from 'react-bootstrap';
+import {  Container, Modal, Navbar, Nav, Dropdown, DropdownButton } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import EditProject from './project/editProject';
 import EditMilestone from './milestone/editMilestone';
@@ -203,22 +203,41 @@ function HomePage() {
     <div className='page'>
       
       
-          <Navbar bg="dark\" variant="dark" className='Navbar'>
-            <Container>
+      <Navbar  className='Navbar d-none d-lg-block' id='navbar'>
+            <Container id='nav-container'>
               <img src='/2.png' className='NavBarLogo' alt='docket logo'></img>
               <Navbar.Brand >Docket</Navbar.Brand>
-              <Nav id ='navbar-links' className="container-fluid">
+              <Nav >
                 <Nav.Link onClick={showTemplates} >Templates</Nav.Link>
                 <Nav.Link onClick={showTemplateForm} >Add Template</Nav.Link>
                 <Nav.Link onClick={showModal} >Add Project</Nav.Link>
                 <Nav.Link onClick={showCalendar} >Calendar</Nav.Link>
                 <Nav.Link onClick={showUserProfile} user={user} > Account </Nav.Link>
-                <Navbar.Brand  id = 'logout-group' className='ms-auto'>Hello, {user.name} | <a href="/logout" className='logout-button'>Logout</a></Navbar.Brand>
+                
                 </Nav>
-               
-            </Container>
+                </Container>
+                <p  className='logout-group'>Hello, {user.name} | <a href="/logout" className='logout-button'>Logout</a></p>
+        
             
           </Navbar>
+
+           {/* Navbar for smaller screens (less than 800px) */}
+      <Navbar  className='Navbar d-md-none' id='small-navbar'>
+        {/* Adjust the content for the smaller Navbar here */}
+        <img src='/2.png' className='NavBarLogo' alt='docket logo'></img>
+        <Navbar.Brand>Docket</Navbar.Brand>
+        {/* Add a dropdown button for additional actions */}
+        <DropdownButton id="dropdown-basic-button" title="Menu">
+          {/* Add dropdown items with respective actions */}
+          <Dropdown.Item onClick={showTemplates}>Templates</Dropdown.Item>
+          <Dropdown.Item onClick={showTemplateForm}>Add Template</Dropdown.Item>
+          <Dropdown.Item onClick={showModal}>Add Project</Dropdown.Item>
+          <Dropdown.Item onClick={showCalendar}>Calendar</Dropdown.Item>
+          <Dropdown.Item onClick={showUserProfile}>Account</Dropdown.Item>
+          <Dropdown.Item href="/logout">Logout</Dropdown.Item>
+          {/* Include actions accordingly */}
+        </DropdownButton>
+      </Navbar>
 
        
   
