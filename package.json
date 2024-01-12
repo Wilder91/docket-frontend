@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:3000",
-  "homepage": "http://myname.github.io/myapp",
+  "homepage": "http://wilder91.github.io/docket",
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
@@ -33,7 +33,7 @@
     "react-redux": "^7.2.8",
     "react-router-dom": "^6.3.0",
     "redux": "^4.1.2",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4"o
   },
   "optionalDependencies": {
     "fsevents": "^2.1.2"
