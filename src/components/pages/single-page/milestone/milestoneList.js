@@ -55,6 +55,7 @@ function MilestoneList({
           {filteredMilestones.map((milestone) => (
             <div key={milestone.id}>
               <Milestone
+              key = {milestone.id}
                 user={user}
                 setUser={setUser}
                 milestone={milestone}

@@ -222,7 +222,7 @@ function HomePage() {
           </Navbar>
 
            {/* Navbar for smaller screens (less than 800px) */}
-      <Navbar  className='Navbar d-md-none' id='small-navbar'>
+      <Navbar  className='Navbar d-lg-none' id='small-navbar'>
         {/* Adjust the content for the smaller Navbar here */}
         <img src='/2.png' className='NavBarLogo' alt='docket logo'></img>
         <Navbar.Brand>Docket</Navbar.Brand>
@@ -289,7 +289,7 @@ function HomePage() {
   
           <br />
           <div className='project-list'>
-          <p className='headline'>Projects</p>
+          <p id='projects-headline'>Projects</p>
           <ProjectList user={user} setUser={setUser} projects={projects} setProjects={setProjects} milestones={milestones} setMilestones={setMilestones} templates={templates} />
           </div>
       

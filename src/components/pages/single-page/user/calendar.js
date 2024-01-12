@@ -31,7 +31,7 @@ function UserSchedule({ milestones }) {
   return (
     <div className='calendar-box'>
       <Calendar
-        className='react-calendar'
+        className='user-calendar'
         onClickDay={handleDateClick}
         tileContent={tileContent}
       />

@@ -42,7 +42,7 @@ function userProfile({ user, setUser, setUsers, setEditFormOpen, onConfirmDelete
 
     return (
         <div>
-            <p className="profile-text">Hello {user.name}</p>
+            <p className="profile-text">Edit Account Details</p>
             <EditUser user={user} setUser={setUser} setUsers={setUsers} setEditFormOpen={setEditFormOpen} />
 
             {confirmDelete ? (

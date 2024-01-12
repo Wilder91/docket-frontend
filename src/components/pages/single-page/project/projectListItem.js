@@ -47,8 +47,9 @@ function ProjectListItem({ project, showProject, milestones, showEditForm, confi
       <div className="card-content">
          <div className="project-progress">
             <b className='project-name'>{project.name}</b>
-           <div id='progress-bar-text'> <CircularProgressbar text={completionPercentage}styles={{ textSize:'150px'}} value={completionPercentage} className="circular-progress" /></div>
-          </div>
+       
+          <CircularProgressbar text={completionPercentage}styles={{ textSize:'150px'}} value={completionPercentage} className="circular-progress" /></div>
+        
       <p className='project-type'>{project.kind}</p>
 
       <p>Deadline | {dueDate.format('MM.DD.YYYY')}</p>

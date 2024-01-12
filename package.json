@@ -38,8 +38,8 @@
     "fsevents": "^2.1.2"
   },
   "scripts": {
-    "start":"set PORT=4000 && react-scripts --openssl-legacy-provider start ",
-    "build": "react-scripts build",
+    "start": "set PORT=4000 && react-scripts --openssl-legacy-provider start ",
+    "build": "react-scripts build --openssl-legacy-provider",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

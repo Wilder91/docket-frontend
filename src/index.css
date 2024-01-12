@@ -29,7 +29,7 @@ p{
 }
 
 .NavBarLogo {
-  width: 2.75%;
+  width: 35px;
   height: auto;
   justify-content: end !important;
   margin-left: 50px;
@@ -41,22 +41,7 @@ navbar-expand .navbar-nav .nav-link {
   padding-left: 0; 
 }
 
-.calendar-box {
-  width: 600px ; 
-}
 
-.react-calendar {
-  width: 600px !important;
- 
-  background: white;
-  border: none !important;
-  font-family: Arial, Helvetica, sans-serif;
-  line-height: 1.125em;
-}
-
-.calendar-details {
-  width: 600px;
-}
 
 .navbar-nav.container-fluid {
   color: red !important;
@@ -105,6 +90,7 @@ navbar-expand .navbar-nav .nav-link {
   float: right;
   width: 250px;
   padding-top: 15px;
+  font-size: 10pt;
 }
 
 
@@ -114,8 +100,10 @@ navbar-expand .navbar-nav .nav-link {
 .card-content {
   text-align: left;
   padding-left: 20px;
+  height: 230px !important;
 
 }
+
 
 .bootstrap_card,
 
@@ -227,6 +215,14 @@ navbar-expand .navbar-nav .nav-link {
 
 }
 
+.account-delete-button {
+  font-size: 9.5pt;
+  color: gray;
+  cursor: pointer;
+  display: inline-block;
+  line-height: 1;
+}
+
 b.completion-date {
   padding-right: 10px;
 }
@@ -263,6 +259,13 @@ b.completion-date {
   display: flex;
   align-items: center;
   margin-right: 10px; /* Adjust the margin as needed */
+}
+
+
+#milestone-notes{
+  float: right;
+  margin-top: 30px;
+  padding-right: 28px;
 }
 
 
@@ -350,11 +353,7 @@ ul > li {
   border-radius: 0px;
 }
 
-.account-delete-button {
 
-  cursor: pointer;
-  display: inline-block;
-}
 
 #complete {
   float:left;
@@ -521,9 +520,21 @@ h1 {
   font-weight: normal;
   text-align: left;
   line-height: 0.9em;
-  padding-top: 10px;
+  padding-top: 15px;
   padding-left: 60px;
   color: #608bbb;
+}
+
+#projects-headline{ 
+  padding-top: 10px;
+  font-size: 15pt !important;
+  position: relative;
+  font-weight: normal;
+  text-align: left;
+  line-height: 0.9em;
+  color: #608bbb;
+  padding-left: 60px;
+  padding-top: 50px;
 }
 
 milestone-headline {
@@ -585,7 +596,7 @@ h5 {
 
 
 .CircularProgressbar {
-  scale: 70%;
+  scale: 50%;
   width: 30% !important;
   margin-left: 55px;
   position: relative;
@@ -723,10 +734,6 @@ b {
   background-color: rebeccapurple;
 }
 
-#milestone-notes{
-  float: right;
-  margin-top: 30px;
-}
 
 #small-navbar{
   padding-left: 30px;
@@ -747,11 +754,7 @@ b {
 }
 
 @media (max-width: 800px) {
-  .NavBarLogo{
-    width: 30px;
-   
-    margin: 0px;
-  }
+
   .modal-body{
     max-width: 400px;
   }
@@ -763,8 +766,58 @@ b {
   .calendar-box{
     max-width: 400px;
   }
+
+  @media screen and (max-width:400px) {
+    .body {
+      width:260px;
+    }
+  }
+  
+  @media screen and (min-width: 401px) and (max-width:640px) { 
+      .body {
+        width:480px;
+      }
+  }
   
   
+  
+  @media screen and (min-width: 641px) and (max-width: 800px) { 
+      .body {
+         width:600px;
+      }
+  }
+  
+  @media screen and (min-width: 801px) and (max-width: 1024px)  { 
+    .body{
+      width:800px;
+     }
+  }
+  
+  @media (min-width: 800px){
+
+.d-lg-block {
+    display: block!important;
+}
+}
+
+.calendar-box {
+  width: 10000px ; 
+}
+
+.react-calendar {
+  
+  background: white;
+  border: none !important;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.125em;
+  max-width: '200%' !important;
+}
+
+.calendar-details {
+  width: 900px;
+}
+
+
 
   
 }
